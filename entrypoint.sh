@@ -1,52 +1,46 @@
 #!/bin/sh
 
-# Exit immediately if a command exits with a non-zero status nad 
+# Exit immediately if a command exits with a non-zero status.
 set -e
 
+# Function to wait for the database to be ready
+wait_for_db() {
+    echo "Waiting for database..."
+    # Use environment variables for database connection
+    # Assumes PostgreSQL is on localhost:5432 via Cloud SQL Proxy or similar
+    while ! pg_isready -h ${DB_HOST:-localhost} -p ${DB_PORT:-5432} -U ${DB_USER:-postgres} -q -t 1; do
+        echo "Database is unavailable - sleeping"
+        sleep 1
+    done
+    echo "Database is up!"
+}
+
+# Optional: Wait for DB if needed, uncomment if DB startup is slow
+# wait_for_db 
+
+# Collect static files
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
+# Run database migrations  <-- REMOVE/COMMENT THESE OUT
+# echo "python manage.py Before Running Make Migrations"
+# python manage.py makemigrations
+# 
+# echo "python manage.py Before Running migrate"
+# python manage.py migrate
+# 
+# echo "python manage.py migrate - Complete..."
 
+# Start Gunicorn server
+# Use PORT environment variable provided by Cloud Run
+# Use environment variables for Gunicorn configuration where possible
+WORKERS=${GUNICORN_WORKERS:-1} # Default to 1 worker if not set
+THREADS=${GUNICORN_THREADS:-8} # Default to 8 threads if not set
+TIMEOUT=${GUNICORN_TIMEOUT:-0} # Default to 0 (infinite) if not set
 
-DB_HOST="${DB_HOST:-db}"
-
-# Wait for PostgreSQL to be ready
-if [ "$ENVIRONMENT" != "production" ]; then
-
-  echo "Waiting for PostgreSQL at $DB_HOST:5432..."
-  while ! nc -z $DB_HOST 5432; do
-    sleep 1
-  done
-  echo "PostgreSQL is up - continuing..."
-fi
-
-# Run database migrations
-echo "python manage.py Before Running Make Migrations"
-python manage.py makemigrations
-
-echo "python manage.py Before Running migrate"
-python manage.py migrate
-
-echo "python manage.py migrate - Complete..."
-
-# Create superuser if not exists
-if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ] && [ -n "$DJANGO_SUPERUSER_EMAIL" ]; then
-    python manage.py shell -c "
-from django.contrib.auth import get_user_model;
-User = get_user_model();
-if not User.objects.filter(username='$DJANGO_SUPERUSER_USERNAME').exists():
-    User.objects.create_superuser(
-        username='$DJANGO_SUPERUSER_USERNAME',
-        email='$DJANGO_SUPERUSER_EMAIL',
-        password='$DJANGO_SUPERUSER_PASSWORD'
-    );
-    print('Superuser created successfully');
-else:
-    print('Superuser already exists');
-"
-fi
-
-# Start the Gunicorn server
-gunicorn --bind 0.0.0.0:8080 samaanai.wsgi:application
-
-echo "gunicorn started"
+echo "Starting Gunicorn server on port $PORT with $WORKERS workers and $THREADS threads..."
+exec gunicorn samaanai.wsgi:application \
+    --bind :$PORT \
+    --workers $WORKERS \
+    --threads $THREADS \
+    --timeout $TIMEOUT
