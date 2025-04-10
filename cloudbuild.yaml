@@ -1,5 +1,11 @@
 # cloudbuild.yaml
 
+# Define substitutions (passed by Trigger or default)
+substitutions:
+  _SERVICE_NAME: 'samaanai-app' # Default service name
+  _REGION: 'us-central1' # Default region
+  _ARTIFACT_REGISTRY_REPO: 'samaanai-repo' # Default Artifact Registry repo name
+
 options:
   logging: 'CLOUD_LOGGING_ONLY'
 
@@ -41,7 +47,4 @@ steps:
 images:
   - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME'
 
-substitutions:
-  _SERVICE_NAME: 'samaanai_service'       # Replace with your Cloud Run service name
-  _REGION: 'us-west1'                     # Replace with your Cloud Run service region
-  _INSTANCE_NAME: 'mypostgres'            # Replace with your Cloud SQL instance name
+# Trigger re-build comment
