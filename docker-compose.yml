@@ -1,0 +1,42 @@
+# docker-compose.yml
+
+services:
+  web:
+    build: .
+    command: gunicorn --reload --bind 0.0.0.0:8080 samaanai.wsgi:application
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network      
+    env_file:
+      - .env  # This loads the .env file into the container
+    environment:
+      - PROJECT_ID=${PROJECT_ID}
+      - PYTHONUNBUFFERED=1
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/temp_credentials.json  # Set the env variable to point to the key
+      - GS_BUCKET_NAME=your-bucket-name      
+
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge      
+
+volumes:
+  postgres_data:

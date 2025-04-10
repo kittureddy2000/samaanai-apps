@@ -1,0 +1,1012 @@
+<!-- task_dashboard.html -->
+{% extends 'task_management/task_base.html' %}
+{% load static %}
+{% block title %}Task Management{% endblock %}
+{% block additional_head %}
+<meta name="csrf-token" content="{{ csrf_token }}" />
+<link rel="stylesheet" href="{% static 'task_management/task_management_style.css' %}">
+{% endblock %}
+{% block content %}
+
+<input type="hidden" id="current-list" />
+
+<div
+  id="success-message"
+  style="display: none"
+  class="alert alert-success"
+  role="alert"
+></div>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Hamburger Icon for smaller screens Start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light d-lg-none">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#sidebarMenu"
+          aria-controls="sidebarMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars text-primary"></i>
+        </button>
+      </div>
+    </nav>
+    <!-- Hamburger Icon for smaller screens End -->
+
+    <!-- Bootstrap Sidebar Start -->
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <!-- Special Lists -->
+          {% for tasklist in special_lists %}
+            <li class="nav-item">
+              <a href="#" class="nav-link task-list-item d-flex align-items-center" data-id="{{ tasklist.id }}">
+                <span class="icon-container me-3">
+                  {% if tasklist.list_code == "PAST_DUE" %}
+                    <i class="far fa-exclamation-triangle icon-subtle-dark"></i>
+                  {% elif tasklist.list_code == "IMPORTANT" %}
+                    <i class="far fa-star icon-subtle-dark"></i>
+                  {% elif tasklist.list_code == "ALL_TASKS" %}
+                    <i class="far fa-list icon-subtle-dark"></i>
+                  {% else %}
+                    <i class="far fa-clipboard icon-subtle-dark"></i>
+                  {% endif %}
+                </span>
+                <span class="flex-grow-1">{{ tasklist.list_name }}</span>
+                {% if tasklist.task_count > 0 %}
+                  <span class="task-count">{{ tasklist.task_count }}</span>
+                {% endif %}
+              </a>
+            </li>
+          {% endfor %}
+
+          {% if semi_special_lists or normal_lists %}
+            <li class="nav-item">
+              <hr class="divider-blue">
+            </li>
+          {% endif %}
+
+          <!-- Semi-Special Lists (G My Tasks and MS Tasks) -->
+          {% for tasklist in semi_special_lists %}
+            <li class="nav-item">
+              <a href="#" class="nav-link task-list-item d-flex align-items-center" data-id="{{ tasklist.id }}">
+                <span class="icon-container me-3">
+                  {% if tasklist.list_name == "G My Tasks" %}
+                    <i class="fab fa-google icon-subtle-dark"></i>
+                  {% elif tasklist.list_name == "MS Tasks" %}
+                    <i class="fab fa-microsoft icon-subtle-dark"></i>
+                  {% else %}
+                    <i class="far fa-tasks icon-subtle-dark"></i>
+                  {% endif %}
+                </span>
+                <span class="flex-grow-1">{{ tasklist.list_name }}</span>
+                {% if tasklist.task_count > 0 %}
+                  <span class="task-count">{{ tasklist.task_count }}</span>
+                {% endif %}
+              </a>
+            </li>
+          {% endfor %}
+
+          {% if normal_lists %}
+            <li class="nav-item">
+              <hr class="divider-blue">
+            </li>
+          {% endif %}
+
+          <!-- Normal Lists (sorted alphabetically) -->
+          {% for tasklist in normal_lists %}
+            <li class="nav-item">
+              <a href="#" class="nav-link task-list-item d-flex align-items-center" data-id="{{ tasklist.id }}">
+                <span class="icon-container me-3">
+                  {% if tasklist.list_source == "Google" %}
+                    <i class="fab fa-google icon-subtle-dark"></i>
+                  {% elif tasklist.list_source == "Microsoft" %}
+                    <i class="fab fa-microsoft icon-subtle-dark"></i>
+                  {% else %}
+                    <i class="far fa-list-alt icon-subtle-dark"></i>
+                  {% endif %}
+                </span>
+                <span class="flex-grow-1">{{ tasklist.list_name }}</span>
+                {% if tasklist.task_count > 0 %}
+                  <span class="task-count">{{ tasklist.task_count }}</span>
+                {% endif %}
+              </a>
+            </li>
+          {% endfor %}
+
+          <!-- Create List Link -->
+          <li class="nav-item">
+            <a href="{% url 'task_management:create_task_list' %}" class="nav-link task-list-item d-flex align-items-center">
+              <span class="icon-container me-3">
+                <i class="far fa-plus-square icon-subtle-dark"></i>
+              </span>
+              <span>New list</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Bootstrap Sidebar End -->
+
+    <main id="task-middle-panel" class="col-md-9 col-lg-7 ms-sm-auto px-md-4">
+      <!-- Search row Section Start-->
+      <div id="searchbar_row" class="sticky-top">
+        <div class="position-relative flex-grow-1 me-3">
+          <i class="fas fa-search position-absolute ms-3" style="top: 10px; left: 5px; color: #a0a0a0;"></i>
+          <input
+            type="text"
+            class="form-control search-input"
+            id="search-task"
+            placeholder="Search"
+          />
+        </div>
+    
+        <!-- Add Task Button -->
+        <button id="add-task-btn" class="add-task-btn">
+          <i class="far fa-plus"></i>
+        </button>
+    
+        <!-- Filter Dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="far fa-filter filter-icon"></i> All
+          </button>
+          <ul class="dropdown-menu" id="filters">
+            <li><a class="dropdown-item" href="#" data-value="all">All</a></li>
+            <li><a class="dropdown-item" href="#" data-value="completed">Completed</a></li>
+            <li><a class="dropdown-item" href="#" data-value="past_due">Past Due</a></li>
+          </ul>
+        </div>
+    
+        <!-- Sort Dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="far fa-sort sort-icon"></i> No Sort
+          </button>
+          <ul class="dropdown-menu" id="sort-by">
+            <li><a class="dropdown-item" href="#" data-value="none">No Sort</a></li>
+            <li><a class="dropdown-item" href="#" data-value="due_date">Due Date</a></li>
+            <li><a class="dropdown-item" href="#" data-value="important">Important</a></li>
+          </ul>
+        </div>
+    
+        <!-- Sync Button -->
+        <button id="sync-button" class="sync-btn" type="button">
+          <i class="far fa-sync-alt sync-icon"></i> Sync
+        </button>
+      </div>
+      <!-- Search row Section End -->
+
+      <!-- Task Cards Section -->
+      <section id="tasks-section">
+        <div id="sync-status" class="d-none alert alert-info">
+          Syncing tasks... <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <!-- Task cards will be dynamically inserted here -->
+      </section>
+    </main>
+
+    <!-- Task Details Section -->
+    <div id="task-details-panel" class="col-md-0 col-lg-3 d-none bg-white">
+      <!-- Task details will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Back button visible only on small screens -->
+  <button id="back-button" class="btn btn-primary d-none shadow">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+
+  <!-- Task Modal -->
+  <div
+    class="modal fade"
+    id="taskModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="taskModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="taskModalLabel">Add Task</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- Form content will be loaded here -->
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="saveTask"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script_block %}
+<script>
+  // Function to create HTML for task cards
+  function createTaskCardHTML(task) {
+    const taskNameClass = task.task_completed ? 'strikethrough' : '';
+    const checkIcon = task.task_completed ? 'far fa-check-circle' : 'far fa-circle';
+    const favoriteIconClass = task.important ? 'far fa-star text-primary' : 'far fa-star';
+    const dueDateText = task.due_date ? formatDate(task.due_date) : '';
+    const overdueText = task.overdue ? ' · Overdue' : '';
+    
+    return `
+      <div class="task-card" data-task-id="${task.id}" id="task-${task.id}">
+        <div class="d-flex justify-content-between align-items-start">
+          <div class="d-flex align-items-start">
+            <div style="padding-top: 2px;">
+              <i class="${checkIcon} custom-check" data-id="${task.id}"></i>
+            </div>
+            <div>
+              <div class="task-name ${taskNameClass}">${task.task_name}</div>
+              ${dueDateText ? `<div class="task-due-date">${dueDateText}${overdueText}</div>` : ''}
+            </div>
+          </div>
+          <i class="${favoriteIconClass} mark-favorite" data-id="${task.id}"></i>
+        </div>
+      </div>`;
+  }
+
+  // Format date function
+  function formatDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const options = { month: 'short', day: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
+  }
+
+  // Function to update tasks section
+  function updateTasksSection(tasks) {
+    if (tasks.length === 0) {
+      $("#tasks-section").html(`
+        <div class="alert alert-info text-center" role="alert">
+          No tasks available. Check your Google Tasks or Microsoft To Do accounts for tasks, 
+          or <a href="#" id="manual-sync-btn">sync manually</a> to refresh.
+        </div>
+      `);
+    } else {
+      const tasksHtml = tasks.map((task) => createTaskCardHTML(task)).join("");
+      $("#tasks-section").html(tasksHtml);
+    }
+  }
+
+  // Show loading indicator
+  function showLoading() {
+    $("#tasks-section").html('<div class="loading-spinner"><i class="fas fa-spinner fa-spin me-2"></i> Loading tasks...</div>');
+  }
+
+  // Function to sync Google Tasks
+  function syncGoogleTasks() {
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
+    console.log("Dashboard HTML : syncGoogleTasks function called");
+    
+    $("#sync-status").removeClass("d-none").fadeIn();
+    
+    fetch("/task_management/sync_google_tasks/", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+      }
+    })
+    .then((response) => {
+      if (!response.ok) {
+        console.log("Dashboard HTML : syncGoogleTasks: Response Status : " + response.status);
+        return response.json().then(data => {
+          console.error("Dashboard HTML : syncGoogleTasks: Error syncing tasks:", data.error);
+          if (response.status === 400) {
+            console.error("Dashboard HTML : syncGoogleTasks: User not authenticated");
+            return;
+          }
+          throw new Error(data.error || "Failed to sync tasks.");
+        });
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data) {
+        console.log("Dashboard HTML : syncGoogleTasks: Sync Task Success " + data.message);
+        $("#success-message").text(data.message).fadeIn();
+        setTimeout(function () {
+          $("#success-message").fadeOut();
+        }, 3000);
+        fetchTasksFromDb(); // Refresh the task table after success.
+        updateBadgeCounts(); // Update badges after sync
+      }
+    })
+    .catch((error) => {
+      console.error("Dashboard HTML : syncGoogleTasks: Error syncing tasks:", error);
+      $("#sync-status").removeClass("alert-info").addClass("alert-danger").html(`
+        <div class="d-flex align-items-center">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          <span>Error syncing tasks: ${error.message}</span>
+          <button type="button" class="btn-close ms-auto" aria-label="Close" id="dismiss-sync"></button>
+        </div>
+      `);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        $("#sync-status").fadeOut();
+      }, 3000);
+    });
+  }
+
+  // Function to sync Microsoft Tasks
+  function syncMSTasks() {
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
+    
+    $("#sync-status").removeClass("d-none").fadeIn();
+
+    fetch("/task_management/sync_microsoft_tasks/", {
+      method: 'GET',
+      headers: {
+        'X-CSRFToken': csrfToken,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          if (data.error === "Microsoft account not connected." || data.error === "Authentication failed. Please reconnect your Microsoft account.") {
+            window.location.href = "/task_management/connect_microsoft/";
+          } else {
+            console.error("Error response:", data);
+            throw new Error(data.error || "Failed to sync tasks.");
+          }
+        });
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.message) {
+        console.log("MS Tasks Sync:", data.message);
+        $("#success-message").text(data.message).fadeIn();
+        setTimeout(function () {
+          $("#success-message").fadeOut();
+        }, 3000);
+        fetchTasksFromDb();
+        updateBadgeCounts(); // Update badges after sync
+      } else {
+        console.error("MS Tasks Sync: No message in response");
+      }
+    })
+    .catch((error) => {
+      console.error("Error syncing MS tasks:", error);
+      $("#sync-status").removeClass("alert-info").addClass("alert-danger").html(`
+        <div class="d-flex align-items-center">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          <span>Error syncing tasks: ${error.message}</span>
+          <button type="button" class="btn-close ms-auto" aria-label="Close" id="dismiss-sync"></button>
+        </div>
+      `);
+    })
+    .finally(() => {
+      setTimeout(() => {
+        $("#sync-status").fadeOut();
+      }, 3000);
+    });
+  }
+
+  // Function to fetch tasks from database
+  function fetchTasksFromDb() {
+    console.log("Task Dashboard: Fetching tasks from DB");
+    showLoading(); // Show loading spinner
+    
+    fetch("/task_management/get_all_tasks/", { timeout: 5000 })
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Task Dashboard: Tasks fetched from DB");
+        updateTasksSection(data.tasks);
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks from DB:", error);
+        $("#tasks-section").html(`
+          <div class="alert alert-danger text-center" role="alert">
+            <p>Tasks failed to load</p>
+            <button class="btn btn-primary btn-sm retry-load-tasks">Try Again</button>
+          </div>
+        `);
+      })
+      .finally(() => {
+        $("#sync-status").fadeOut();
+      });
+  }
+
+  // Trigger async background sync
+  function triggerAsyncSync() {
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
+    console.log(`Triggering async Process for all tasks`);
+    
+    // Show a non-obtrusive sync notification
+    $("#sync-status").removeClass("d-none alert-danger").addClass("alert-info")
+      .html(`<div class="d-flex align-items-center">
+                <i class="fas fa-sync-alt fa-spin me-2"></i>
+                <span>Syncing tasks in background...</span>
+                <button type="button" class="btn-close ms-auto" aria-label="Close" id="dismiss-sync"></button>
+             </div>`)
+      .fadeIn();
+    
+    fetch("/task_management/trigger_user_sync/", {  
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+      }
+    })
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      return response.json();
+    })
+    .then((data) => {
+      console.log(`All syncs enqueued:`, data.message);
+      
+      // Start polling for completion
+      checkSyncStatus();
+    })
+    .catch((error) => {
+      console.error(`Error triggering sync:`, error);
+      $("#sync-status").removeClass("alert-info").addClass("alert-danger")
+        .html(`<div class="d-flex align-items-center">
+                <i class="fas fa-exclamation-triangle me-2"></i> 
+                <span>Sync failed—please try again.</span>
+                <button type="button" class="btn-close ms-auto" aria-label="Close" id="dismiss-sync"></button>
+               </div>`);
+    });
+  }
+
+  // Dismiss sync notification
+  $(document).on("click", "#dismiss-sync", function() {
+    $("#sync-status").fadeOut();
+  });
+
+  // Check sync status periodically
+  function checkSyncStatus() {
+    let checkCount = 0;
+    const maxChecks = 10; // Max 10 checks at 3-second intervals (30 seconds total)
+    
+    const statusCheck = setInterval(() => {
+      checkCount++;
+      
+      // Auto-refresh tasks and stop checking after maxChecks
+      if (checkCount >= maxChecks) {
+        clearInterval(statusCheck);
+        $("#sync-status").html(`<div class="d-flex align-items-center">
+                                  <i class="fas fa-check-circle me-2"></i>
+                                  <span>Sync completed or still processing in background.</span>
+                                  <button type="button" class="btn-close ms-auto" aria-label="Close" id="dismiss-sync"></button>
+                                </div>`);
+        
+        // Refresh UI elements
+        fetchTasksFromDb();
+        updateBadgeCounts();
+        
+        setTimeout(() => {
+          $("#sync-status").fadeOut();
+        }, 3000);
+        return;
+      }
+      
+      console.log(`Checking sync status, attempt ${checkCount}`);
+    }, 3000);
+  }
+
+  // Function to update badge counts
+  function updateBadgeCounts() {
+    $.ajax({
+      url: "{% url 'task_management:get_task_counts' %}",
+      type: "GET",
+      dataType: "json",
+      success: function (response) {
+        const counts = response.counts;
+        $('.task-list-item').each(function () {
+          const listId = $(this).data('id');
+          const count = counts[listId] || 0;
+          const badge = $(this).find('.task-count');
+          if (count > 0) {
+            if (badge.length) {
+              badge.text(count); // Update existing badge
+            } else {
+                $(this).append(`<span class="task-count">${count}</span>`);
+            }
+          } else {
+            badge.remove(); // Remove badge if count is 0
+          }
+        });
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching task counts: " + error);
+      }
+    });
+  }
+
+  // Document ready function
+  $(document).ready(function () {
+    console.log("Dashboard HTML : In Document Ready Function");
+    const userId = {{ user.id }};
+
+    // Fetch tasks on page load
+    fetchTasksFromDb();
+
+    // Set a delay before triggering background sync to ensure UI loads first
+    setTimeout(() => {
+      triggerAsyncSync();
+    }, 1000);
+
+    // Manual sync button event handler
+    $(document).on("click", "#manual-sync-btn", function(e) {
+      e.preventDefault();
+      triggerAsyncSync();
+    });
+
+    // Retry loading tasks button handler
+    $(document).on("click", ".retry-load-tasks", function(e) {
+      e.preventDefault();
+      fetchTasksFromDb();
+    });
+
+    // Handle clicking on a task category in the sidebar
+    $(document).on("click", ".task-list-item", function (e) {
+      e.preventDefault();
+      var listId = $(this).data("id");
+      console.log("list Id : " + listId);
+      $("#current-list").data("list-id", listId);
+      $(".task-list-item").removeClass("highlighted");
+      $(this).addClass("highlighted");
+
+      $.ajax({
+        url: `/task_management/get_tasks_by_list/${listId}`,
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+          console.log("Received data:", response);
+          updateTasksSection(response.tasks);
+          $("#task-details-panel").addClass("d-none");
+          $("#task-middle-panel").removeClass("col-lg-4 col-md-6").addClass("col-lg-7 col-md-9");
+
+          if (window.innerWidth < 768) {
+            var sidebarMenu = $("#sidebarMenu");
+            var bsCollapse = new bootstrap.Collapse(sidebarMenu, {
+              toggle: true,
+            });
+            bsCollapse.hide();
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("An error occurred while fetching tasks: " + error);
+          $("#tasks-section").html(`
+            <div class="alert alert-danger text-center" role="alert">
+              <p>Failed to load tasks for this list</p>
+              <button class="btn btn-primary btn-sm retry-load-list" data-list-id="${listId}">Try Again</button>
+            </div>
+          `);
+        }
+      });
+    });
+
+    // Handle retry loading list tasks
+    $(document).on("click", ".retry-load-list", function(e) {
+      e.preventDefault();
+      var listId = $(this).data("list-id");
+      $.ajax({
+        url: `/task_management/get_tasks_by_list/${listId}`,
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+          updateTasksSection(response.tasks);
+        },
+        error: function (xhr, status, error) {
+          console.error("An error occurred while fetching tasks: " + error);
+        }
+      });
+    });
+
+    // Handle clicking on a task card to show details
+    $(document).on("click", ".task-card", function () {
+      var taskId = $(this).data("task-id");
+      console.log("Clicked on task row with Task Id : " + taskId);
+
+      // Show loading indicator inside details panel
+      $("#task-details-panel").removeClass("d-none").html('<div class="p-4 text-center"><i class="fas fa-spinner fa-spin"></i> Loading task details...</div>');
+      
+      // Update column classes for layout
+      $("#task-middle-panel").removeClass("col-lg-7 col-md-9").addClass("col-lg-4 col-md-6");
+      $("#task-details-panel").removeClass("d-none col-md-0").addClass("col-lg-3 col-md-3");
+
+      url = "{% url 'task_management:edit_task' 999 %}".replace("999", taskId);
+
+      // Use a timeout to prevent UI hanging
+      var taskDetailTimeout = setTimeout(function() {
+        $("#task-details-panel").html('<div class="alert alert-warning m-3">Request is taking longer than expected. <button class="btn btn-sm btn-primary retry-load-task" data-task-id="' + taskId + '">Retry</button></div>');
+      }, 5000); // 5 second timeout
+
+      $.ajax({
+        url: url,
+        type: "GET",
+        timeout: 10000, // 10 second timeout 
+        success: function (response) {
+          clearTimeout(taskDetailTimeout);
+          console.log("In Success message for getting edit_task_panel");
+          $("#task-details-panel").html(response);
+
+          if ($(window).width() < 768) {
+            $("#task-middle-panel").addClass("d-none");
+            $("#back-button").removeClass("d-none");
+            $("#searchbar_row").addClass("d-none");
+          }
+        },
+        error: function (xhr, status, error) {
+          clearTimeout(taskDetailTimeout);
+          console.log("Error fetching task details:", xhr.status, error);
+          $("#task-details-panel").html(
+            '<div class="alert alert-danger m-3">' +
+            '<p>Error loading task details: ' + (xhr.status === 0 ? 'Connection timeout' : error) + '</p>' +
+            '<button class="btn btn-primary retry-load-task" data-task-id="' + taskId + '">Retry</button>' +
+            '</div>'
+          );
+        }
+      });
+    });
+
+    // Add retry handler for task loading failures
+    $(document).on("click", ".retry-load-task", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var taskId = $(this).data("task-id");
+      $("#task-details-panel").html('<div class="p-4 text-center"><i class="fas fa-spinner fa-spin"></i> Retrying...</div>');
+      
+      url = "{% url 'task_management:edit_task' 999 %}".replace("999", taskId);
+      
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          $("#task-details-panel").html(response);
+        },
+        error: function (xhr, status, error) {
+          $("#task-details-panel").html(
+            '<div class="alert alert-danger m-3">' +
+            '<p>Error loading task details: ' + error + '</p>' +
+            '<button class="btn btn-primary retry-load-task" data-task-id="' + taskId + '">Retry</button>' +
+            '</div>'
+          );
+        }
+      });
+    });
+
+    // Handle completing a task
+    $(document).on("click", ".custom-check, .complete-task", function (e) {
+      e.stopPropagation(); // Prevent the task card click event
+      var taskId = $(this).data("id");
+      var taskRow = $("#task-" + taskId);
+      var csrfToken = $('meta[name="csrf-token"]').attr("content");
+      console.log("Task_id : " + taskId);
+
+      $.ajax({
+        url: "{% url 'task_management:complete_task' %}",
+        type: "POST",
+        data: {
+          id: taskId,
+          csrfmiddlewaretoken: csrfToken,
+        },
+        success: function (response) {
+          console.log("Clicked Complete : " + response.task_name);
+          console.log("Task Id : " + response.task_id);
+
+          if (response.task_completed) {
+            $(`#task-${response.task_id} .task-name`).addClass("strikethrough");
+            $(`#task-${response.task_id} .custom-check`).removeClass("fa-circle").addClass("fa-check-circle");
+          } else {
+            $(`#task-${response.task_id} .task-name`).removeClass("strikethrough");
+            $(`#task-${response.task_id} .custom-check`).removeClass("fa-check-circle").addClass("fa-circle");
+          }
+
+          $("#success-message").text("Task status updated: " + response.task_name).show();
+          setTimeout(function () {
+            $("#success-message").hide();
+          }, 1000);
+          updateBadgeCounts(); // Update badges after task completion
+        },
+        error: function (xhr, status, error) {
+          console.error("Error in AJAX request:", status, error);
+          $("#success-message").addClass("alert-danger").text("Error updating task status").show();
+          setTimeout(function () {
+            $("#success-message").hide().removeClass("alert-danger");
+          }, 2000);
+        },
+      });
+    });
+
+    // Handle marking a task as favorite/important
+    $(document).on("click", ".mark-favorite", function (e) {
+      e.stopPropagation(); // Prevent the task card click event from firing
+      var taskId = $(this).data("id");
+      var csrfToken = $('meta[name="csrf-token"]').attr("content");
+      console.log("Mark Favorite Task_id : " + taskId);
+
+      $.ajax({
+        url: "{% url 'task_management:mark_favorite' %}",
+        type: "POST",
+        data: {
+          id: taskId,
+          csrfmiddlewaretoken: csrfToken,
+        },
+        success: function (response) {
+          // Update the star icon class based on the response
+          var starElement = $(`#task-${response.task_id} .mark-favorite`);
+          if (response.Important) {
+            starElement.removeClass("text-secondary").addClass("text-primary");
+          } else {
+            starElement.removeClass("text-primary").addClass("text-secondary");
+          }
+
+          $("#success-message").text("Task importance updated").show();
+          setTimeout(function () {
+            $("#success-message").hide();
+          }, 1000);
+          updateBadgeCounts(); // Update badges after marking as favorite
+        },
+        error: function (xhr, status, error) {
+          console.error("Error in AJAX request:", status, error);
+          $("#success-message").addClass("alert-danger").text("Error updating task importance").show();
+          setTimeout(function () {
+            $("#success-message").hide().removeClass("alert-danger");
+          }, 2000);
+        },
+      });
+    });
+
+    // Handle clicking the add task button
+    $(document).on("click", "#add-task-btn", function () {
+      var listId = $("#current-list").data("list-id");
+      if (listId === undefined) {
+        listId = 1;
+      }
+      console.log("listid in Add Task Form : " + listId);
+      $("#taskModal").data("mode", "add");
+      console.log(" Task Model Mode in Create mode ");
+      $("#taskModal .modal-body").load("/task_management/add/" + listId, function () {
+        $("#taskModal").modal("show");
+      });
+    });
+
+    // Handle saving a task (create/edit)
+    $("#saveTask").click(function () {
+      console.log("Saving Task function called");
+      var mode = $("#taskModal").data("mode");
+      var taskId = $("#taskModal").data("taskId");
+      var url = mode === "edit" ? `/task_management/edit_task/${taskId}/` : "/task_management/add/1/";
+      var formData = new FormData($("#taskModal form")[0]);
+
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          console.log("Success in Ajax Save Task");
+          var newTask = response.new_task || response; // Handle add/edit response
+          addNewTasktoDisplay(newTask);
+          $("#taskModal").modal("hide");
+
+          $("#success-message").text("Task saved successfully").show();
+          setTimeout(function () {
+            $("#success-message").hide();
+          }, 1000);
+
+          // Update badge counts after adding the task
+          updateBadgeCounts();
+        },
+        error: function (xhr, status, error) {
+          console.log("Ajax error in Save Task: " + error);
+          $("#taskModal .modal-body").prepend(`
+            <div class="alert alert-danger">
+              Error saving task: ${error}
+            </div>
+          `);
+        },
+      });
+    });
+
+    // Handle searching tasks
+    $(document).on("input", "#search-task", function() {
+      const query = $(this).val();
+      if (query.length > 2) {
+        doSearch(query);
+      } else if (query.length === 0) {
+        fetchTasksFromDb(); // Refresh to show all tasks when search is cleared
+      }
+    });
+
+    // Handle filter dropdown selection
+    $(document).on("click", "#filters .dropdown-item", function(e) {
+      e.preventDefault();
+      const filterValue = $(this).data("value");
+      $("#filterDropdown").html(`<i class="far fa-filter filter-icon"></i> ${$(this).text()}`);
+      // Apply filter here
+      applyFilters(filterValue);
+    });
+
+    // Handle sort dropdown selection
+    $(document).on("click", "#sort-by .dropdown-item", function(e) {
+      e.preventDefault();
+      const sortValue = $(this).data("value");
+      $("#sortDropdown").html(`<i class="far fa-sort sort-icon"></i> ${$(this).text()}`);
+      // Apply sorting here
+      applySorting(sortValue);
+    });
+
+    // Search function
+    function doSearch(query) {
+      console.log("Searching for: " + query);
+      const filter = $("#filterDropdown").text().trim().replace("All", "").trim();
+      const sort = $("#sortDropdown").text().trim().replace("No Sort", "").trim();
+      
+      $.ajax({
+        url: "{% url 'task_management:search_tasks' %}",
+        data: { q: query, filter: filter, sort_by: sort },
+        dataType: "json",
+        success: function (response) {
+          console.log("Search results:", response);
+          updateTasksSection(response.tasks);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error in search:", error);
+          $("#tasks-section").html(`
+            <div class="alert alert-danger text-center" role="alert">
+              <p>Error searching tasks</p>
+              <button class="btn btn-primary btn-sm" id="clear-search">Clear Search</button>
+            </div>
+          `);
+        }
+      });
+    }
+
+    // Apply filters function
+    function applyFilters(filter) {
+      const query = $("#search-task").val();
+      const sort = $("#sortDropdown").text().trim().replace("No Sort", "").trim();
+
+      $.ajax({
+        url: "{% url 'task_management:search_tasks' %}",
+        data: { q: query, filter: filter, sort_by: sort },
+        dataType: "json",
+        success: function (response) {
+          updateTasksSection(response.tasks);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error applying filters:", error);
+        }
+      });
+    }
+
+    // Apply sorting function
+    function applySorting(sort) {
+      const query = $("#search-task").val();
+      const filter = $("#filterDropdown").text().trim().replace("All", "").trim();
+
+      $.ajax({
+        url: "{% url 'task_management:search_tasks' %}",
+        data: { q: query, filter: filter, sort_by: sort },
+        dataType: "json",
+        success: function (response) {
+          updateTasksSection(response.tasks);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error applying sorting:", error);
+        }
+      });
+    }
+
+    // Handle submitting the edit task form in the panel
+    $(document).on("submit", "#edit-task-form", function (e) {
+      console.log("Edit Task Save function called from Side Panel");
+      e.preventDefault();
+      var taskId = $(this).data("task-id");
+      url = "/task_management/edit_task/" + taskId + "/";
+
+      var formData = new FormData(this);
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          console.log("edit-task-form Ajax : Success from Save Task : " + response.task_name);
+          console.log("edit-task-form Ajax : Task ID : " + response.id);
+          const taskHtml = createTaskCardHTML(response);
+          $("#task-" + response.id).replaceWith(taskHtml);
+          
+          // Handle UI for task detail panel close
+          if ($(window).width() >= 768) {
+            $("#task-details-panel").addClass("d-none");
+            $("#task-middle-panel").removeClass("col-lg-4 col-md-6").addClass("col-lg-7 col-md-9");
+          } else {
+            $("#task-details-panel").addClass("d-none");
+            $("#task-middle-panel").removeClass("d-none");
+            $("#back-button").addClass("d-none");
+            $("#searchbar_row").removeClass("d-none");
+          }
+          
+          $("#success-message").text("Task updated successfully").show();
+          setTimeout(function () {
+            $("#success-message").hide();
+          }, 1000);
+          
+          updateBadgeCounts(); // Update badges after editing a task
+        },
+        error: function (xhr, status, error) {
+          console.error("Error updating task:", error);
+          $("#task-details-panel").prepend(`
+            <div class="alert alert-danger m-3">
+              Error updating task: ${error}
+              <button type="button" class="btn-close float-end" aria-label="Close"></button>
+            </div>
+          `);
+        },
+      });
+    });
+
+    // Handle clicking the back button
+    $("#back-button").on("click", function () {
+      $("#task-details-panel").addClass("d-none");
+      $("#task-middle-panel").removeClass("d-none");
+      $("#back-button").addClass("d-none");
+      $("#searchbar_row").removeClass("d-none");
+    });
+
+    // Add new task to display
+    function addNewTasktoDisplay(newTask) {
+      const newTaskHtml = createTaskCardHTML(newTask);
+      $("#tasks-section").prepend(newTaskHtml);
+    }
+
+    // Sync Tasks button handler
+    $(document).on("click", "#sync-button", function () {
+      console.log("Sync button clicked");
+      triggerAsyncSync();
+    });
+
+    // Handle window resize for responsive layout
+    $(window).resize(function() {
+      if ($(window).width() >= 768) {
+        if (!$("#task-details-panel").hasClass("d-none")) {
+          $("#task-middle-panel").removeClass("d-none");
+          $("#searchbar_row").removeClass("d-none");
+          $("#back-button").addClass("d-none");
+        }
+      }
+    });
+  });
+</script>
+<script src="{% static 'task_management/scripts/task_management-script.js' %}"></script>
+{% endblock %}

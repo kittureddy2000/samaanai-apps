@@ -1,0 +1,11 @@
+{% load task_management_extras %}
+<form method="post" id="create-list-form" class="mb-0">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="mb-3">
+        <label for="{{ form.list_name.id_for_label }}" class="form-label">List Name</label>
+        {{ form.list_name|add_class:"form-control" }}
+        {{ form.list_name.errors }}
+    </div>
+    <!-- Add any other fields from your TaskList form if needed -->
+</form>

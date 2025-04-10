@@ -1,0 +1,988 @@
+/* ========================================================================== */
+/* ==                        Samaan Task Management CSS                    == */
+/* ========================================================================== */
+
+/* ========================================================================== */
+/* ==                            Variables & Base                          == */
+/* ========================================================================== */
+
+/* CSS variables for a consistent color scheme and spacing */
+:root {
+    /* Primary colors */
+    --primary-color: #2980b9;  /* More subdued blue */
+    --primary-light: #3498db;  /* Lighter blue for hover states */
+    --primary-dark: #1a365d;   /* Dark blue for headers */
+    --microsoft-blue: #0078d7; /* Microsoft blue */
+    
+    /* Secondary colors */
+    --secondary-color: #f8f9fa; /* Light background */
+    --secondary-dark: #e9ecef;  /* Slightly darker background for hover/active states */
+    
+    /* Accent colors */
+    --accent-color: #e67e22;    /* Orange for important actions */
+    
+    /* Text colors */
+    --text-primary: #343a40;    /* Dark gray for main text */
+    --text-secondary: #606060;  /* Slightly darker grey for better readability */
+    --text-light: #767676;      /* Keep for less important text */
+    
+    /* Status colors */
+    --success: #28a745;         /* Green */
+    --danger: #dc3545;          /* Red */
+    --warning: #ffc107;         /* Yellow */
+    --info: #17a2b8;            /* Teal */
+  
+    /* Border colors */
+    --border-light: #ebebeb;    
+    --border-medium: #e0e0e0;   /* Use this more consistently for subtle borders */
+  
+    /* Consistent spacing system */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+  }
+  
+/* Base styles */
+body {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  background-color: var(--secondary-color);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Global consistency overrides */
+* {
+  box-sizing: border-box !important;
+}
+
+/* Consistent font sizes throughout */
+.form-control, .btn, .dropdown-item, .nav-link, .task-title {
+  font-size: 13px !important;
+}
+
+/* ========================================================================== */
+/* ==                        Core Layout & Grid                            == */
+/* ========================================================================== */
+
+/* Direct grid structure fixes to remove Bootstrap default spacing */
+.container-fluid {
+  padding: 0 !important;
+  margin: 0 !important; /* Ensure no margin */
+}
+
+.container-fluid > .row {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Consistent top starting point for all columns in the main row */
+.container-fluid > .row > * {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Reset padding/margin on common container elements */
+#mainAppContainer,
+.content-container {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Make all panels the same height, accounting for the header */
+#sidebarMenu, 
+#task-middle-panel,
+#task-details-panel {
+  height: calc(100vh - 72px) !important; /* 72px is estimated header height */
+  overflow-y: auto !important;
+  margin-top: 0 !important;
+  padding-top: 16px !important; /* Consistent top padding inside panels */
+  padding-bottom: 0 !important;
+}
+
+/* ========================================================================== */
+/* ==                            Navbar / Header                           == */
+/* ========================================================================== */
+
+/* Remove extra spacing from the main app header/navbar */
+.app-header, 
+.app-navbar,
+header.navbar {
+  margin-bottom: 0 !important;
+  padding: 0 !important; /* Remove Bootstrap padding */
+}
+
+/* Hide the default Bootstrap hamburger toggler */
+.navbar-toggler {
+  display: none !important;
+}
+
+/* ========================================================================== */
+/* ==                        Sidebar (Left Panel)                          == */
+/* ========================================================================== */
+
+/* Sidebar Structure and Overrides */
+#sidebarMenu {
+  padding: 0 !important; /* Override any padding */
+  position: sticky !important; 
+  top: 0 !important; 
+  /* Height is set in Core Layout section */
+  width: 240px !important;
+  max-width: 240px !important;
+  border-right: 1px solid var(--border-medium) !important; 
+  background-color: #fafafa !important; 
+  z-index: 100 !important; 
+}
+
+/* Sidebar Navigation List */
+#sidebarMenu .nav {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#sidebarMenu .nav-item {
+  margin-top: 0 !important;
+  margin-bottom: 1px !important; /* Small gap between items */
+}
+
+#sidebarMenu .nav-item:first-child {
+  margin-top: 0 !important; /* Ensure first item starts at the very top */
+}
+
+#sidebarMenu .nav > .nav-item:first-child > a {
+  margin-top: 0 !important;
+  padding-top: 6px !important; /* Align first item text with others */
+}
+
+/* Sidebar List Item Links */
+#sidebarMenu .nav-link.task-list-item {
+  font-size: 13px !important;
+  padding: 6px 10px !important;
+  color: #333 !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none !important; 
+  transition: background-color 0.15s ease !important; 
+}
+
+#sidebarMenu .nav-link.task-list-item:hover {
+  background-color: #f8f8f8 !important;
+  text-decoration: none !important; 
+}
+
+#sidebarMenu .nav-link.task-list-item.highlighted {
+  background-color: #eef6fd !important;
+  color: #0078d7 !important;
+  font-weight: 500 !important; 
+  border-left: 2px solid var(--microsoft-blue) !important; 
+}
+
+/* Sidebar Icons */
+#sidebarMenu .icon-container i {
+  font-size: 14px !important;
+  width: 16px !important;
+  text-align: center !important;
+}
+
+.icon-subtle-dark,
+.icon-subtle-google,
+.icon-subtle-microsoft {
+  color: var(--text-secondary) !important; /* Consistent icon color */
+  opacity: 0.9;
+  font-size: 15px;
+}
+
+/* Sidebar Task Count Badge */
+#sidebarMenu .task-count {
+  font-size: 11px !important;
+  background-color: #e0e0e0 !important; /* Slightly darker grey */
+  color: #555 !important;
+  padding: 1px 6px !important;
+  border-radius: 10px !important;
+  font-weight: normal !important;
+  margin-left: auto !important; /* Push to the right */
+}
+
+/* Sidebar Divider */
+#sidebarMenu .divider-blue {
+  margin: 8px 0 !important;
+  border-color: #e0e0e0 !important; /* Match border color */
+  opacity: 0.7 !important;
+  border-top: 1px solid #e0e0e0 !important; 
+}
+
+/* ========================================================================== */
+/* ==                  Task List Panel (Middle Panel)                      == */
+/* ========================================================================== */
+
+/* Base styling for middle panel */
+#task-middle-panel {
+  position: relative; /* Needed for sticky search bar */
+  /* Height, overflow, padding-top set in Core Layout */
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #ffffff; /* Changed to white */
+  border-left: 1px solid var(--border-medium) !important; /* Match sidebar border */
+  transition: all 0.3s ease;
+}
+
+/* Ensure content starts below header */
+#task-middle-panel > * {
+  margin-top: 0 !important;
+}
+
+/* Search Row */
+#searchbar_row {
+  position: sticky;
+  top: 0; /* Stick to the top of the panel */
+  z-index: 1000;
+  padding: 10px 0px; /* Adjust padding */
+  margin-bottom: 8px !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+    display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 10px;
+  background-color: #ffffff; /* Match panel background */
+  border-bottom: 1px solid var(--border-medium) !important; /* Lighter border */
+}
+
+#searchbar_row .position-relative {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.search-input {
+  width: 100%;
+  padding-left: 35px !important;
+  height: 32px;
+  border-radius: 2px;
+  border: 1px solid var(--border-light);
+  background-color: #ffffff; /* White background */
+  font-size: 13px;
+}
+
+.search-input:focus {
+  background-color: #fff;
+  border-color: var(--microsoft-blue);
+  box-shadow: none;
+  outline: none;
+}
+
+/* Search Icon */
+.position-absolute.ms-3 {
+  left: 10px !important;
+  top: 50% !important; /* Vertically center */
+  transform: translateY(-50%) !important;
+  z-index: 5;
+  color: var(--text-secondary) !important;
+}
+
+/* Add Task Button (in Search Row) */
+.add-task-btn {
+  background-color: white;
+  color: var(--microsoft-blue);
+  width: 32px;
+  height: 32px;
+  border-radius: 2px;
+  border: 1px solid var(--border-medium) !important; /* Use medium border */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  padding: 0;
+}
+
+.add-task-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.add-task-btn i {
+  font-size: 16px; /* Slightly larger plus */
+}
+
+/* Filter/Sort Dropdowns (in Search Row) */
+.dropdown {
+  margin-left: 5px;
+}
+
+.btn-light.dropdown-toggle {
+  height: 32px;
+  border: 1px solid var(--border-medium) !important; /* Use medium border */
+  background-color: white;
+  color: var(--text-secondary); /* Use secondary text color */
+  font-size: 13px;
+    display: flex;
+    align-items: center;    
+  padding: 0 12px;
+}
+
+.btn-light.dropdown-toggle:hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown-menu {
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid var(--border-light);
+  padding: 4px 0;
+}
+
+.dropdown-item {
+  font-size: 13px;
+  padding: 6px 12px;
+  color: var(--text-primary);
+}
+
+.dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* Sync Button (in Search Row) */
+.sync-btn, #manual-sync-btn /* Target both if used */ {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 13px;
+  color: var(--microsoft-blue);
+  background-color: white;
+  border: 1px solid var(--border-medium) !important; /* Use medium border */
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.sync-btn:hover, #manual-sync-btn:hover {
+  background-color: #f5f5f5;
+  text-decoration: none;
+}
+
+.sync-icon, .filter-icon, .sort-icon {
+  font-size: 13px;
+  margin-right: 6px;
+  color: var(--microsoft-blue); 
+}
+
+/* Task Card Styling */
+#tasks-section .alert {
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+.task-card {
+  transition: all 0.2s ease !important;
+  margin-bottom: 8px !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: 2px !important;
+  background-color: white !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+}
+
+.task-card > div {
+  padding: 6px 8px !important;
+}
+  
+.task-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--border-medium) !important;
+  cursor: pointer !important;
+}
+
+/* Task Card Content */
+.task-title {
+  /* font-size set globally */
+}
+
+.due-date {
+  font-size: 11px !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Task Completion Checkmark */
+.custom-check, .complete-task {
+  cursor: pointer !important;
+  z-index: 10 !important;
+  position: relative !important;
+  font-size: 14px !important; /* Ensure size */
+  color: var(--text-secondary); /* Default check color */
+}
+
+.complete-task.fas.fa-check-circle { /* Completed state */
+  color: var(--microsoft-blue) !important;
+}
+
+.strikethrough {
+text-decoration: line-through;
+  color: #a6a6a6 !important; 
+  opacity: 0.8;
+}
+
+/* Favorite/Star Icon */
+.fav-icon, .mark-favorite {
+  font-size: 14px !important;
+  color: var(--text-secondary); /* Default star color */
+}
+
+.fav-icon.text-primary,
+.mark-favorite.text-primary, 
+.mark-favorite.fas.fa-star {
+  color: var(--microsoft-blue) !important; 
+}
+
+/* ========================================================================== */
+/* ==                   Task Details Panel (Right Panel)                   == */
+/* ========================================================================== */
+
+/* Base styles for details panel */
+#task-details-panel {
+  /* Height, overflow, padding-top set in Core Layout */
+  position: sticky !important; 
+  top: 0 !important; 
+  padding: 16px !important; 
+  border-left: 1px solid var(--border-medium) !important; 
+  background-color: white !important; 
+  transition: all 0.3s ease !important; 
+  font-size: 13px !important; 
+}
+
+/* Form Element Styling within Details Panel */
+#task-details-panel label {
+  font-size: 13px !important;
+  color: #333 !important;
+  font-weight: normal !important;
+  margin-bottom: 3px !important;
+}
+
+#task-details-panel input, 
+#task-details-panel select, 
+#task-details-panel textarea,
+#task-details-panel .form-control {
+  font-size: 13px !important;
+  color: #333 !important;
+  border-color: var(--border-medium) !important;
+  height: 32px;
+  padding: 4px 8px !important;
+  border-radius: 2px; /* Subtle rounding */
+}
+
+#task-details-panel textarea {
+  height: auto !important;
+  min-height: 60px !important;
+  resize: vertical !important;
+  width: 100% !important; /* Ensure full width */
+  display: block !important;
+}
+
+#task-details-panel .btn {
+  font-size: 13px !important;
+  padding: 4px 12px !important;
+  height: 32px !important;
+  border-radius: 2px;
+}
+
+#task-details-panel h3, 
+#task-details-panel h4, 
+#task-details-panel h5,
+#task-details-panel h6 {
+  font-size: 15px !important;
+  color: #333 !important;
+  margin-bottom: 12px !important;
+}
+
+#task-details-panel .list-group-item {
+  padding: 6px 8px !important;
+  font-size: 13px !important;
+}
+
+#task-details-panel .text-muted,
+#task-details-panel .text-secondary,
+#task-details-panel .form-text {
+  color: var(--text-secondary) !important;
+  font-size: 11px !important;
+}
+
+#task-details-panel i {
+  font-size: 14px !important;
+}
+
+/* Ensure dropdown menus in the form are styled properly */
+#task-details-panel .form-select {
+  height: 32px !important;
+  padding: 2px 24px 2px 8px !important; /* Adjust padding for arrow */
+  font-size: 13px !important;
+  width: 100% !important;
+}
+
+/* General Form Spacing */
+#task-details-panel .form-group, /* If using form-group class */
+#task-details-panel .mb-3 { /* Standard Bootstrap margin */
+  margin-bottom: 12px !important;
+}
+
+/* Auto-grow for Textareas */
+.autoGrow {
+  overflow: hidden;
+  transition: height 0.1s ease;
+}
+
+/* Current Images Section Styling */
+.current-images-section {
+  margin-bottom: 12px !important;
+  border: 1px solid var(--border-medium) !important;
+  border-radius: 4px !important;
+  padding: 8px !important;
+  background-color: #f9f9f9 !important;
+}
+
+.current-images-section h5 {
+  font-size: 13px !important;
+  margin-bottom: 8px !important;
+  font-weight: 500 !important;
+}
+
+.current-images-section a {
+  font-size: 13px !important;
+  margin-bottom: 4px !important;
+  display: block !important;
+  color: var(--microsoft-blue);
+  text-decoration: none;
+}
+.current-images-section a:hover {
+  text-decoration: underline;
+}
+
+/* Action Items Section Styling */
+.action-items {
+  background-color: #f9f9f9 !important;
+  border-radius: 4px !important;
+  padding: 10px !important;
+  margin-bottom: 12px !important;
+}
+
+.action-items h6 {
+  font-size: 13px !important;
+  margin-bottom: 8px !important;
+  color: #333 !important;
+}
+
+.action-items ul {
+  margin-bottom: 0 !important;
+  padding-left: 0 !important;
+  list-style: none; /* Ensure no bullets */
+}
+
+.action-items li, /* For potential future <li> usage */
+.action-items .action-item /* Current div usage */ {
+  padding: 4px 0 !important;
+  font-size: 13px !important;
+  color: #333 !important;
+}
+
+/* File Upload Section Styling */
+#attachment, .custom-file-upload {
+  font-size: 13px !important;
+}
+
+.file-upload-container a {
+  color: var(--microsoft-blue);
+  text-decoration: none;
+}
+.file-upload-container a:hover {
+  text-decoration: underline;
+}
+
+/* File Upload Button */
+.file-upload-container .btn {
+  border-color: var(--border-medium) !important; /* Consistent border */
+  color: var(--microsoft-blue) !important;
+}
+
+/* Main Save Button */
+#task-details-panel .btn[type="submit"] {
+  background-color: var(--success) !important;
+  border-color: var(--success) !important;
+  color: white !important;
+}
+
+#task-details-panel .btn[type="submit"]:hover {
+  background-color: #218838 !important; /* Darker green */
+  border-color: #1e7e34 !important;
+}
+
+/* ========================================================================== */
+/* ==                      Components & Utilities                          == */
+/* ========================================================================== */
+
+/* Input box styling (generic, likely superseded by panel-specific styles) */
+.input-box {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.input-box:focus {
+  border-color: var(--microsoft-blue);
+  box-shadow: 0 0 0 2px rgba(0, 120, 215, 0.1);
+  outline: none;
+}
+
+/* Expandable textarea (generic) */
+.expandable {
+  min-height: 100px;
+  transition: height 0.3s ease;
+}
+
+/* Save button (generic) */
+.save-button {
+  padding: 8px 20px;
+  background-color: var(--success);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.save-button i {
+  margin-right: 8px;
+}
+
+/* File list/preview (generic) */
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.file-item i {
+  margin-right: 8px;
+  color: var(--text-light);
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.image-preview img {
+  max-width: 80px;
+  height: auto;
+  border-radius: 3px;
+  border: 1px solid var(--border-light);
+}
+
+/* Date picker styling (jQuery UI) */
+.ui-datepicker {
+  background: white;
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  width: 280px;
+  z-index: 1100 !important; /* Ensure it's above other elements */
+}
+
+.ui-datepicker-header {
+  background: var(--secondary-color);
+  border-bottom: 1px solid var(--border-medium);
+  padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ui-datepicker-title {
+  text-align: center;
+  font-weight: 500;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next {
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.ui-datepicker-calendar {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ui-datepicker-calendar th {
+  padding: 5px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.ui-datepicker-calendar td {
+  padding: 3px;
+  text-align: center;
+}
+
+.ui-datepicker-calendar .ui-state-default {
+  display: block;
+    padding: 5px;
+  text-decoration: none;
+  color: var(--text-primary);
+  border-radius: 4px;
+}
+
+.ui-datepicker-calendar .ui-state-highlight {
+  background: var(--microsoft-blue);
+    color: white;
+}
+
+/* Status indicators */
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+  color: var(--text-secondary);
+}
+
+#sync-status {
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 4px;
+}
+
+/* Modal styling */
+.modal-content {
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.modal-header, .modal-footer {
+  border: none;
+  padding: 15px 20px;
+}
+
+.modal-body {
+  padding: 0 20px 20px;
+}
+
+.modal-title {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+/* ========================================================================== */
+/* ==                   Add/Edit Task Modal Styling                      == */
+/* ========================================================================== */
+
+/* Apply common styles to both task and list modals */
+#taskModal, #createListModal {
+  /* Modal backdrop opacity */
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#taskModal .modal-dialog, 
+#createListModal .modal-dialog {
+  max-width: 500px;
+  margin: 1.75rem auto;
+}
+
+#taskModal .modal-header, 
+#createListModal .modal-header {
+  background-color: var(--secondary-color);
+  border-bottom: 1px solid var(--border-medium);
+  padding: var(--space-sm) var(--space-md);
+}
+
+#taskModal .modal-title, 
+#createListModal .modal-title {
+  font-size: 16px !important; /* Slightly larger title */
+  font-weight: 500;
+}
+
+#taskModal .modal-body, 
+#createListModal .modal-body {
+  padding: var(--space-md) !important;
+}
+
+/* Style form elements within the modals */
+#taskModal label, 
+#createListModal label {
+  font-size: 13px !important;
+  color: var(--text-secondary) !important;
+  margin-bottom: var(--space-xs) !important;
+}
+
+#taskModal .form-control, 
+#taskModal .form-select, 
+#createListModal .form-control, 
+#createListModal .form-select {
+  font-size: 13px !important;
+  height: 32px !important;
+  padding: 4px 8px !important;
+  border-color: var(--border-medium) !important;
+  border-radius: 2px !important;
+}
+
+#taskModal textarea.form-control,
+#createListModal textarea.form-control /* If textarea is added later */ {
+  height: auto !important;
+  min-height: 80px !important;
+  resize: vertical;
+}
+
+/* Style the file input to match others */
+#taskModal input[type="file"],
+#createListModal input[type="file"] /* If file input is added later */ {
+  font-size: 13px !important;
+}
+
+/* Due date checkbox styling */
+#taskModal .form-date .form-check-input {
+  margin-top: 0.4em; /* Align checkbox better */
+}
+
+#taskModal .form-date label {
+  margin-left: var(--space-sm);
+}
+
+/* Modal Footer Buttons */
+#taskModal .modal-footer, 
+#createListModal .modal-footer {
+  border-top: 1px solid var(--border-medium);
+  padding: var(--space-sm) var(--space-md);
+}
+
+#taskModal .modal-footer .btn, 
+#createListModal .modal-footer .btn {
+  font-size: 13px !important;
+  height: 32px !important;
+  padding: 4px 12px !important;
+  border-radius: 2px !important;
+}
+
+#taskModal .modal-footer .btn-secondary,
+#createListModal .modal-footer .btn-secondary {
+  background-color: var(--secondary-dark) !important;
+  border-color: var(--border-medium) !important;
+  color: var(--text-primary) !important;
+}
+
+#taskModal .modal-footer .btn-primary, 
+#taskModal #saveTask, /* Target Add Task Save by ID */
+#createListModal .modal-footer .btn-primary,
+#createListModal #saveNewList /* Target Create List Save by ID */ {
+  background-color: var(--success) !important; /* Use success green */
+  border-color: var(--success) !important;
+  color: white !important;
+}
+
+#taskModal .modal-footer .btn-primary:hover, 
+#taskModal #saveTask:hover,
+#createListModal .modal-footer .btn-primary:hover,
+#createListModal #saveNewList:hover {
+  background-color: #218838 !important; /* Darker green */
+  border-color: #1e7e34 !important;
+}
+
+/* ========================================================================== */
+/* ==                        Responsive Adjustments                        == */
+/* ========================================================================== */
+
+@media (max-width: 767.98px) {
+  /* Sidebar becomes off-canvas */
+  #sidebarMenu {
+    position: fixed;
+    width: 80%;
+    max-width: 300px; /* Limit width on small screens */
+    z-index: 1050;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    height: 100vh !important; /* Full height when off-canvas */
+    border-right: none; /* Remove border when off-canvas */
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  }
+  
+  #sidebarMenu.show {
+    transform: translateX(0);
+  }
+  
+  /* Middle panel takes full width */
+  #task-middle-panel {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  /* Details panel becomes full screen overlay */
+  #task-details-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100% !important; /* Full height overlay */
+    z-index: 1040;
+    border-left: none;
+  }
+  
+  /* Back button for closing details panel on mobile */
+  #back-button {
+    display: flex;
+    margin: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1050; /* Above details panel */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    background-color: var(--microsoft-blue);
+    color: white;
+    border: none;
+  }
+  
+  .navbar {
+    padding: 10px 15px; /* Restore padding for mobile navbar */
+  }
+  
+  /* Allow search bar elements to wrap */
+  #searchbar_row {
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+  }
+  
+  #searchbar_row .position-relative { /* Search input container */
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .dropdown, .sync-btn, .add-task-btn {
+    margin-top: 5px;
+  }
+}

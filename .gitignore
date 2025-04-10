@@ -1,0 +1,25 @@
+# Environment variables
+.env
+
+# Credentials
+temp_credentials.json
+
+# Database
+db.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Static files collected by Django
+staticfiles/
+
+# Python cache
+*.pyc
+__pycache__/
+
+# OS generated files
+.DS_Store
+
+# Attachments (if you don't want them in repo)
+task_management/attachments/ 

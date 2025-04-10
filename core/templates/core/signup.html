@@ -1,0 +1,108 @@
+<!-- core/templates/account/signup.html -->
+
+{% extends "core/base.html" %}
+
+{% load i18n %}
+{% load form_extras %}
+
+{% block title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Display any messages -->
+    {% if messages %}
+    <div>
+        <ul>
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h3 class="text-center">{% trans "Sign Up" %}</h3>
+
+            <p class="text-center">
+                Already have an account? Then please <a href="{% url 'core:login' %}">sign in Here</a>
+            </p>
+
+            <form id="signup_form" method="post" action="{% url 'core:signup' %}" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+
+                <!-- Username Field -->
+                <div class="form-group row mb-3">
+                    <label for="id_username" class="col-sm-3 col-form-label">{% trans "Username" %}:</label>
+                    <div class="col-sm-9">
+                        {{ form.username|add_class:"form-control" }}
+                        {% if form.username.errors %}
+                            <div class="text-danger">
+                                {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Email Field -->
+                <div class="form-group row mb-3">
+                    <label for="id_email" class="col-sm-3 col-form-label">{% trans "Email" %}:</label>
+                    <div class="col-sm-9">
+                        {{ form.email|add_class:"form-control" }}
+                        {% if form.email.errors %}
+                            <div class="text-danger">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Password1 Field -->
+                <div class="form-group row mb-3">
+                    <label for="id_password1" class="col-sm-3 col-form-label">{% trans "Password" %}:</label>
+                    <div class="col-sm-9">
+                        {{ form.password1|add_class:"form-control" }}
+                        {% if form.password1.errors %}
+                            <div class="text-danger">
+                                {{ form.password1.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Password2 Field (Confirmation) -->
+                <div class="form-group row mb-3">
+                    <label for="id_password2" class="col-sm-3 col-form-label">{% trans "Confirm Password" %}:</label>
+                    <div class="col-sm-9">
+                        {{ form.password2|add_class:"form-control" }}
+                        {% if form.password2.errors %}
+                            <div class="text-danger">
+                                {{ form.password2.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Hidden redirect field (if needed) -->
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+
+                <!-- Submit Button -->
+                <div class="form-group row mb-3">
+                    <div class="col-sm-9 offset-sm-3">
+                        <button class="btn btn-outline-primary btn-lg btn-block" type="submit">{% trans "Sign Up" %}</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

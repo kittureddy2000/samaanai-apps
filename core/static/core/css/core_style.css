@@ -1,0 +1,84 @@
+.login-background {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align children at the start of the container */
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 56px; /* Same as above, ensures content starts below the header */
+  background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+}
+
+/* If needed, apply specific top margin to the icon+text row */
+.login-background .col-8 {
+  margin-top: 0px; /* Adjust this as necessary */
+  margin-bottom: 15rem; /* This adds some space below the icon+text row */
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background: linear-gradient(to right, #1b4c89, #FFFFFF);
+  min-height: 100vh;
+}
+
+/* Increase top margin for breathing room */
+.container {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+/* Card styling */
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Card title styling */
+.card-title a {
+  color: #333;
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.card-title a:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+/* Subtitle (card-text) styling */
+.card-text {
+  font-size: 0.9rem;
+  color: #555;
+}
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.logo-container{
+  display: inline-block;
+}
+.logo{
+  height: 50px; /* Adjust as needed */
+  vertical-align: middle;
+}
+
+.divider {
+  margin: 20px 0;
+  border-top: 1px solid #e0e0e0;
+}

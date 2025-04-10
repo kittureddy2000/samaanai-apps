@@ -1,0 +1,1143 @@
+<!-- task_dashboard.html -->
+{% extends 'task_management/task_base.html' %}
+{% load static %}
+{% block title %}Task Management{% endblock %}
+{% block additional_head %}
+<meta name="csrf-token" content="{{ csrf_token }}" />
+<style>
+  /* Styles moved to task_management_style.css */
+  .flat-dropdown-toggle {
+    background-color: white !important;
+    border: 1px solid var(--border-medium) !important;
+    color: var(--text-secondary) !important;
+    font-size: 13px !important;
+    padding: 4px 24px 4px 8px !important; /* Adjust padding */
+    border-radius: 2px !important;
+    /* Override default button focus/hover */
+    box-shadow: none !important;
+    text-align: left !important;
+  }
+
+  .flat-dropdown-toggle:hover,
+  .flat-dropdown-toggle:focus {
+    background-color: #f8f8f8 !important; /* Subtle hover */
+    border-color: var(--border-medium) !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure Bootstrap's caret (arrow) is positioned correctly */
+  .flat-dropdown-toggle::after {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+</style>
+{% endblock %}
+{% block content %}
+
+<input type="hidden" id="current-list" />
+
+<div
+  id="success-message"
+  style="display: none"
+  class="alert alert-success"
+  role="alert"
+></div>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Hamburger Icon for smaller screens Start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="col col-auto d-block d-lg-none">
+        <button
+          class="btn btn-light"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#sidebarMenu"
+          aria-controls="sidebarMenu"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i
+            class="fas fa-bars text-primary"
+            aria-hidden="true"
+            style="cursor: pointer"
+          ></i>
+        </button>
+      </div>
+    </nav>
+    <!-- Hamburger Icon for smaller screens End -->
+
+    <!-- Bootstrap Sidebar Start -->
+    <nav id="sidebarMenu" class="col-md-2 d-md-block collapse">
+      <ul class="nav flex-column">
+        <!-- Special Lists -->
+        {% for tasklist in special_lists %}
+          <li class="nav-item">
+            <a href="#" class="nav-link task-list-item d-flex align-items-center" data-id="{{ tasklist.id }}" style="font-size: 13px; padding: 6px 8px; color: #333;">
+              <span class="icon-container me-3">
+                {% if tasklist.list_code == "PAST_DUE" %}
+                  <i class="fas fa-exclamation-triangle icon-subtle-dark" style="font-size: 14px;"></i>
+                {% elif tasklist.list_code == "IMPORTANT" %}
+                  <i class="fas fa-star icon-subtle-dark" style="font-size: 14px;"></i>
+                {% elif tasklist.list_code == "ALL_TASKS" %}
+                  <i class="fas fa-list icon-subtle-dark" style="font-size: 14px;"></i>
+                {% else %}
+                  <i class="fas fa-clipboard icon-subtle-dark" style="font-size: 14px;"></i>
+                {% endif %}
+              </span>
+              <span class="flex-grow-1">{{ tasklist.list_name }}</span>
+              {% if tasklist.task_count > 0 %}
+                <span class="task-count" style="font-size: 11px; background-color: #f0f0f0; color: #555; padding: 1px 6px; border-radius: 10px; font-weight: normal;">{{ tasklist.task_count }}</span>
+              {% endif %}
+            </a>
+          </li>
+        {% endfor %}
+
+        {% if semi_special_lists or normal_lists %}
+          <li class="nav-item">
+            <hr class="divider-blue">
+          </li>
+        {% endif %}
+
+        <!-- Semi-Special Lists (G My Tasks and MS Tasks) -->
+        {% for tasklist in semi_special_lists %}
+          <li class="nav-item">
+            <a href="#" class="nav-link task-list-item d-flex align-items-center" data-id="{{ tasklist.id }}" style="font-size: 13px; padding: 6px 8px; color: #333;">
+              <span class="icon-container me-3">
+                {% if tasklist.list_name == "G My Tasks" %}
+                  <i class="fab fa-google icon-subtle-dark" style="font-size: 14px;"></i>
+                {% elif tasklist.list_name == "MS Tasks" %}
+                  <i class="fab fa-microsoft icon-subtle-dark" style="font-size: 14px;"></i>
+                {% else %}
+                  <i class="fas fa-tasks icon-subtle-dark" style="font-size: 14px;"></i>
+                {% endif %}
+              </span>
+              <span class="flex-grow-1">{{ tasklist.list_name }}</span>
+              {% if tasklist.task_count > 0 %}
+                <span class="task-count" style="font-size: 11px; background-color: #f0f0f0; color: #555; padding: 1px 6px; border-radius: 10px; font-weight: normal;">{{ tasklist.task_count }}</span>
+              {% endif %}
+            </a>
+          </li>
+        {% endfor %}
+
+        {% if normal_lists %}
+          <li class="nav-item">
+            <hr class="divider-blue" style="margin: 8px 0; border-color: #f0f0f0; opacity: 0.7;">
+          </li>
+        {% endif %}
+
+        <!-- Normal Lists (sorted alphabetically) -->
+        <div id="normal-lists-container">
+          {% for tasklist in normal_lists %}
+            <li class="nav-item">
+              <a href="#" class="nav-link task-list-item d-flex align-items-center" data-id="{{ tasklist.id }}" style="font-size: 13px; padding: 6px 8px; color: #333;">
+                <span class="icon-container me-3">
+                  {# Temporarily use a default icon for ALL normal lists #}
+                  <i class="far fa-list-alt icon-subtle-dark" style="font-size: 14px;"></i>
+                </span>
+                <span class="flex-grow-1">{{ tasklist.list_name }}</span>
+                {% if tasklist.task_count > 0 %}
+                  <span class="task-count" style="font-size: 11px; background-color: #f0f0f0; color: #555; padding: 1px 6px; border-radius: 10px; font-weight: normal;">{{ tasklist.task_count }}</span>
+                {% endif %}
+              </a>
+            </li>
+          {% endfor %}
+        </div>
+
+        <!-- Create List Link -->
+        <li class="nav-item">
+          <a href="#" id="create-list-link" class="nav-link task-list-item d-flex align-items-center" style="font-size: 13px; padding: 6px 8px; color: #333;">
+            <span class="icon-container me-3">
+              <i class="fas fa-plus-square icon-subtle-dark text-primary" style="font-size: 14px;"></i>
+            </span>
+            <span>Create list</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- Bootstrap Sidebar End -->
+
+    <main id="task-middle-panel" class="col-md-9">
+      <!-- Search row Section Start-->
+      <div id="searchbar_row" class="mb-3">
+        <div class="d-flex align-items-center flex-nowrap">
+          <!-- Search Box: grows to fill available space -->
+          <input
+            type="text"
+            class="form-control form-control-sm flex-grow-1 me-3"
+            id="search-task"
+            placeholder="Search"
+            style="height: 32px; font-size: 13px;"
+          />
+      
+          <!-- Add Task Button -->
+          <button class="btn btn-light add-task-btn me-3" type="button" style="padding: 4px 8px; height: 32px; width: 32px;">
+            {% comment %} <i class="fas fa-plus text-primary" aria-hidden="true" style="cursor: pointer;"></i> {% endcomment %}
+            <i class="fa-solid fa-plus text-primary" aria-hidden="true" style="cursor: pointer;"></i>
+          </button>
+      
+          <!-- Filter Dropdown -->
+          <div class="d-flex align-items-center me-3 dropdown">
+            <label class="form-label me-2" title="Filter">
+              <i class="fa-solid fa-filter text-primary" style="font-size: 14px;"></i>
+            </label>
+            <input type="hidden" id="filter-value" name="filter" value="all">
+            <button class="btn dropdown-toggle flat-dropdown-toggle"
+                    type="button"
+                    id="filter-button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style="width: auto; height: 32px; text-align: left;">
+              All
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="filter-button">
+              <li><a class="dropdown-item" href="#" data-value="all">All</a></li>
+              <li><a class="dropdown-item" href="#" data-value="completed">Completed</a></li>
+              <li><a class="dropdown-item" href="#" data-value="past_due">Past Due</a></li>
+            </ul>
+          </div>
+      
+          <!-- Sort Dropdown -->
+          <div class="d-flex align-items-center me-3 dropdown">
+            <label class="form-label me-2" title="Sort By">
+              <i class="fa-solid fa-sort text-primary" style="font-size: 16px;"></i>
+            </label>
+            <input type="hidden" id="sort-by-value" name="sort_by" value="">
+            <button class="btn dropdown-toggle flat-dropdown-toggle"
+                    type="button"
+                    id="sort-by-button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style="width: auto; height: 32px; text-align: left;">
+              No Sort
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="sort-by-button">
+              <li><a class="dropdown-item" href="#" data-value="">No Sort</a></li>
+              <li><a class="dropdown-item" href="#" data-value="due_date">Due Date</a></li>
+              <li><a class="dropdown-item" href="#" data-value="important">Important</a></li>
+            </ul>
+          </div>
+      
+        <!-- Sort Dropdown End -->
+
+          <!-- Sync Button -->
+          <button id="manual-sync-btn" class="btn btn-outline-primary d-flex align-items-center" style="height: 32px; padding: 4px 12px; font-size: 13px;">
+            <i class="fa-solid fa-sync-alt me-2" style="font-size: 14px;"></i>
+            Sync
+          </button>
+        </div>
+      </div>
+      <!-- Search row Section End -->
+
+      <!-- Task Cards Section -->
+      <section id="tasks-section">
+        <div id="sync-status" class="d-none alert alert-info" style="margin-top: 10px;">
+          Syncing tasks... <i class="fas fa-spinner fa-spin"></i>
+        </div>
+        <!-- Task cards will be dynamically inserted here -->
+      </section>
+    </main>
+
+    <!-- Task Details Panel -->
+    <div class="col-md-3 d-none" id="task-details-panel" style="border-left: 1px solid #f0f0f0; height: calc(100vh - 70px); overflow-y: auto; background-color: #fdfdfd;">
+      <div class="p-3">
+        <div id="task-details-content">
+          <!-- Content will be loaded here -->
+        </div>
+      </div>
+    </div>
+    <!-- Back button visible only on small screens, outside the task-details-panel -->
+    <button id="back-button" class="btn btn-secondary d-none mb-3">
+      <i class="fas fa-arrow-left"></i> Back
+    </button>
+  </div>
+
+  <!-- Task Modal -->
+  <div
+    class="modal fade"
+    id="taskModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="taskModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="taskModalLabel">Add Task</h5>
+          <button
+            type="button"
+            class="close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Form content will be loaded here -->
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            id="saveTask"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create List Modal -->
+<div class="modal fade" id="createListModal" tabindex="-1" role="dialog" aria-labelledby="createListModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createListModalLabel">Create New List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Form content will be loaded here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="saveNewList">Create List</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script_block %}
+<script>
+  // Function to sync Google Tasks
+  function syncGoogleTasks() {
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
+    console.log("Dashboard HTML : syncGoogleTasks function called");
+    fetch("/task_management/sync_google_tasks/", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+      }
+    })
+    .then((response) => {
+      if (!response.ok) {
+        console.log("Dashboard HTML : syncGoogleTasks: Response Status : " + response.status);
+        return response.json().then(data => {
+          console.error("Dashboard HTML : syncGoogleTasks: Error syncing tasks:", data.error);
+          if (response.status === 400) {
+            console.error("Dashboard HTML : syncGoogleTasks: User not authenticated");
+            return;
+          }
+          throw new Error(data.error || "Failed to sync tasks.");
+        });
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data) {
+        console.log("Dashboard HTML : syncGoogleTasks: Sync Task Success " + data.message);
+        $("#success-message").text(data.message).fadeIn();
+        setTimeout(function () {
+          $("#success-message").fadeOut();
+        }, 3000);
+        fetchTasksFromDb(); // Refresh the task table after success.
+        updateBadgeCounts(); // Update badges after sync
+      }
+    })
+    .catch((error) => {
+      console.error("Dashboard HTML : syncGoogleTasks: Error syncing tasks:", error);
+    })
+    .finally(() => {
+      $("#sync-status").fadeOut(); // Hide sync status on completion or error
+    });
+  }
+
+  // Function to sync Microsoft Tasks
+  function syncMSTasks() {
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
+
+    fetch("/task_management/sync_microsoft_tasks/", {
+      method: 'GET',
+      headers: {
+        'X-CSRFToken': csrfToken,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          if (data.error === "Microsoft account not connected." || data.error === "Authentication failed. Please reconnect your Microsoft account.") {
+            window.location.href = "/task_management/connect_microsoft/";
+          } else {
+            console.error("Error response:", data);
+            throw new Error(data.error || "Failed to sync tasks.");
+          }
+        });
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.message) {
+        console.log("MS Tasks Sync:", data.message);
+        $("#success-message").text(data.message).fadeIn();
+        setTimeout(function () {
+          $("#success-message").fadeOut();
+        }, 3000);
+        fetchTasksFromDb();
+        updateBadgeCounts(); // Update badges after sync
+      } else {
+        console.error("MS Tasks Sync: No message in response");
+      }
+    })
+    .catch((error) => {
+      console.error("Error syncing MS tasks:", error);
+    })
+    .finally(() => {
+      $("#sync-status").fadeOut(); // Hide sync status on completion or error
+    });
+  }
+
+  function createTaskCardHTML(task) {
+    const taskNameClass = task.task_completed ? 'strikethrough' : '';
+    const checkIcon = task.task_completed ? 'fas fa-check-circle' : 'far fa-circle';
+    const favoriteIconClass = task.important ? 'fas fa-star text-primary' : 'far fa-star';
+    const dueDateText = task.due_date ? formatDate(task.due_date) : '';
+    const overdueText = task.overdue ? ' · Overdue' : '';
+    
+    console.log("Creating task card with ID:", task.id);
+    
+    return `
+      <div class="task-card" data-task-id="${task.id}" id="task-${task.id}" 
+           style="margin-bottom: 8px !important; border: 1px solid #e0e0e0; border-radius: 2px; background-color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+        <div class="d-flex justify-content-between align-items-center" style="padding: 6px 8px;">
+          <div class="d-flex align-items-center" style="padding-left: 4px;">
+            <i class="${checkIcon} custom-check complete-task" 
+               data-task-id="${task.id}" 
+               onclick="completeTaskClick(event, ${task.id})"
+               style="font-size: 14px; cursor: pointer; position: relative; z-index: 10; color: #a0a0a0;"></i>
+            <div style="margin-left: 12px;">
+              <div class="task-title ${taskNameClass}" style="font-size: 13px;">${task.task_name}</div>
+              ${dueDateText ? `<div class="due-date" style="font-size: 11px; color: #767676;">${dueDateText}${overdueText}</div>` : ''}
+            </div>
+          </div>
+          <div style="padding-right: 4px;">
+            <i class="${favoriteIconClass} mark-favorite" data-id="${task.id}" data-task-id="${task.id}" style="font-size: 14px;"></i>
+          </div>
+        </div>
+      </div>`;
+  }
+  function updateTasksSection(tasks) {
+    const tasksHtml = tasks.map((task) => createTaskCardHTML(task)).join("");
+    if (tasks.length === 0) {
+      $("#tasks-section").html(`
+        <div class="alert alert-info text-center" role="alert">
+          No tasks available. Check your Google Tasks or Microsoft To Do accounts for tasks, 
+          or <a href="#" id="manual-sync-btn">sync manually</a> to refresh.
+        </div>
+      `);
+    } else {
+      $("#tasks-section").html(tasksHtml || '<p>No tasks available or loading failed—try refreshing.</p>');
+    }
+  }
+
+  function showLoading() {
+    $("#tasks-section").html('<div class="loading-spinner">Loading tasks...</div>');
+  }
+
+  function fetchTasksFromDb() {
+    console.log("Task Dashboard: Fetching tasks from DB");
+    showLoading(); // Show loading spinner
+    fetch("/task_management/get_all_tasks/", { timeout: 5000 })
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Task Dashboard: Tasks fetched from DB");
+        updateTasksSection(data.tasks);
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks from DB:", error);
+        updateTasksSection([]); // Show empty state with enhanced message
+        $("#tasks-section").append('<p>Tasks failed to load—please refresh or try later.</p>');
+      })
+      .finally(() => {
+        $("#sync-status").fadeOut(); // Hide sync status on completion or error
+      });
+  }
+
+  function triggerAsyncSync() {
+    var csrfToken = $('meta[name="csrf-token"]').attr("content");
+    console.log(`Triggering async Process for all tasks`);
+    
+    // Show a non-obtrusive sync notification
+    $("#sync-status").removeClass("d-none alert-danger").addClass("alert-info")
+      .html(`<div class="d-flex align-items-center">
+                <i class="fas fa-sync-alt fa-spin me-2"></i>
+                <span>Syncing tasks in background...</span>
+                <button type="button" class="btn-close ms-auto" aria-label="Close" id="dismiss-sync"></button>
+             </div>`)
+      .fadeIn();
+    
+    fetch("/task_management/trigger_user_sync/", {  
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+      }
+    })
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      return response.json();
+    })
+    .then((data) => {
+      console.log(`All syncs enqueued:`, data.message);
+      
+      // Start polling for completion (if using sync status endpoint)
+      checkSyncStatus();
+    })
+    .catch((error) => {
+      console.error(`Error triggering sync:`, error);
+      $("#sync-status").removeClass("alert-info").addClass("alert-danger")
+        .html(`<div class="d-flex align-items-center">
+                <i class="fas fa-exclamation-triangle me-2"></i> 
+                <span>Sync failed—please try again.</span>
+                <button type="button" class="btn-close ms-auto" aria-label="Close" id="dismiss-sync"></button>
+               </div>`);
+    });
+  }
+
+  // Dismiss sync notification
+  $(document).on("click", "#dismiss-sync", function() {
+    $("#sync-status").fadeOut();
+  });
+
+  // Check sync status periodically
+  function checkSyncStatus() {
+    let checkCount = 0;
+    const maxChecks = 10; // Max 10 checks at 3-second intervals (30 seconds total)
+    
+    const statusCheck = setInterval(() => {
+      checkCount++;
+      
+      // Auto-refresh tasks and stop checking after maxChecks
+      if (checkCount >= maxChecks) {
+        clearInterval(statusCheck);
+        $("#sync-status").html(`<div class="d-flex align-items-center">
+                                  <i class="fas fa-check-circle me-2"></i>
+                                  <span>Sync completed or still processing in background.</span>
+                                  <button type="button" class="btn-close ms-auto" aria-label="Close" id="dismiss-sync"></button>
+                                </div>`);
+        
+        // Refresh UI elements
+        fetchTasksFromDb();
+        updateBadgeCounts();
+        
+        setTimeout(() => {
+          $("#sync-status").fadeOut();
+        }, 3000);
+        return;
+      }
+      
+      // Optionally query a status endpoint
+      // If you have a sync status endpoint, use it here
+      // Otherwise, this just provides a nicer UI experience
+      console.log(`Checking sync status, attempt ${checkCount}`);
+    }, 3000);
+  }
+
+  // Function to update badge counts
+  function updateBadgeCounts() {
+    $.ajax({
+      url: "{% url 'task_management:get_task_counts' %}",
+      type: "GET",
+      dataType: "json",
+      success: function (response) {
+        const counts = response.counts;
+        $('.task-list-item').each(function () {
+          const listId = $(this).data('id');
+          const count = counts[listId] || 0;
+          const badge = $(this).find('.task-count');
+          if (count > 0) {
+            if (badge.length) {
+              badge.text(count); // Update existing badge
+            } else {
+                $(this).append(`<span class="task-count">${count}</span>`);
+            }
+          } else {
+            badge.remove(); // Remove badge if count is 0
+          }
+        });
+      },
+      error: function (xhr, status, error) {
+        console.error("Error fetching task counts: " + error);
+      }
+    });
+  }
+
+  // Direct click handler for task completion
+  function completeTaskClick(e, taskId) {
+    console.log("⭐ CLICK HANDLER ACTIVATED ⭐");
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!taskId) {
+      console.error("ERROR: No task ID provided to completeTaskClick function");
+      return;
+    }
+    
+    console.log("Complete task click function called with task ID:", taskId);
+    
+    var url = '/task_management/complete_task/' + taskId + '/';
+    console.log("Making AJAX request to:", url);
+    
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function(response) {
+        console.log("Task completion response:", response);
+        
+        if (response && response.id) {
+          // Find the task card
+          var taskCard = $('#task-' + response.id);
+          console.log("Task card found:", taskCard.length > 0);
+          
+          // Find the icon element
+          var icon = taskCard.find('.custom-check');
+          console.log("Current icon class:", icon.attr('class'));
+          
+          // Update icon based on completion status
+          if (response.task_completed) {
+            icon.removeClass('far fa-circle').addClass('fas fa-check-circle');
+            taskCard.find('.task-title').addClass('strikethrough');
+            console.log("Task marked as completed - Added strikethrough");
+          } else {
+            icon.removeClass('fas fa-check-circle').addClass('far fa-circle');
+            taskCard.find('.task-title').removeClass('strikethrough');
+            console.log("Task marked as incomplete - Removed strikethrough");
+          }
+          
+          // Update task counts
+          updateBadgeCounts();
+        } else {
+          console.error("Invalid response format:", response);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error("Error completing task:", status);
+        console.error("Error details:", error);
+        console.error("Response text:", xhr.responseText);
+      }
+    });
+  }
+
+  $(document).ready(function () {
+    console.log("Dashboard HTML : In Document Ready Function");
+    const userId = {{ user.id }};
+
+    // DEBUG: Log normal lists from template to JS
+    console.log("DEBUG - Normal Lists in template context:", [
+      {% for list in normal_lists %}
+        { id: {{ list.id }}, name: "{{ list.list_name }}", source: "{{ list.list_source|default:'none' }}" },
+      {% endfor %}
+    ]);
+
+    // Call fetchTasksFromDb function to fetch tasks from the database
+    fetchTasksFromDb();
+
+    // Make textareas auto-grow
+    $(document).on('input', '#task-details-panel textarea', function() {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+      $(this).addClass('autoGrow');
+    });
+    
+    // Apply auto-grow to textareas when they're loaded
+    $(document).on('DOMNodeInserted', '#task-details-panel', function() {
+      setTimeout(function() {
+        $('#task-details-panel textarea').each(function() {
+          $(this).trigger('input');
+        });
+      }, 100);
+    });
+
+    // Set a delay before triggering background sync to ensure UI loads first
+    setTimeout(() => {
+      // Trigger async syncs for all tasks in the background (single call)
+      triggerAsyncSync();
+    }, 1000);
+
+    // Optional: Add a manual sync button for users (already in HTML as #manual-sync-btn)
+    $("#manual-sync-btn").on("click", function(e) {
+      e.preventDefault();
+      triggerAsyncSync();
+    });
+
+    // Handle clicking on a task category in the sidebar
+    $(".task-list-item").click(function () {
+      var listId = $(this).data("id");
+      console.log("list Id : " + listId);
+      $("#current-list").data("list-id", listId);
+      $(".task-list-item").removeClass("highlighted");
+      this.classList.add("highlighted");
+
+      $.ajax({
+        url: `/task_management/get_tasks_by_list/${listId}`,
+        type: "GET",
+        dataType: "json",
+        success: function (response) {
+          console.log("Received data:", response);
+          updateTasksSection(response.tasks);
+          $("#task-details-panel").addClass("d-none");
+
+          if (window.innerWidth < 768) {
+            var sidebarMenu = $("#sidebarMenu");
+            var bsCollapse = new bootstrap.Collapse(sidebarMenu, {
+              toggle: true,
+            });
+            bsCollapse.hide();
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("An error occurred while fetching tasks: " + error);
+        }
+      });
+    });
+
+    // Handle clicking on a task card to show details
+    $(document).on("click", ".task-card", function () {
+      var taskId = $(this).data("task-id");
+      console.log("Clicked on task row with Task Id : " + taskId);
+
+      // Show loading indicator inside details panel
+      $("#task-details-panel").removeClass("d-none").html('<div class="p-4 text-center"><i class="fas fa-spinner fa-spin"></i> Loading task details...</div>');
+      document.getElementById("task-middle-panel").classList.remove("col-md-9");
+      document.getElementById("task-middle-panel").classList.add("col-md-6");
+
+      url = "{% url 'task_management:edit_task' 999 %}".replace("999", taskId);
+
+      // Use a timeout to prevent UI hanging
+      var taskDetailTimeout = setTimeout(function() {
+        $("#task-details-panel").html('<div class="alert alert-warning m-3">Request is taking longer than expected. <button class="btn btn-sm btn-primary retry-load-task" data-task-id="' + taskId + '">Retry</button></div>');
+      }, 5000); // 5 second timeout
+
+      $.ajax({
+        url: url,
+        type: "GET",
+        timeout: 10000, // 10 second timeout 
+        success: function (response) {
+          clearTimeout(taskDetailTimeout);
+          console.log("In Success message for getting edit_task_panel");
+          $("#task-details-panel").html(response);
+
+          if ($(window).width() < 768) {
+            $("#tasks-section").toggleClass("d-none");
+            $("#back-button").removeClass("d-none");
+            $("#searchbar_row").addClass("d-none");
+          }
+        },
+        error: function (xhr, status, error) {
+          clearTimeout(taskDetailTimeout);
+          console.log("Error fetching task details:", xhr.status, error);
+          $("#task-details-panel").html(
+            '<div class="alert alert-danger m-3">' +
+            '<p>Error loading task details: ' + (xhr.status === 0 ? 'Connection timeout' : error) + '</p>' +
+            '<button class="btn btn-primary retry-load-task" data-task-id="' + taskId + '">Retry</button>' +
+            '</div>'
+          );
+        }
+      });
+    });
+
+    // Add retry handler for task loading failures
+    $(document).on("click", ".retry-load-task", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var taskId = $(this).data("task-id");
+      $("#task-details-panel").html('<div class="p-4 text-center"><i class="fas fa-spinner fa-spin"></i> Retrying...</div>');
+      
+      url = "{% url 'task_management:edit_task' 999 %}".replace("999", taskId);
+      
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          $("#task-details-panel").html(response);
+        },
+        error: function (xhr, status, error) {
+          $("#task-details-panel").html(
+            '<div class="alert alert-danger m-3">' +
+            '<p>Error loading task details: ' + error + '</p>' +
+            '<button class="btn btn-primary retry-load-task" data-task-id="' + taskId + '">Retry</button>' +
+            '</div>'
+          );
+        }
+      });
+    });
+
+    // Handle clicking the add task button
+    $(document).on("click", ".add-task-btn", function () {
+      var listId = $("#current-list").data("list-id");
+      if (listId === undefined) {
+        listId = 1;
+      }
+      console.log("listid in Add Task Form : " + listId);
+      $("#taskModal").data("mode", "add");
+      console.log(" Task Model Mode in Create mode ");
+      $("#taskModal .modal-body").load("/task_management/add/" + listId, function () {
+        $("#taskModal").modal("show");
+      });
+    });
+
+    // Handle saving a task (create/edit)
+    $("#saveTask").click(function () {
+      console.log("Saving Task function called");
+      var mode = $("#taskModal").data("mode");
+      var taskId = $("#taskModal").data("taskId");
+      var url = mode === "edit" ? `/task_management/edit_task/${taskId}/` : "/task_management/add/1/";
+      var formData = new FormData($("#taskModal form")[0]);
+
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          console.log("Success in Ajax Save Task");
+          var newTask = response.new_task || response; // Handle add/edit response
+          addNewTasktoDisplay(newTask);
+
+          if ($(window).width() < 768) {
+            $("#task-details-panel").addClass("d-none");
+          }
+
+          setTimeout(function () {
+            $("#taskModal").modal("hide");
+          }, 500);
+
+          // Update badge counts after adding the task
+          updateBadgeCounts();
+        },
+        error: function (xhr, status, error) {
+          console.log("Ajax error in Save Task: " + error);
+        },
+      });
+    });
+
+    // Handle searching tasks
+    function doSearch() {
+      console.log("Java Script : In doSearch Function ");
+      const query = document.getElementById("search-task").value;
+      const filter = document.getElementById("filter-value").value;
+      const sortBy = document.getElementById("sort-by-value").value;
+
+      console.log("Query : " + query);
+      console.log("Filter : " + filter);
+      console.log("Sort By : " + sortBy);
+
+      const url = new URL(window.location.origin + "{% url 'task_management:search_tasks' %}");
+      url.searchParams.set("q", query);
+      if (filter) url.searchParams.set("filter", filter);
+      if (sortBy) url.searchParams.set("sort_by", sortBy);
+
+      console.log("URL : " + url);
+
+      $.ajax({
+        url: url,
+        dataType: "json",
+        success: function (response) {
+          console.log("Received Search data:", response);
+
+          if (response.tasks.length === 0) {
+            $("#tasks-section").html("<p>No tasks found.</p>");
+          } else {
+            updateTasksSection(response.tasks);
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("Error occurred: " + error);
+        },
+      });
+    }
+
+    document.getElementById("search-task").addEventListener("input", doSearch);
+    // Remove the incorrect listener for the filter select change
+    // document.getElementById("filters").addEventListener("change", doSearch);
+    
+    // Add listener for filter dropdown item clicks
+    $(document).on('click', '[aria-labelledby="filter-button"] .dropdown-item', function(e) {
+      e.preventDefault();
+      var selectedText = $(this).text();
+      var selectedValue = $(this).data('value');
+      console.log("Filter dropdown item clicked - Text:", selectedText, "Value:", selectedValue);
+      $('#filter-button').text(selectedText);
+      $('#filter-value').val(selectedValue);
+      doSearch();
+    });
+
+    // Listener for sort dropdown item clicks (already updated)
+    $(document).on('click', '[aria-labelledby="sort-by-button"] .dropdown-item', function(e) {
+      e.preventDefault(); 
+      var selectedText = $(this).text();
+      var selectedValue = $(this).data('value');
+      console.log("Sort dropdown item clicked - Text:", selectedText, "Value:", selectedValue);
+      $('#sort-by-button').text(selectedText);
+      $('#sort-by-value').val(selectedValue);
+      doSearch();
+    });
+
+    // Handle submitting the edit task form in the panel
+    $(document).on("submit", "#edit-task-form", function (e) {
+      console.log("Edit Task Save function called from Side Panel");
+      e.preventDefault();
+      var taskId = $(this).data("task-id");
+      url = "/task_management/edit_task/" + taskId + "/";
+
+      // Ensure form has proper enctype
+      $(this).attr('enctype', 'multipart/form-data');
+      
+      // Debug file upload field
+      var fileInput = $(this).find('input[type="file"]');
+      if (fileInput.length) {
+        console.log("File input found:", fileInput.attr('name'));
+        console.log("Files selected:", fileInput[0].files.length);
+        if (fileInput[0].files.length > 0) {
+          console.log("File name:", fileInput[0].files[0].name);
+          console.log("File size:", fileInput[0].files[0].size, "bytes");
+        }
+      } else {
+        console.log("No file input found in the form");
+      }
+
+      var formData = new FormData(this);
+      var taskHtml = "";
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          console.log("edit-task-form Ajax : Success from Save Task : " + response.task_name);
+          console.log("edit-task-form Ajax : Task ID : " + response.id);
+          const taskHtml = createTaskCardHTML(response);
+          $("#task-" + response.id).replaceWith(taskHtml);
+          $("#task-details-panel").addClass("d-none");
+          $("#task-middle-panel").removeClass("col-md-6");
+          $("#task-middle-panel").addClass("col-md-9");
+          updateBadgeCounts(); // Update badges after editing a task
+        },
+        error: function (xhr, status, error) {
+          console.error("Error uploading file:", status, error);
+          console.error("Server response:", xhr.responseText);
+          
+          // Display error to user
+          var errorMsg = "Error saving task: " + (xhr.responseJSON?.error || error);
+          $("#edit-task-form").before('<div class="alert alert-danger">' + errorMsg + '</div>');
+          
+          // Auto-hide after 5 seconds
+          setTimeout(function() {
+            $(".alert-danger").fadeOut();
+          }, 5000);
+        },
+      });
+    });
+
+    // Handle clicking the back button
+    $("#back-button").on("click", function () {
+      $("#task-details-panel").addClass("d-none");
+      $("#tasks-section").toggleClass("d-none");
+      $("#back-button").addClass("d-none");
+      $("#searchbar_row").removeClass("d-none");
+    });
+
+    // Add new task to display
+    function addNewTasktoDisplay(newTask) {
+      const newTaskHtml = createTaskCardHTML(newTask);
+      $("#tasks-section").append(newTaskHtml);
+    }
+
+    // Sync Google Tasks button
+    $(document).on("click", "#sync-goog-tasks-btn", function (e) {
+      console.log("Sync Task button clicked");
+      syncGoogleTasks();
+    });
+
+    // Sync Microsoft Tasks button
+    $(document).on("click", "#sync-ms-tasks-btn", function () {
+      syncMSTasks();
+    });
+
+    // Handle manual sync link in empty state
+    $("#tasks-section").on("click", "#manual-sync-btn", function(e) {
+      e.preventDefault();
+      triggerAsyncSync();
+    });
+
+    // ---- Create New List Modal Logic ----
+    // Handle clicking the 'New list' link
+    $(document).on("click", "#create-list-link", function (e) {
+      e.preventDefault(); // Prevent default link behavior
+      var url = "{% url 'task_management:create_task_list' %}";
+      console.log("Loading create list form from:", url);
+      $("#createListModal .modal-body").load(url, function(response, status, xhr) {
+        if (status == "error") {
+          console.error("Error loading create list form:", xhr.status, xhr.statusText);
+          // Optionally display an error message to the user
+        } else {
+          $("#createListModal").modal("show");
+        }
+      });
+    });
+
+    // Handle clicking the Close button after successful list creation
+    $(document).on("click", "#closeListModal", function() {
+      var button = $(this);
+      $("#createListModal").modal("hide");
+      // Reset the modal for next use
+      setTimeout(function() {
+        button.text('Save').attr('id', 'saveNewList');
+        $("#createListModal .btn-secondary").show();
+      }, 500);
+    });
+
+    // Handle saving the new list from the modal
+    $(document).on("click", "#saveNewList", function () {
+      var form = $("#create-list-form");
+      var url = "{% url 'task_management:create_task_list' %}";
+      console.log("Submitting new list form to:", url);
+      // Clear previous errors
+      form.find('.form-error').remove(); 
+      
+      // Add loading state
+      var saveButton = $(this);
+      var originalText = saveButton.text();
+      saveButton.prop('disabled', true).text('Creating...');
+
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: form.serialize(), // Serialize form data
+        success: function (response) {
+          console.log("AJAX Success Callback - Full Response:", response);
+          
+          // Enhanced debugging
+          console.log("LIST CREATION DEBUG");
+          console.log("Response success:", response.success);
+          console.log("Response list object:", response.list);
+          
+          if (response && response.success && response.list) {
+            console.log("Successfully created list:", response.list.name);
+            console.log("List ID:", response.list.id);
+            console.log("List type:", response.list.list_type);
+            console.log("List code:", response.list.list_code);
+            
+            // Add the new list to the sidebar without reloading
+            var newListHtml = `
+              <li class="nav-item">
+                <a href="#" class="nav-link task-list-item d-flex align-items-center" data-id="${response.list.id}" style="font-size: 13px; padding: 6px 8px; color: #333;">
+                  <span class="icon-container me-3">
+                    <i class="${response.list.icon} icon-subtle-dark" style="font-size: 14px;"></i>
+                  </span>
+                  <span class="flex-grow-1">${response.list.name}</span>
+                  <span class="task-count" style="font-size: 11px; background-color: #f0f0f0; color: #555; padding: 1px 6px; border-radius: 10px; font-weight: normal;">0</span>
+                </a>
+              </li>
+            `;
+            
+            // Add the new list to the normal lists section
+            $("#normal-lists-container").append(newListHtml);
+            
+            // Show success feedback
+            $("#createListModal .modal-body").html(`
+              <div class="alert alert-success">
+                <i class="far fa-check-circle me-2"></i>
+                List "${response.list.name}" created successfully!
+              </div>
+            `);
+            
+            // Change save button to close
+            saveButton.text('Close').prop('disabled', false).attr('id', 'closeListModal');
+            $("#closeListModal").show();
+            $("#createListModal .btn-secondary").hide();
+            
+            // Close after delay or let user close manually
+            setTimeout(function() {
+              $("#createListModal").modal("hide");
+              // Reset the modal for next use
+              setTimeout(function() {
+                saveButton.text(originalText).attr('id', 'saveNewList');
+                $("#createListModal .btn-secondary").show();
+              }, 500);
+            }, 1500);
+          } else {
+            console.error("Error in list creation response:", response);
+            // Reset button
+            saveButton.prop('disabled', false).text(originalText);
+            
+            // Display form errors
+            if (response.errors) {
+              $.each(response.errors, function(field, errors) {
+                var fieldElement = form.find('[name="' + field + '"]');
+                var errorList = '<ul class="form-error text-danger small ps-0 list-unstyled">';
+                $.each(errors, function(i, error) {
+                    errorList += '<li>' + error + '</li>';
+                });
+                errorList += '</ul>';
+                // Add errors after the field or its container
+                if (fieldElement.length) {
+                  fieldElement.closest('.mb-3').append(errorList); 
+                } else {
+                   // Handle non-field errors
+                   form.prepend('<div class="form-error text-danger small mb-2">' + errors.join('<br>') + '</div>');
+                }
+              });
+            } else {
+              // Generic error
+              form.prepend('<div class="form-error text-danger small mb-2">An error occurred while creating the list. Please try again.</div>');
+            }
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("AJAX error creating list:", status, error);
+          // Reset button
+          saveButton.prop('disabled', false).text(originalText);
+          
+          // Try to parse response if it's JSON
+          let errorMessage = "An unexpected error occurred. Please try again.";
+          try {
+            const responseData = JSON.parse(xhr.responseText);
+            if (responseData && responseData.error) {
+              errorMessage = responseData.error;
+            }
+          } catch (e) {
+            console.log("Could not parse error response");
+          }
+          
+          // Display error message
+          form.prepend(`<div class="form-error text-danger small mb-2">${errorMessage}</div>`);
+        },
+      });
+    });
+    // ---- End Create New List Modal Logic ----
+
+  }); // End $(document).ready
+</script>
+<script src="{% static 'task_management/scripts/task_management-script.js' %}"></script>
+{% endblock %}

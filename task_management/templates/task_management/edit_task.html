@@ -1,0 +1,333 @@
+{% load task_management_extras %}
+<!-- Load custom template tags, if any -->
+
+<form method="post" id="edit-task-form" data-task-id="{{ task_id }}" enctype="multipart/form-data">
+    <!-- Main form to manage tasks -->
+    {% csrf_token %}
+    <!-- Django's CSRF token for security -->
+    {{ edit_task_form.non_field_errors }}
+    <!-- Display any form errors that are not related to a specific field -->
+
+    <!-- Task Name -->
+    <div>
+        {{ edit_task_form.task_name|add_class:"form-control mb-1 input-box" }}
+        <!-- Task name field using Django's form rendering with Bootstrap classes -->
+        {{ edit_task_form.task_name.errors }}
+        <!-- Display any errors related to the task name field -->
+    </div>
+
+    <!-- Due Date -->
+    <div class="card">
+        <!-- Card container for styling -->
+        <div class="card-body">
+            <!-- Card body for padding and content -->
+            <i class="fas fa-calendar-alt form-icon"></i>
+            <!-- Calendar icon -->
+            <label class="form-label dropdown-toggle" id="dueDateDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- Label for due date dropdown -->
+                Due Date
+                <span id="dueDateLabel" class="ms-2">
+                    <!-- Span to hold formatted due date -->
+                    {% if edit_task_form.due_date.value %}
+                    {{ edit_task_form.due_date.value|date:"D, M j, Y" }}
+                    {% endif %}
+                    <!-- Initial date set by Django template tag -->
+                </span>
+            </label>
+            <ul class="dropdown-menu" aria-labelledby="dueDateDropdown">
+                <!-- Dropdown menu for due date options -->
+                <li><a class="dropdown-item due-date-option" data-value="today" href="#">Today</a></li>
+                <li><a class="dropdown-item due-date-option" data-value="tomorrow" href="#">Tomorrow</a></li>
+                <li><a class="dropdown-item due-date-option" data-value="next_week" href="#">Next Week</a></li>
+                <li><a class="dropdown-item due-date-option" data-value="pick_date_time" href="#">Pick a date</a></li>
+            </ul>
+             <input type="text" class="d-none date-picker" id="dueDateInput" name="due_date" value="{{ edit_task_form.due_date.value|date:'Y-m-d' }}">
+             <!-- Hidden input for due date, value pre-filled by Django in 'YYYY-MM-DD' format -->
+         </div>
+    </div>
+
+    <!-- Reminder Time -->
+    <div class="card">
+         <!-- Card container for styling -->
+        <div class="card-body">
+             <!-- Card body for padding and content -->
+            <i class="fas fa-bell form-icon"></i>
+            <!-- Bell icon -->
+             <label class="form-label dropdown-toggle" id="reminderDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- Label for reminder time dropdown -->
+                Remind me at
+                <span id="reminderTimeLabel" class="ms-2">
+                    <!-- Span to hold formatted reminder time -->
+                    {% if edit_task_form.reminder_time.value %}
+                        {{ edit_task_form.reminder_time.value|date:"D, M j, Y" }}
+                    {% endif %}
+                    <!-- Initial time set by Django template tag -->
+                </span>
+            </label>
+           <ul class="dropdown-menu" aria-labelledby="reminderDropdown">
+                <!-- Dropdown menu for reminder time options -->
+                <li><a class="dropdown-item reminder-option" data-value="later_today" href="#">Later Today, 11:00PM</a></li>
+                <li><a class="dropdown-item reminder-option" data-value="tomorrow" href="#">Tomorrow, 9:00AM</a></li>
+                <li><a class="dropdown-item reminder-option" data-value="next_week" href="#">Next Week, Monday 9:00AM</a></li>
+                <li><a class="dropdown-item reminder-option" data-value="pick_date_time" href="#">Pick a date</a></li>
+            </ul>
+            <input type="text" class="d-none date-picker" id="reminderInput" name="reminder_time" value="{{ edit_task_form.reminder_time.value|date:'Y-m-d' }}">
+              <!-- Hidden input for reminder time, value pre-filled by Django in 'YYYY-MM-DD' format -->
+        </div>
+    </div>
+
+    <!-- Recurrence -->
+    <div class="card">
+        <!-- Card container for styling -->
+        <div class="card-body">
+        <!-- Card body for padding and content -->
+            <i class="fas fa-redo form-icon"></i>
+             <!-- Redo icon -->
+            <label class="form-label dropdown-toggle" id="recurrenceDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- Label for recurrence dropdown -->
+                Repeat
+                <span id="recurrenceLabel" class="ms-2">
+                    <!-- Span to hold formatted recurrence option -->
+                    {% if edit_task_form.recurrence.value %}
+                    {% for choice in edit_task_form.recurrence.field.choices %}
+                    {% if choice.0 == edit_task_form.recurrence.value %}
+                    {{ choice.1 }}
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                      <!-- Initial value set by Django template tag -->
+                </span>
+            </label>
+            <ul class="dropdown-menu" aria-labelledby="recurrenceDropdown">
+                 <!-- Dropdown menu for recurrence options -->
+                {% for choice in edit_task_form.recurrence.field.choices %}
+                <li><a class="dropdown-item recurrence-option" data-value="{{ choice.0 }}" href="#">{{ choice.1 }}</a></li>
+                {% endfor %}
+            </ul>
+            <input type="hidden" name="recurrence" id="recurrenceInput" value="{{ edit_task_form.recurrence.value }}">
+            <!-- Hidden input for recurrence, value pre-filled by Django -->
+        </div>
+    </div>
+
+    <!-- List Name -->
+    <div class="card">
+         <!-- Card container for styling -->
+        <div class="card-body">
+        <!-- Card body for padding and content -->
+            <i class="fas fa-tasks form-icon"></i>
+             <!-- list icon -->
+            <label class="form-label dropdown-toggle" id="listNameDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                 <!-- Label for list name dropdown -->
+                <span id="listNameLabel" class="ms-2">
+                     <!-- Span to hold formatted list name option -->
+                    {% if edit_task_form.list_name.value %}
+                    {% for choice in edit_task_form.list_name.field.choices %}
+                    {% if choice.0 == edit_task_form.list_name.value %}
+                    {{ choice.1 }}
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                       <!-- Initial value set by Django template tag -->
+                </span>
+            </label>
+            <ul class="dropdown-menu" aria-labelledby="listNameDropdown">
+                <!-- Dropdown menu for list name options -->
+                {% for choice in edit_task_form.list_name.field.choices %}
+                <li><a class="dropdown-item list-name-option" data-value="{{ choice.0 }}" href="#">{{ choice.1 }}</a></li>
+                {% endfor %}
+            </ul>
+            <input type="hidden" name="list_name" id="listNameInput" value="{{ edit_task_form.list_name.value }}">
+            <!-- Hidden input for list name, value pre-filled by Django -->
+        </div>
+    </div>
+
+    <!-- Images Section -->
+    <div class="card">
+          <!-- Card container for styling -->
+        <div class="card-body">
+        <!-- Card body for padding and content -->
+            {% if images %}
+            <div class="mb-3">
+                <!-- Section for existing images -->
+                <label class="form-label">Current Images</label>
+                 <!-- Label for images -->
+                <div class="file-list">
+                     <!-- List of current images -->
+                    {% for image in images %}
+                    <div class="file-item">
+                        <i class="fas fa-file-image"></i>
+                         <!-- Image icon -->
+                        <a href="{{ image.image_url|quote }}" target="_blank">{{ image.image_name }}</a>
+                         <!-- Link to view each image -->
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            <div class="mb-3">
+                 <!-- Section for new images -->
+                <label class="form-label">File</label>
+                <!-- Label for file upload -->
+                <input type="file" name="images" id="images" multiple class="form-control">
+                   <!-- File upload input -->
+            </div>
+            <div id="image-previews" class="image-preview"></div>
+              <!-- Placeholder for image previews -->
+        </div>
+    </div>
+
+    <!-- Task Description -->
+    <div>
+        {{ edit_task_form.task_description|add_class:"form-control expandable input-box" }}
+        <!-- Task description textarea -->
+        {{ edit_task_form.task_description.errors }}
+        <!-- Display any errors related to the task description -->
+    </div>
+
+    <!-- Submit Button -->
+    <div class="d-flex justify-content-center mt-4">
+         <!-- Container for submit button -->
+        <button type="submit" class="save-button">
+            <!-- Button to submit the form -->
+            <i class="fas fa-save"></i>Save
+             <!-- Button icon and text -->
+        </button>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        // Initialize jQuery UI Datepicker for Due Date
+        $('#dueDateInput').datepicker({
+            onSelect: function (dateText) {
+                 $('#dueDateInput').val(dateText);
+                const selectedDate = new Date(dateText);
+                var formattedDate =  $.datepicker.formatDate('D, M dd yy', new Date(selectedDate));
+                 $('#dueDateLabel').text(formattedDate);
+
+            },
+            beforeShow: function(input, inst) {
+
+                if($('#dueDateInput').hasClass('d-none'))
+                    return false;
+            }
+        });
+
+        // Initialize jQuery UI Datepicker for Reminder
+        $('#reminderInput').datepicker({
+            onSelect: function (dateText) {
+                $('#reminderInput').val(dateText);
+                $('#reminderTimeLabel').text($.datepicker.formatDate('D, M dd yy', new Date(dateText)));
+            },
+            beforeShow: function(input, inst) {
+                if($('#reminderInput').hasClass('d-none'))
+                    return false;
+            }
+        });
+
+
+        function handleDropdownClick(selector, inputSelector, labelSelector, dropdownType) {
+             $(document).on('click', selector, function (e) {
+                e.preventDefault();
+                const selectedValue = $(this).data('value');
+                const selectedText = $(this).text();
+
+                if (selectedValue === 'pick_date_time') {
+                    $(inputSelector).removeClass('d-none').focus();
+                } else {
+                    $(labelSelector).text(selectedText);
+                    $(inputSelector).val(selectedValue);
+                    if (!$(inputSelector).hasClass('d-none')) {
+                        $(inputSelector).addClass('d-none');
+                    }
+                }
+
+
+                if (dropdownType === 'dueDate' ) {
+                   //Handle due date update
+                    if(selectedValue == "today"){
+                        let date = new Date();
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        let formattedDate = `${year}-${month}-${day}`;
+                        $('#dueDateInput').val(formattedDate);
+                        $('#dueDateLabel').text($.datepicker.formatDate('D, M dd yy', new Date(formattedDate)));
+
+                    }
+                    if(selectedValue == "tomorrow"){
+                        let date = new Date();
+                        date.setDate(date.getDate() + 1);
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        let formattedDate = `${year}-${month}-${day}`;
+                        $('#dueDateInput').val(formattedDate);
+                         $('#dueDateLabel').text($.datepicker.formatDate('D, M dd yy', new Date(formattedDate)));
+                    }
+                    if(selectedValue == "next_week"){
+                        let date = new Date();
+                        const dayOfWeek = date.getDay();
+                        const daysUntilMonday = (1 - dayOfWeek + 7) % 7;
+                        date.setDate(date.getDate() + daysUntilMonday);
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        let formattedDate = `${year}-${month}-${day}`;
+                        $('#dueDateInput').val(formattedDate);
+                        $('#dueDateLabel').text($.datepicker.formatDate('D, M dd yy', new Date(formattedDate)));
+                    }
+
+                } else if (dropdownType === 'reminderTime') {
+                   //Handle reminder update
+                    if(selectedValue == "later_today"){
+                         let date = new Date();
+                         let formattedDate =  $.datepicker.formatDate('yy-mm-dd', new Date(date.getFullYear(), date.getMonth(), date.getDate()));
+                        $('#reminderInput').val(formattedDate);
+                        $('#reminderTimeLabel').text($.datepicker.formatDate('D, M dd yy', new Date(formattedDate)));
+
+                    }
+                    if(selectedValue == "tomorrow"){
+                         let date = new Date();
+                         date.setDate(date.getDate() + 1);
+                        let formattedDate = $.datepicker.formatDate('yy-mm-dd', new Date(date.getFullYear(), date.getMonth(), date.getDate()));
+                        $('#reminderInput').val(formattedDate);
+                        $('#reminderTimeLabel').text($.datepicker.formatDate('D, M dd yy', new Date(formattedDate)));
+                    }
+                     if(selectedValue == "next_week"){
+                        let date = new Date();
+                        const dayOfWeek = date.getDay();
+                         const daysUntilMonday = (1 - dayOfWeek + 7) % 7;
+                        date.setDate(date.getDate() + daysUntilMonday);
+                         let formattedDate = $.datepicker.formatDate('yy-mm-dd', new Date(date.getFullYear(), date.getMonth(), date.getDate()));
+                        $('#reminderInput').val(formattedDate);
+                        $('#reminderTimeLabel').text($.datepicker.formatDate('D, M dd yy', new Date(formattedDate)));
+                   }
+                }
+            });
+        }
+
+         // Attach handlers for dropdowns
+        handleDropdownClick('.due-date-option', '#dueDateInput', '#dueDateLabel', 'dueDate');
+        handleDropdownClick('.reminder-option', '#reminderInput', '#reminderTimeLabel', 'reminderTime');
+        handleDropdownClick('.recurrence-option', '#recurrenceInput', '#recurrenceLabel');
+        handleDropdownClick('.list-name-option', '#listNameInput', '#listNameLabel');
+
+
+        // Image preview functionality
+        $('#images').on('change', function () {
+            const imagePreviews = $('#image-previews').empty();
+            Array.from(this.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('<img>', {
+                        src: e.target.result,
+                        class: 'img-thumbnail',
+                    }).appendTo(imagePreviews);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+    });
+</script>

@@ -1,0 +1,79 @@
+/* Body Styles */
+body {
+    background: linear-gradient(to bottom, #e3f2fd, #bbdefb); /* Light blue to white-blue */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main Content Styling */
+.main-container {
+    padding: 20px;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+/* Table Styles */
+.table {
+    background-color: rgba(255, 255, 255, 0.9); /* Match card transparency */
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+}
+
+.table thead th {
+    background-color: #f4f6f8;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e6f7ff;
+}
+
+/* Header Styles */
+h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Chart Container Styles */
+.rounded {
+    border-radius: 10px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 1.2rem;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    .main-container {
+        padding: 10px;
+    }
+}

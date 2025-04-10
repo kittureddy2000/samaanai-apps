@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Completed Tasks</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Task Name</th>
+                <th>List Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="completed-tasks-list">
+            {% for task in completed_tasks %}
+            <tr>
+                <td>{{ task.task_name }}</td>
+                <td>{{ task.list_name }}</td>
+                <td>
+                    <button class="btn btn-warning undelete-task" data-id="{{ task.id }}">Reactivate</button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No completed tasks found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+{% block script_block %}
+
+<script>
+
+$(document).ready(function() {
+    $('#completed-tasks-list').on('click', '.undelete-task', function() {
+        var taskId = $(this).data('id');
+        var button = $(this);
+
+        $.ajax({
+            url: '/task_management/undelete_task/' + taskId + '/',
+            type: 'POST',
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if(response.status === 'success') {
+                    button.closest('li').fadeOut(); // or remove()
+                    console.log(response.message)
+                    // Optionally, display a success message
+                } else {
+                    // Handle error
+                    console.log(response.message)
+                }
+            },
+            error: function() {
+                // Handle AJAX error
+            }
+        });
+    });
+});
+    </script>
+
+{% endblock %}

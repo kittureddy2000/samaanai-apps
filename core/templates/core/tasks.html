@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Tasks</title>
+</head>
+<body>
+    <h1>Your Google Tasks</h1>
+    {% if tasks %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Due Date</th>   
+                    <th>List</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.status }}</td>
+                        <td>{{ task.due }}</td>
+                        <td>{{ task.list }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No tasks found in Google Tasks</p>
+    {% endif %}
+</body>
+</html>

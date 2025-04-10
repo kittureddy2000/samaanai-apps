@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>SP Return Calculator</title>
+</head>
+<body>
+    <div class="container my-4">
+        <form method="post" class="row g-3 align-items-end">
+            {% csrf_token %}
+            <div class="col-lg-3 col-md-6">
+                <label for="{{ form.numYears.id_for_label }}" class="form-label">{{ form.numYears.label }}</label>
+                {{ form.numYears }}
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label for="{{ form.reccuringDeposit.id_for_label }}" class="form-label">{{ form.reccuringDeposit.label }}</label>
+                {{ form.reccuringDeposit }}
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label for="{{ form.startingInvest.id_for_label }}" class="form-label">{{ form.startingInvest.label }}</label>
+                {{ form.startingInvest }}
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <label for="{{ form.reccuringDepositAmount.id_for_label }}" class="form-label">{{ form.reccuringDepositAmount.label }}</label>
+                {{ form.reccuringDepositAmount }}
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Calculate</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Optional: Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>    {% block script_block %}{% endblock %}
+</body>
+</html>

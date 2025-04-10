@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add SP Info</title>
+    <style>
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .form-row > div {
+            flex-basis: calc(100% / 9); /* Adjust based on the number of fields */
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Add SP Info</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <div class="form-row">
+                {% for field in form.visible_fields %}
+                    <div>{{ field.label_tag }}{{ field }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

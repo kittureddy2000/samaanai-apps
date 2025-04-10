@@ -1,0 +1,173 @@
+{% extends 'spreturn/spreturn_base.html' %}
+
+{% block title %}
+    S&P Insights
+{% endblock %}
+
+{% block header %}
+    <h4>S&P Return Insights</h4>
+{% endblock %}
+
+{% block crispy %}
+    {% load crispy_forms_tags %}
+{% endblock %}
+
+{% block additional_head %}
+    <!-- Chart.js Library -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"
+    ></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1 class="mb-4 text-center">S&P Return Insights</h1>
+        
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% else %}
+            <!-- Summary Table -->
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <h3>Summary Statistics</h3>
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Investment Period (Years)</th>
+                                <th>Minimum SP Dividend Return ($)</th>
+                                <th>Average SP Dividend Return ($)</th>
+                                <th>Maximum SP Dividend Return ($)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for period, stats in SPReturnSummary.items %}
+                                <tr>
+                                    <td>{{ period }}</td>
+                                    <td>{{ stats.min }}</td>
+                                    <td>{{ stats.avg }}</td>
+                                    <td>{{ stats.max }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Combined Return Chart -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="mb-3">SP Dividend Return Analysis</h3>
+                    <canvas id="returnChart" width="800" height="400"></canvas>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block script_block %}
+    {% if not error %}
+    <script>
+        // Data passed from the view
+        const yearsInvest = {{ years_invest|safe }};
+        const seriesMin = {{ series_min|safe }};
+        const seriesAvg = {{ series_avg|safe }};
+        const seriesMax = {{ series_max|safe }};
+        
+        // Log data to console for debugging
+        console.log('Years Invest:', yearsInvest);
+        console.log('Series Min:', seriesMin);
+        console.log('Series Avg:', seriesAvg);
+        console.log('Series Max:', seriesMax);
+        
+        // Define colors
+        const colors = {
+            min: 'rgba(255, 99, 132, 1)',      // Red
+            avg: 'rgba(54, 162, 235, 1)',      // Blue
+            max: 'rgba(75, 192, 192, 1)',      // Green
+        };
+
+        const backgroundColors = {
+            min: 'rgba(255, 99, 132, 0.2)',    // Light Red
+            avg: 'rgba(54, 162, 235, 0.2)',    // Light Blue
+            max: 'rgba(75, 192, 192, 0.2)',    // Light Green
+        };
+
+        // Combined Return Chart
+        const ctx = document.getElementById('returnChart').getContext('2d');
+        const returnChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: yearsInvest,
+                datasets: [
+                    {
+                        label: 'Min SP Dividend Return ($)',
+                        data: seriesMin,
+                        borderColor: colors.min,
+                        backgroundColor: backgroundColors.min,
+                        fill: true,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Avg SP Dividend Return ($)',
+                        data: seriesAvg,
+                        borderColor: colors.avg,
+                        backgroundColor: backgroundColors.avg,
+                        fill: true,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Max SP Dividend Return ($)',
+                        data: seriesMax,
+                        borderColor: colors.max,
+                        backgroundColor: backgroundColors.max,
+                        fill: true,
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    title: {
+                        display: true,
+                        text: 'SP Dividend Return Across Investment Periods'
+                    },
+                    legend: {
+                        position: 'top',
+                    },
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Investment Period (Years)'
+                        },
+                        ticks: {
+                            autoSkip: true,
+                            maxTicksLimit: 20
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Return ($)'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    {% endif %}
+{% endblock %}

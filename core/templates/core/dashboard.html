@@ -1,0 +1,42 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Using AI Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">  <div class="col-md-6 col-lg-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <i class="fas fa-tasks fa-2x mb-2"></i>
+          <h5 class="card-title">My Tasks</h5>
+          <p class="card-text">Manage your tasks</p>
+          <a href="{% url 'task_management:get_lists' %}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+  <div class="row justify-content-center">  <div class="col-md-6 col-lg-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <i class="fas fa-chart-bar fa-2x mb-2"></i>
+          <h5 class="card-title">S&P Return</h5>
+          <p class="card-text">Analyze market performance</p>
+          <a href="{% url 'spreturn:spreturn' %}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <i class="fas fa-plane fa-2x mb-2"></i>
+          <h5 class="card-title">Samaan LLM</h5>
+          <p class="card-text">Samaan LLM applications</p>
+          <a href="www.google.com" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'spreturn/spreturn_base.html' %} {% load static %} 
+
+{% block title%}S&P Return{% endblock %} 
+{% block header %} <h4>S&P Return Analysis</h4> {% endblock %}
+{% load crispy_forms_tags %}
+ {%block content %}
+
+ <div class="container-fluid mt-4">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <!-- Form -->
+            {% include 'spreturn/spreturn_form.html' %}
+        </div>
+        <div class="col-6">
+            <div class="row ms-4">
+                <!-- Metric 1 -->
+                <div class="col-4 mb-3">
+                    <div class="card text-white bg-primary text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">S&P Min</h5>
+                            <p class="card-text">{{ sp_min }}</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Metric 2 -->
+                <div class="col-4 mb-3">
+                    <div class="card text-white bg-primary text-center">                        
+                        <div class="card-body">
+                            <h5 class="card-title">S&P Mean</h5>
+                            <p class="card-text">{{ sp_mean }}</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Metric 3 -->
+                <div class="col-4">
+                    <div class="card text-white bg-primary text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">S&P Max</h5>
+                            <p class="card-text">{{ sp_max }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+    </div>
+
+    <div class="row mt-2 justify-content-center">
+        <!-- Table -->
+        <div class="col-lg-6 mb-4">
+            <div class="bg-white rounded shadow-sm p-3">
+                <h3 class="mb-3">SP Return Details</h3>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Start Year</th>
+                                <th>End Year</th>
+                                <th>SP Return</th>
+                                <th>SP Return with Dividend</th>
+                                <th>CGAR</th>
+                                <th>CGAR with Dividend</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for year, data in Returndict.items %}
+                                <tr>
+                                    <td>{{ year }}</td>
+                                    <td>{{ data.0 }}</td>
+                                    <td>{{ data.1 }}</td>
+                                    <td>{{ data.2 }}</td>
+                                    <td>{{ data.3 }}</td>
+                                    <td>{{ data.4 }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
+        </div>        
+            <!-- Chart -->
+        <div class="col-lg-6 mb-4">
+            <div class="bg-white rounded shadow-sm p-3">
+                <h3 class="mb-3">SP Growth Chart</h3>
+                <canvas id="spGrowthChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Prepare data for the chart
+    const labels = {{ categories | safe }};
+    const dataSP = {{ SP | safe }};
+    const dataSPDD = {{ SP_DD | safe }};
+
+    console.log("In Preparing Chart");
+
+    const ctx = document.getElementById('spGrowthChart').getContext('2d');
+    const spGrowthChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'SP',
+                data: dataSP,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            }, {
+                label: 'SP with Dividend',
+                data: dataSPDD,
+                borderColor: 'rgb(54, 162, 235)',
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

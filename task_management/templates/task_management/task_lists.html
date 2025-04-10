@@ -1,0 +1,39 @@
+<!-- task_dashboard.html --> 
+{% extends 'task_management/task_base.html' %}
+{% load static %}
+{% load task_management_extras %}
+
+{% block title %}Create Task List{% endblock %}
+{% block additional_head %}
+<meta name="csrf-token" content="{{ csrf_token }}" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="form-container panel-shadow">
+                <h2 class="form-title">Create Task List</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.list_name.id_for_label }}">List Name</label>
+                        {{ form.list_name|add_class:"form-control" }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.list_code.id_for_label }}">List Code</label>
+                        {{ form.list_code|add_class:"form-control" }}
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="{{ form.list_type.id_for_label }}">
+                        <label class="form-check-label" for="{{ form.list_type.id_for_label }}">
+                            {{ form.list_type }} Special List
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block custom-hover-card">Create List</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

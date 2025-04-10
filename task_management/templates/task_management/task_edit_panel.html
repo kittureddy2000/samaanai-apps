@@ -1,0 +1,184 @@
+<form id="edit-task-form" data-task-id="{{ task.id }}" style="max-width: 100%;" enctype="multipart/form-data">
+  {% csrf_token %}
+  
+  <!-- Task title input - no card, simpler design -->
+  <div class="mb-3">
+    <input type="text" class="form-control form-control-sm border-0 fs-5 fw-medium" id="task_name" name="task_name" value="{{ task.task_name }}" style="padding: 0.5rem 0.25rem; background-color: transparent; box-shadow: none;">
+  </div>
+  
+  <!-- Due date with smaller compact design -->
+  <div class="d-flex align-items-center mb-3 py-2" style="border-bottom: 1px solid #f0f0f0;">
+    <i class="fas fa-calendar text-muted me-3" style="width: 20px;"></i>
+    <div class="dropdown flex-grow-1">
+      <button class="btn btn-sm btn-link text-start text-dark p-0 w-100 d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span id="due-date-text">{{ task.formatted_due_date|default:"Add due date" }}</span>
+        <i class="fas fa-chevron-down ms-auto small text-muted"></i>
+      </button>
+      <input type="hidden" id="due_date" name="due_date" value="{{ task.due_date|date:'Y-m-d' }}">
+      <ul class="dropdown-menu w-100 shadow-sm border-light">
+        <li><a class="dropdown-item py-1" href="#" data-due-date="">No date</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-due-date="{% now 'Y-m-d' %}">Today</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-due-date="{{ tomorrow_date|date:'Y-m-d' }}">Tomorrow</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-due-date="{{ next_week_date|date:'Y-m-d' }}">Next week</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item py-1" href="#" id="custom-date">Custom date</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Reminder with compact design -->
+  <div class="d-flex align-items-center mb-3 py-2" style="border-bottom: 1px solid #f0f0f0;">
+    <i class="fas fa-bell text-muted me-3" style="width: 20px;"></i>
+    <div class="dropdown flex-grow-1">
+      <button class="btn btn-sm btn-link text-start text-dark p-0 w-100 d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span>Remind me at</span>
+        <i class="fas fa-chevron-down ms-auto small text-muted"></i>
+      </button>
+      <input type="hidden" id="reminder_time" name="reminder_time" value="{{ task.reminder_time }}">
+      <ul class="dropdown-menu w-100 shadow-sm border-light">
+        <li><a class="dropdown-item py-1" href="#" data-reminder-time="">No reminder</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-reminder-time="today_evening">Today evening</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-reminder-time="tomorrow_morning">Tomorrow morning</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-reminder-time="tomorrow_evening">Tomorrow evening</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-reminder-time="next_week">Next week</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Repeat with compact design -->
+  <div class="d-flex align-items-center mb-3 py-2" style="border-bottom: 1px solid #f0f0f0;">
+    <i class="fas fa-repeat text-muted me-3" style="width: 20px;"></i>
+    <div class="dropdown flex-grow-1">
+      <button class="btn btn-sm btn-link text-start text-dark p-0 w-100 d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span>Repeat</span>
+        <i class="fas fa-chevron-down ms-auto small text-muted"></i>
+      </button>
+      <input type="hidden" id="repeats" name="repeats" value="{{ task.repeats }}">
+      <ul class="dropdown-menu w-100 shadow-sm border-light">
+        <li><a class="dropdown-item py-1" href="#" data-repeat="">Never</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-repeat="daily">Daily</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-repeat="weekdays">Weekdays</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-repeat="weekly">Weekly</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-repeat="monthly">Monthly</a></li>
+        <li><a class="dropdown-item py-1" href="#" data-repeat="yearly">Yearly</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Lists with compact design -->
+  <div class="d-flex align-items-center mb-3 py-2" style="border-bottom: 1px solid #f0f0f0;">
+    <i class="fas fa-list-ul text-muted me-3" style="width: 20px;"></i>
+    <div class="dropdown flex-grow-1">
+      <button class="btn btn-sm btn-link text-start text-dark p-0 w-100 d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span>{{ task.task_list.list_name }}</span>
+        <i class="fas fa-chevron-down ms-auto small text-muted"></i>
+      </button>
+      <input type="hidden" id="task_list_id" name="task_list_id" value="{{ task.task_list.id }}">
+      <ul class="dropdown-menu w-100 shadow-sm border-light">
+        {% for list in task_lists %}
+          <li><a class="dropdown-item py-1" href="#" data-list-id="{{ list.id }}">{{ list.list_name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Current Images section with better formatting -->
+  {% if task.images.all %}
+  <div class="mb-3 current-images-section">
+    <h5 class="mb-2">Current Images</h5>
+    <div class="row g-2">
+      {% for image in task.images.all %}
+      <div class="col-12">
+        <a href="{{ image.image_url }}" target="_blank" class="d-flex align-items-center text-decoration-none">
+          <i class="far fa-file-image me-2 text-primary"></i>
+          <span class="text-truncate">{{ image.image_name }}</span>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  
+  <!-- File attachment with custom icon design -->
+  <div class="d-flex align-items-center mb-3 py-2" style="border-bottom: 1px solid #f0f0f0;">
+    <i class="fas fa-paperclip text-muted me-3" style="width: 20px;"></i>
+    <div class="flex-grow-1">
+      <div class="d-flex align-items-center">
+        <label for="attachment" class="custom-file-upload mb-0 d-flex align-items-center" style="cursor: pointer;">
+          <span class="me-2">Attach file</span>
+          <i class="fas fa-upload text-primary" style="font-size: 14px;"></i>
+        </label>
+        <span id="file-name" class="ms-2 text-muted small"></span>
+        <input type="file" id="attachment" name="attachment" class="d-none">
+      </div>
+      {% if task.attachment %}
+      <div class="mt-1 small">
+        <a href="{{ task.attachment.url }}" class="text-primary d-flex align-items-center" target="_blank">
+          <i class="fas fa-file me-1"></i>
+          <span class="text-truncate">{{ task.attachment.name }}</span>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  
+  <!-- Task description with compact design -->
+  <div class="mb-3">
+    <textarea class="form-control form-control-sm border-0" 
+              id="note" 
+              name="note" 
+              placeholder="Task description" 
+              rows="3" 
+              style="background-color: #f9f9f9; padding: 0.5rem; resize: none; font-size: 13px;">{{ task.note }}</textarea>
+  </div>
+  
+  <!-- Save button -->
+  <div class="text-center">
+    <button type="submit" class="btn btn-success">
+      <i class="fas fa-save me-1"></i> Save
+    </button>
+  </div>
+</form>
+
+<script>
+// File upload handling
+document.addEventListener('DOMContentLoaded', function() {
+  var fileInput = document.getElementById('attachment');
+  var fileNameDisplay = document.getElementById('file-name');
+  
+  if (fileInput && fileNameDisplay) {
+    fileInput.addEventListener('change', function() {
+      if (fileInput.files.length > 0) {
+        var fileName = fileInput.files[0].name;
+        var fileSize = (fileInput.files[0].size / 1024).toFixed(2) + ' KB';
+        fileNameDisplay.textContent = fileName + ' (' + fileSize + ')';
+        fileNameDisplay.classList.add('text-primary');
+        console.log('File selected:', fileName, 'Size:', fileSize);
+      } else {
+        fileNameDisplay.textContent = '';
+      }
+    });
+  } else {
+    console.error('File input or file name display element not found');
+  }
+});
+</script>
+
+<style>
+/* Compact edit panel styles */
+#edit-task-form .dropdown-menu {
+  font-size: 0.875rem;
+}
+
+#edit-task-form .dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+#edit-task-form .btn-link {
+  text-decoration: none;
+}
+
+#edit-task-form .btn-link:hover {
+  background-color: transparent;
+}
+</style> 
