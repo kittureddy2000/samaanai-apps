@@ -13,13 +13,15 @@ services:
     env_file:
       - .env  # This loads the .env file into the container
     environment:
+      - PORT=8080
       - PROJECT_ID=${PROJECT_ID}
       - PYTHONUNBUFFERED=1
       - GOOGLE_APPLICATION_CREDENTIALS=/app/temp_credentials.json  # Set the env variable to point to the key
       - GS_BUCKET_NAME=your-bucket-name      
-
+      - REDIS_HOST=redis  # Point to Redis service name (not localhost)
     depends_on:
       - db
+      - redis
 
   db:
     image: postgres:13
@@ -34,9 +36,17 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:6.2
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+
 networks:
   app-network:
     driver: bridge      
 
 volumes:
   postgres_data:
+  redis_data:

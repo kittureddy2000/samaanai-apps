@@ -1,0 +1,78 @@
+{% extends 'portfolio/portfolio_base.html' %}
+
+{% block title %}API Debug - Stock Portfolio{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Alpha Vantage API Debug</h1>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">API Configuration</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">API Key:</dt>
+                <dd class="col-sm-9">{{ api_key|default:"Not configured" }}</dd>
+            </dl>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Test API Call</h5>
+        </div>
+        <div class="card-body">
+            <form method="get" class="mb-4">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="symbol" value="{{ test_symbol }}" placeholder="Enter stock symbol (e.g., AAPL)">
+                    <button class="btn btn-primary" type="submit">Test</button>
+                </div>
+            </form>
+            
+            {% if error %}
+                <div class="alert alert-danger">
+                    <h5 class="alert-heading">Error:</h5>
+                    <p>{{ error }}</p>
+                </div>
+            {% endif %}
+            
+            {% if result %}
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <h6 class="card-title mb-0">Results for {{ result.symbol }}</h6>
+                    </div>
+                    <div class="card-body">
+                        {% if result.success %}
+                            <dl class="row">
+                                <dt class="col-sm-3">Company Name:</dt>
+                                <dd class="col-sm-9">{{ result.company_name }}</dd>
+                                
+                                <dt class="col-sm-3">Current Price:</dt>
+                                <dd class="col-sm-9">${{ result.price }}</dd>
+                            </dl>
+                        {% else %}
+                            <p class="text-danger">Failed to retrieve data</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">API Troubleshooting Tips</h5>
+        </div>
+        <div class="card-body">
+            <ol>
+                <li>Verify your Alpha Vantage API key is correct</li>
+                <li>Check for API rate limits - Alpha Vantage limits to 5 calls per minute on free tier</li>
+                <li>Verify the stock symbol exists and is valid</li>
+                <li>Check network connectivity to alphavantage.co</li>
+                <li>Review server logs for detailed error messages</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %} 

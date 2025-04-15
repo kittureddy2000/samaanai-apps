@@ -1,0 +1,150 @@
+/* Base Styles */
+:root {
+    --primary-color: #4e73df;
+    --secondary-color: #858796;
+    --success-color: #1cc88a;
+    --danger-color: #e74a3b;
+    --warning-color: #f6c23e;
+    --info-color: #36b9cc;
+    --light-color: #f8f9fa;
+    --dark-color: #5a5c69;
+    --card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  }
+  
+  body {
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+      'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.875rem;
+    background-color: #f8f9fc;
+    color: #5a5c69;
+  }
+  
+  /* Navbar */
+  .navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Cards */
+  .card {
+    border: none;
+    border-radius: 0.35rem;
+    box-shadow: var(--card-shadow);
+  }
+  
+  .card-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+    padding: 0.75rem 1.25rem;
+  }
+  
+  .card-title {
+    font-weight: 700;
+    color: #4e73df;
+  }
+  
+  .card-body {
+    padding: 1.25rem;
+  }
+  
+  /* Status colors */
+  .positive {
+    color: var(--success-color);
+    font-weight: 600;
+  }
+  
+  .negative {
+    color: var(--danger-color);
+    font-weight: 600;
+  }
+  
+  /* Tables */
+  .table th {
+    font-weight: 700;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+  }
+  
+  .table td {
+    vertical-align: middle;
+  }
+  
+  /* Forms */
+  .form-label {
+    font-weight: 600;
+    color: var(--secondary-color);
+  }
+  
+  .form-control:focus {
+    border-color: #bac8f3;
+    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  .btn-primary:hover {
+    background-color: #2653d4;
+    border-color: #244cda;
+  }
+  
+  /* Special card style */
+  .border-dashed {
+    border: 2px dashed #d1d3e2;
+    background-color: rgba(248, 249, 252, 0.5);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .border-dashed:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(78, 115, 223, 0.05);
+  }
+  
+  /* Breadcrumbs */
+  .breadcrumb {
+    background-color: transparent;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.35rem;
+  }
+  
+  .breadcrumb-item a {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .breadcrumb-item a:hover {
+    text-decoration: underline;
+  }
+  
+  .breadcrumb-item.active {
+    color: var(--secondary-color);
+    font-weight: 600;
+  }
+  
+  /* Alerts */
+  .alert {
+    border-radius: 0.35rem;
+    border: none;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 767.98px) {
+    .card-body {
+      padding: 1rem;
+    }
+    
+    h1 {
+      font-size: 1.75rem;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+  }

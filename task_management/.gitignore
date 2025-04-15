@@ -1,0 +1,9 @@
+.env
+temp_credentials.json
+db.sqlite3
+logs/
+staticfiles/
+*.pyc
+__pycache__/
+.DS_Store
+task_management/attachments/

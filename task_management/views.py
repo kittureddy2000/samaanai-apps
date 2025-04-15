@@ -276,18 +276,19 @@ def complete_task(request, task_id):
         
         # Return the updated task information
         response_data = {
+            'success': True,
             'id': task.id,
             'task_name': task.task_name,
-            'completed': task.task_completed
+            'task_completed': task.task_completed
         }
         logger.info(f"Returning success response: {response_data}")
         return JsonResponse(response_data)
     except Task.DoesNotExist:
         logger.error(f"Task with ID {task_id} not found")
-        return JsonResponse({'error': 'Task not found'}, status=404)
+        return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
     except Exception as e:
         logger.error(f"Error in complete_task: {str(e)}", exc_info=True)
-        return JsonResponse({'error': str(e)}, status=500)
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 def mark_favorite(request):
     task_id = request.POST.get('id')

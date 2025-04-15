@@ -6,30 +6,43 @@ set -e
 # Function to wait for the database to be ready
 wait_for_db() {
     echo "Waiting for database..."
-    # Use environment variables for database connection
-    # Assumes PostgreSQL is on localhost:5432 via Cloud SQL Proxy or similar
-    while ! pg_isready -h ${DB_HOST:-localhost} -p ${DB_PORT:-5432} -U ${DB_USER:-postgres} -q -t 1; do
+    
+    # Try to connect using Python instead of pg_isready
+    until python -c "
+import sys
+import psycopg2
+try:
+    psycopg2.connect(
+        dbname='$DB_NAME',
+        user='$DB_USER',
+        password='$DB_PASSWORD',
+        host='$DB_HOST'
+    )
+except psycopg2.OperationalError:
+    sys.exit(1)
+sys.exit(0)
+    "; do
         echo "Database is unavailable - sleeping"
         sleep 1
     done
-    echo "Database is up!"
+    
+    echo "Database is up - continuing..."
 }
 
 # Optional: Wait for DB if needed, uncomment if DB startup is slow
-# wait_for_db 
+wait_for_db 
 
 # Collect static files
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
-# Run database migrations  <-- REMOVE/COMMENT THESE OUT
-# echo "python manage.py Before Running Make Migrations"
-# python manage.py makemigrations
-# 
-# echo "python manage.py Before Running migrate"
-# python manage.py migrate
-# 
-# echo "python manage.py migrate - Complete..."
+echo "python manage.py Before Running Make Migrations"
+python manage.py makemigrations
+
+echo "python manage.py Before Running migrate"
+python manage.py migrate
+
+echo "python manage.py migrate - Complete..."
 
 # Start Gunicorn server
 # Use PORT environment variable provided by Cloud Run

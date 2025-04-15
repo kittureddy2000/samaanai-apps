@@ -8,6 +8,24 @@
     {{ edit_task_form.non_field_errors }}
     <!-- Display any form errors that are not related to a specific field -->
 
+    <!-- Action Buttons -->
+    <div class="task-action-buttons">
+        <button type="button" id="toggle-complete-btn" class="task-action-btn complete" data-task-id="{{ task_id }}">
+            {% if edit_task_form.task_completed.value %}
+            <i class="fas fa-check-circle"></i>Completed
+            {% else %}
+            <i class="far fa-circle"></i>Mark Complete
+            {% endif %}
+        </button>
+        <button type="button" id="toggle-important-btn" class="task-action-btn important" data-task-id="{{ task_id }}">
+            {% if edit_task_form.important.value %}
+            <i class="fas fa-star"></i>Important
+            {% else %}
+            <i class="far fa-star"></i>Mark Important
+            {% endif %}
+        </button>
+    </div>
+
     <!-- Task Name -->
     <div>
         {{ edit_task_form.task_name|add_class:"form-control mb-1 input-box" }}
@@ -326,6 +344,127 @@
                     }).appendTo(imagePreviews);
                 };
                 reader.readAsDataURL(file);
+            });
+        });
+
+        // Handle toggle complete button
+        $('#toggle-complete-btn').on('click', function(e) {
+            const taskId = $(this).data('task-id');
+            // Create a synthetic event object that has the necessary properties
+            const syntheticEvent = {
+                preventDefault: function() {},
+                stopPropagation: function() {},
+                currentTarget: this
+            };
+            
+            // Create a hidden input for task_completed if it doesn't exist
+            if ($('input[name="task_completed"]').length === 0) {
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'task_completed',
+                    value: $(this).find('i').hasClass('fas') ? 'false' : 'true'
+                }).appendTo('#edit-task-form');
+            } else {
+                // Update the existing input
+                $('input[name="task_completed"]').val($(this).find('i').hasClass('fas') ? 'false' : 'true');
+            }
+            
+            // Call the existing function in the parent window
+            if (typeof window.parent.completeTaskClick === 'function') {
+                // Call the parent window's function
+                window.parent.completeTaskClick(syntheticEvent, taskId);
+                
+                // Update button text based on the new state
+                if ($(this).find('i').hasClass('fas')) {
+                    $(this).html('<i class="far fa-circle"></i>Mark Complete');
+                } else {
+                    $(this).html('<i class="fas fa-check-circle"></i>Completed');
+                }
+            } else {
+                // Fallback if the parent function doesn't exist
+                const isCurrentlyComplete = $(this).find('i').hasClass('fas');
+                const btn = $(this);
+                
+                // Toggle button appearance immediately
+                if (isCurrentlyComplete) {
+                    btn.find('i').removeClass('fas fa-check-circle').addClass('far fa-circle');
+                    btn.html('<i class="far fa-circle"></i>Mark Complete');
+                } else {
+                    btn.find('i').removeClass('far fa-circle').addClass('fas fa-check-circle');
+                    btn.html('<i class="fas fa-check-circle"></i>Completed');
+                }
+                
+                // Make AJAX call
+                $.ajax({
+                    url: `/task_management/complete_task/${taskId}/`,
+                    type: 'GET',
+                    success: function(response) {
+                        console.log('Task completion toggled:', response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error toggling task completion:', error);
+                        // Revert button if error
+                        if (isCurrentlyComplete) {
+                            btn.find('i').removeClass('far fa-circle').addClass('fas fa-check-circle');
+                            btn.html('<i class="fas fa-check-circle"></i>Completed');
+                        } else {
+                            btn.find('i').removeClass('fas fa-check-circle').addClass('far fa-circle');
+                            btn.html('<i class="far fa-circle"></i>Mark Complete');
+                        }
+                    }
+                });
+            }
+        });
+        
+        // Handle toggle important button
+        $('#toggle-important-btn').on('click', function(e) {
+            const taskId = $(this).data('task-id');
+            const btn = $(this);
+            const isCurrentlyImportant = btn.find('i').hasClass('fas');
+            
+            // Create a hidden input for important if it doesn't exist
+            if ($('input[name="important"]').length === 0) {
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'important',
+                    value: isCurrentlyImportant ? 'false' : 'true'
+                }).appendTo('#edit-task-form');
+            } else {
+                // Update the existing input
+                $('input[name="important"]').val(isCurrentlyImportant ? 'false' : 'true');
+            }
+            
+            // Toggle button appearance immediately for better UX
+            if (isCurrentlyImportant) {
+                btn.find('i').removeClass('fas fa-star').addClass('far fa-star');
+                btn.html('<i class="far fa-star"></i>Mark Important');
+            } else {
+                btn.find('i').removeClass('far fa-star').addClass('fas fa-star');
+                btn.html('<i class="fas fa-star"></i>Important');
+            }
+            
+            // Make AJAX request 
+            $.ajax({
+                url: "{% url 'task_management:mark_favorite' %}",
+                type: "POST",
+                data: {
+                    id: taskId,
+                    csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val()
+                },
+                success: function(response) {
+                    console.log('Task importance toggled:', response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error toggling task importance:', error);
+                    // Revert button if error
+                    if (isCurrentlyImportant) {
+                        btn.find('i').removeClass('far fa-star').addClass('fas fa-star');
+                        btn.html('<i class="fas fa-star"></i>Important');
+                    } else {
+                        btn.find('i').removeClass('fas fa-star').addClass('far fa-star');
+                        btn.html('<i class="far fa-star"></i>Mark Important');
+                    }
+                }
             });
         });
 

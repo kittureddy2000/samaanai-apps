@@ -10,6 +10,8 @@ urlpatterns = [
     path('oauth/', include('social_django.urls', namespace='social')),  # Social Auth URLs
     path('task_management/', include('task_management.urls')),
     path('spreturn/', include('spreturn.urls', namespace='spreturn')),
+    path('portfolio/', include('portfolio.urls')),
+
 
 ]
 if settings.DEBUG:

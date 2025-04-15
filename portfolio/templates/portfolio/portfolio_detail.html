@@ -1,0 +1,196 @@
+{% extends 'portfolio/portfolio_base.html' %}
+
+{% block title %}{{ portfolio.name }} - Stock Portfolio{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'portfolio:dashboard' %}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'portfolio:portfolio_list' %}">Portfolios</a></li>
+        <li class="breadcrumb-item active">{{ portfolio.name }}</li>
+    </ol>
+</nav>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>{{ portfolio.name }}</h1>
+    <div>
+        <a href="{% url 'portfolio:refresh_stock_prices' portfolio_pk=portfolio.pk %}" class="btn btn-outline-secondary">
+            <i class="far fa-sync-alt"></i> Refresh Prices
+        </a>
+        <a href="{% url 'portfolio:import_transactions_portfolio' portfolio_pk=portfolio.pk %}" class="btn btn-outline-primary">
+            <i class="far fa-file-import"></i> Import Transactions
+        </a>
+        <a href="{% url 'portfolio:add_transaction' portfolio_pk=portfolio.pk %}" class="btn btn-primary">
+            <i class="far fa-plus"></i> Add Transaction
+        </a>
+    </div>
+</div>
+
+<!-- Portfolio Summary -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Total Value</h6>
+                <h4 class="mb-0">${{ total_value|floatformat:2 }}</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Cost Basis</h6>
+                <h4 class="mb-0">${{ total_cost|floatformat:2 }}</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Total Gain/Loss</h6>
+                <h4 class="{% if total_gain_loss >= 0 %}positive{% else %}negative{% endif %} mb-0">
+                    ${{ total_gain_loss|floatformat:2 }}
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Gain/Loss %</h6>
+                <h4 class="{% if total_gain_loss_percentage >= 0 %}positive{% else %}negative{% endif %} mb-0">
+                    {{ total_gain_loss_percentage|floatformat:2 }}%
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Holdings Table -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Holdings</h5>
+    </div>
+    <div class="card-body">
+        {% if holdings %}
+            <div class="table-responsive">
+                <table class="table table-hover table-sm">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Actions</th>
+                            <th>Price Paid $</th>
+                            <th>Last Price $</th>
+                            <th>Delta from 52W Low</th>
+                            <th>52W High</th>
+                            <th>Change %</th>
+                            <th>Total Gain %</th>
+                            <th>Value $</th>
+                            <th>Total Gain $</th>
+                            <th>YTD Gain %</th>
+                            <th>Day's Gain $</th>
+                            <th>Qty</th>
+                            <th>Change $</th>
+                            <th>% of Portfolio</th>
+                            <th>P/E Ratio</th>
+                            <th>Dividend Yield %</th>
+                            <th>Delta from 52W High</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for holding in holdings %}
+                            <tr>
+                                <td><strong>{{ holding.symbol }}</strong></td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-outline-secondary">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td>${{ holding.avg_cost|floatformat:2 }}</td>
+                                <td>${{ holding.current_price|floatformat:2 }}</td>
+                                <td>${{ holding.delta_from_52w_low|default:"--"|floatformat:2 }}</td>
+                                <td>${{ holding.fifty_two_week_high|default:"--"|floatformat:2 }}</td>
+                                <td class="{% if holding.day_change_percentage >= 0 %}positive{% else %}negative{% endif %}">
+                                    {{ holding.day_change_percentage|default:"0.00"|floatformat:2 }}%
+                                </td>
+                                <td class="{% if holding.gain_loss_percentage >= 0 %}positive{% else %}negative{% endif %}">
+                                    {{ holding.gain_loss_percentage|floatformat:2 }}%
+                                </td>
+                                <td>${{ holding.current_value|floatformat:2 }}</td>
+                                <td class="{% if holding.gain_loss >= 0 %}positive{% else %}negative{% endif %}">
+                                    ${{ holding.gain_loss|floatformat:2 }}
+                                </td>
+                                <td>--</td><!-- YTD Gain % - Would need historical data -->
+                                <td class="{% if holding.day_gain >= 0 %}positive{% else %}negative{% endif %}">
+                                    ${{ holding.day_gain|floatformat:2 }}
+                                </td>
+                                <td>{{ holding.quantity|floatformat:2 }}</td>
+                                <td class="{% if holding.day_change >= 0 %}positive{% else %}negative{% endif %}">
+                                    ${{ holding.day_change|default:"0.00"|floatformat:2 }}
+                                </td>
+                                <td>{{ holding.portfolio_percentage|floatformat:2 }}%</td>
+                                <td>{{ holding.pe_ratio|default:"--" }}</td>
+                                <td>{{ holding.dividend_yield|default:"--" }}%</td>
+                                <td>${{ holding.delta_from_52w_high|default:"--"|floatformat:2 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> This portfolio doesn't have any holdings yet.
+                <a href="{% url 'portfolio:add_transaction' portfolio_pk=portfolio.pk %}" class="alert-link">Add your first transaction</a>.
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Recent Transactions -->
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">Recent Transactions</h5>
+        <a href="{% url 'portfolio:transaction_list' portfolio_pk=portfolio.pk %}" class="btn btn-sm btn-outline-primary">
+            View All
+        </a>
+    </div>
+    <div class="card-body">
+        {% if recent_transactions %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Symbol</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in recent_transactions %}
+                            <tr>
+                                <td>{{ transaction.transaction_date|date:"M d, Y" }}</td>
+                                <td>
+                                    <span class="badge {% if transaction.transaction_type == 'BUY' %}bg-success{% else %}bg-danger{% endif %}">
+                                        {{ transaction.transaction_type }}
+                                    </span>
+                                </td>
+                                <td>{{ transaction.stock_symbol }}</td>
+                                <td>{{ transaction.quantity|floatformat:4 }}</td>
+                                <td>${{ transaction.price_per_share|floatformat:2 }}</td>
+                                <td>${{ transaction.total_value|floatformat:2 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> No transactions recorded for this portfolio yet.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

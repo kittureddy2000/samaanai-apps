@@ -408,20 +408,43 @@ header.navbar {
 /* Task Completion Checkmark */
 .custom-check, .complete-task {
   cursor: pointer !important;
-  z-index: 10 !important;
+  margin-right: 8px !important;
+  font-size: 14px !important;
+  transition: all 0.2s ease !important;
   position: relative !important;
-  font-size: 14px !important; /* Ensure size */
-  color: var(--text-secondary); /* Default check color */
+  z-index: 10 !important;
+  width: 18px !important;
+  height: 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-.complete-task.fas.fa-check-circle { /* Completed state */
-  color: var(--microsoft-blue) !important;
+/* Incomplete task circle */
+.custom-check.far.fa-circle {
+  color: #a0a0a0 !important;
+  border-radius: 50% !important;
 }
 
+/* Completed task check */
+.custom-check.fas.fa-check-circle,
+.complete-task.fas.fa-check-circle { 
+  color: #2ecc71 !important; /* Bright green */
+  animation: checkPulse 0.3s ease-in-out !important;
+}
+
+/* Animation for check mark when clicked */
+@keyframes checkPulse {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Task title strikethrough for completed tasks */
 .strikethrough {
-text-decoration: line-through;
-  color: #a6a6a6 !important; 
-  opacity: 0.8;
+  text-decoration: line-through !important;
+  color: #9e9e9e !important;
+  font-style: italic !important;
 }
 
 /* Favorite/Star Icon */
@@ -450,6 +473,53 @@ text-decoration: line-through;
   background-color: white !important; 
   transition: all 0.3s ease !important; 
   font-size: 13px !important; 
+}
+
+/* Task Action Buttons in Edit Panel */
+.task-action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem !important;
+  padding: 0.5rem;
+  border: 1px solid var(--border-medium);
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.task-action-btn {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.task-action-btn:hover {
+  background-color: #f3f3f3;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.task-action-btn i {
+  margin-right: 8px;
+}
+
+.task-action-btn.complete {
+  color: var(--success);
+}
+
+.task-action-btn.important {
+  color: var(--warning);
+}
+
+/* Card spacing in edit task panel */
+#task-details-panel .card {
+  margin-bottom: 1.0rem !important;
 }
 
 /* Form Element Styling within Details Panel */

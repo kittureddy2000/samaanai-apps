@@ -52,6 +52,33 @@ logger.info(f"HOST: {env('DB_HOST', default='Not Set')}")
 logger.info(f"DB_NAME: {env('DB_NAME', default='Not Set')}")
 logger.info(f"DB_USER: {env('DB_USER', default='Not Set')}")
 
+# Redis settings for caching
+REDIS_HOST = env('REDIS_HOST', default='localhost')
+REDIS_PORT = env('REDIS_PORT', default='6379')
+REDIS_DB = env('REDIS_DB', default='0')
+REDIS_PASSWORD = env('REDIS_PASSWORD', default=None)
+REDIS_SSL = env.bool('REDIS_SSL', default=False)
+
+# Configure Django Redis Cache
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"{'rediss' if REDIS_SSL else 'redis'}://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": REDIS_PASSWORD,
+            "SOCKET_CONNECT_TIMEOUT": 5,  # seconds
+            "SOCKET_TIMEOUT": 5,  # seconds
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100},
+        },
+        "KEY_PREFIX": "samaanai"
+    }
+}
+
+# Stock data cache timeouts (in seconds)
+STOCK_PRICE_CACHE_TIMEOUT = 60 * 15  # 15 minutes
+STOCK_DETAILS_CACHE_TIMEOUT = 60 * 60 * 24  # 24 hours
+
 try:
     credentials, project = google.auth.default()
     logger.info(f"Google Cloud project: {project}")
@@ -152,7 +179,7 @@ else:
     ALLOWED_HOSTS = allowed_hosts_str.split(',')
     logger.info(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
     SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True 
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -208,7 +235,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'crispy_forms',
     'crispy_bootstrap5', 
-
+    'portfolio',
 ]
 
 MIDDLEWARE = [
@@ -270,6 +297,10 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     'https://www.googleapis.com/auth/gmail.readonly',       # Extended scope for Gmail
     'https://www.googleapis.com/auth/tasks'           # Extended scope for Google Tasks
 ]
+
+# Alpha Vantage API key for stock data
+ALPHA_VANTAGE_API_KEY = env('ALPHA_VANTAGE_API_KEY', default=None)
+
 SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
     'access_type': 'offline',
     'prompt': 'consent',  # or 'consent' or 'select_account' 
@@ -309,11 +340,6 @@ MICROSOFT_AUTH = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
 CACHE_TIMEOUT = 300
 
 # ... (rest of the settings.py from the previous response)

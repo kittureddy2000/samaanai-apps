@@ -1,0 +1,177 @@
+{% extends 'portfolio/portfolio_base.html' %}
+
+{% block title %}Dashboard - Stock Portfolio{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Portfolio Dashboard</h1>
+
+{% if portfolios %}
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Overall Portfolio Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <h6 class="text-muted">Total Value</h6>
+                                <h3>${{ total_value|floatformat:2 }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <h6 class="text-muted">Total Cost</h6>
+                                <h3>${{ total_cost|floatformat:2 }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <h6 class="text-muted">Total Gain/Loss</h6>
+                                <h3 class="{% if total_gain_loss >= 0 %}positive{% else %}negative{% endif %}">
+                                    ${{ total_gain_loss|floatformat:2 }}
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <h6 class="text-muted">Total Gain/Loss %</h6>
+                                <h3 class="{% if total_gain_loss_percentage >= 0 %}positive{% else %}negative{% endif %}">
+                                    {{ total_gain_loss_percentage|floatformat:2 }}%
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Portfolio Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="portfolioDistributionChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mb-3">Your Portfolios</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for portfolio in portfolios %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">{{ portfolio.name }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div>
+                                <h6 class="text-muted">Value</h6>
+                                <h4>${{ portfolio.get_total_value|floatformat:2 }}</h4>
+                            </div>
+                            <div class="text-end">
+                                <h6 class="text-muted">Gain/Loss</h6>
+                                {% with gain_loss=portfolio.get_total_gain_loss %}
+                                    <h4 class="{% if gain_loss >= 0 %}positive{% else %}negative{% endif %}">
+                                        ${{ gain_loss|floatformat:2 }}
+                                    </h4>
+                                {% endwith %}
+                            </div>
+                        </div>
+                        
+                        {% with holdings=portfolio.get_holdings %}
+                            {% if holdings %}
+                                <p class="text-muted mb-1">Top Holdings:</p>
+                                <ul class="list-unstyled">
+                                    {% for holding in holdings|slice:":3" %}
+                                        <li>{{ holding.symbol }} - ${{ holding.current_value|floatformat:2 }}</li>
+                                    {% endfor %}
+                                    {% if holdings|length > 3 %}
+                                        <li class="text-muted">+ {{ holdings|length|add:"-3" }} more</li>
+                                    {% endif %}
+                                </ul>
+                            {% else %}
+                                <p class="text-muted">No holdings in this portfolio</p>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'portfolio:portfolio_detail' pk=portfolio.pk %}" class="btn btn-primary">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+        <!-- New Portfolio Card -->
+        <div class="col">
+            <div class="card h-100 border-dashed">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <i class="fas fa-plus-circle fa-3x mb-3 text-primary"></i>
+                    <h5>Create New Portfolio</h5>
+                    <a href="{% url 'portfolio:portfolio_list' %}" class="btn btn-outline-primary mt-3">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-chart-line fa-4x mb-3 text-muted"></i>
+        <h3>Welcome to Stock Portfolio Manager</h3>
+        <p class="lead">You don't have any portfolios yet. Let's create your first one!</p>
+        <a href="{% url 'portfolio:portfolio_list' %}" class="btn btn-primary mt-3">
+            <i class="fas fa-plus"></i> Create Portfolio
+        </a>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    {% if portfolios %}
+    // Data for portfolio distribution chart
+    const portfolioData = [
+        {% for portfolio in portfolios %}
+            {
+                name: "{{ portfolio.name }}",
+                value: {{ portfolio.get_total_value|floatformat:2 }}
+            },
+        {% endfor %}
+    ];
+    
+    // Create chart
+    const ctx = document.getElementById('portfolioDistributionChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: portfolioData.map(p => p.name),
+            datasets: [{
+                data: portfolioData.map(p => p.value),
+                backgroundColor: [
+                    '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b',
+                    '#5a5c69', '#858796', '#6610f2', '#fd7e14', '#20c9a6'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                }
+            }
+        }
+    });
+    {% endif %}
+</script>
+{% endblock %}

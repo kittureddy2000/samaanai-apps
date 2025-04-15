@@ -1,0 +1,86 @@
+{% extends 'portfolio/portfolio_base.html' %}
+
+{% block title %}Import Transactions - Stock Portfolio{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'portfolio:dashboard' %}">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'portfolio:portfolio_list' %}">Portfolios</a></li>
+        <li class="breadcrumb-item active">Import Transactions</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Import Transactions from File</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.portfolio.id_for_label }}" class="form-label">{{ form.portfolio.label }}</label>
+                        {{ form.portfolio }}
+                        {% if form.portfolio.errors %}
+                            <div class="text-danger">{{ form.portfolio.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.file.id_for_label }}" class="form-label">{{ form.file.label }}</label>
+                        {{ form.file }}
+                        {% if form.file.errors %}
+                            <div class="text-danger">{{ form.file.errors }}</div>
+                        {% endif %}
+                        <div class="form-text">{{ form.file.help_text }}</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Import Transactions</button>
+                    <a href="{% url 'portfolio:portfolio_list' %}" class="btn btn-outline-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">File Format Guidelines</h5>
+            </div>
+            <div class="card-body">
+                <h6>Required Columns</h6>
+                <ul>
+                    <li><strong>symbol</strong> - Stock symbol (e.g., AAPL, MSFT)</li>
+                    <li><strong>quantity</strong> - Number of shares</li>
+                    <li><strong>price_per_share</strong> - Price per share</li>
+                </ul>
+                
+                <h6>Optional Columns</h6>
+                <ul>
+                    <li><strong>transaction_type</strong> - "BUY" or "SELL" (defaults to "BUY" if not specified)</li>
+                    <li><strong>transaction_date</strong> - Date of transaction (defaults to current date if not specified)</li>
+                </ul>
+                
+                <h6>Example CSV Format</h6>
+                <pre>symbol,quantity,price_per_share,transaction_type,transaction_date
+AAPL,10,150.50,BUY,2023-01-15
+MSFT,5,280.75,BUY,2023-01-20
+GOOGL,2,2500.00,SELL,2023-02-05</pre>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Download Template</h5>
+            </div>
+            <div class="card-body">
+                <p>Download a template file to get started:</p>
+                <a href="{% url 'portfolio:download_template' %}" class="btn btn-outline-primary">
+                    <i class="far fa-download"></i> Download CSV Template
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

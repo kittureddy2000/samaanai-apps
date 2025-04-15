@@ -4,7 +4,8 @@
 
 {% block content %}
 <div class="container">
-  <div class="row justify-content-center">  <div class="col-md-6 col-lg-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
       <div class="card text-center shadow-sm">
         <div class="card-body">
           <i class="fas fa-tasks fa-2x mb-2"></i>
@@ -14,8 +15,19 @@
         </div>
       </div>
     </div>
+    
+    <div class="col-md-6 col-lg-4">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <i class="fas fa-chart-line fa-2x mb-2"></i>
+          <h5 class="card-title">Portfolio Manager</h5>
+          <p class="card-text">Manage your stock portfolio</p>
+          <a href="{% url 'portfolio:dashboard' %}" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
 
-  <div class="row justify-content-center">  <div class="col-md-6 col-lg-4">
+    <div class="col-md-6 col-lg-4">
       <div class="card text-center shadow-sm">
         <div class="card-body">
           <i class="fas fa-chart-bar fa-2x mb-2"></i>

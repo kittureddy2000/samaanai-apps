@@ -32,6 +32,20 @@
     top: 50%;
     transform: translateY(-50%);
   }
+
+  /* Completed task check */
+  .custom-check.fas.fa-check-circle,
+  .complete-task.fas.fa-check-circle { 
+    color: #2ecc71 !important; /* Bright green */
+    animation: checkPulse 0.3s ease-in-out !important;
+  }
+
+  /* Animation for check mark when clicked */
+  @keyframes checkPulse {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
 </style>
 {% endblock %}
 {% block content %}
@@ -413,33 +427,60 @@
   }
 
   function createTaskCardHTML(task) {
-    const taskNameClass = task.task_completed ? 'strikethrough' : '';
-    const checkIcon = task.task_completed ? 'fas fa-check-circle' : 'far fa-circle';
-    const favoriteIconClass = task.important ? 'fas fa-star text-primary' : 'far fa-star';
-    const dueDateText = task.due_date ? formatDate(task.due_date) : '';
-    const overdueText = task.overdue ? ' · Overdue' : '';
+    // Set icon classes based on task completion status
+    let checkIcon = task.task_completed ? 'fas fa-check-circle' : 'far fa-circle';
+    let checkColor = task.task_completed ? '#2ecc71' : '#a0a0a0'; // Green if completed, gray if not
+    let taskNameClass = task.task_completed ? 'strikethrough' : '';
     
-    console.log("Creating task card with ID:", task.id);
+    // Format due date
+    let dueDateText = '';
+    let overdueText = '';
+    
+    if (task.due_date) {
+        const dueDate = new Date(task.due_date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        // Format the date
+        if (dueDate.getTime() === today.getTime()) {
+            dueDateText = "Due Today";
+        } else if (dueDate.getTime() === tomorrow.getTime()) {
+            dueDateText = "Due Tomorrow";
+        } else {
+            dueDateText = `Due ${dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+        }
+        
+        // Check if overdue
+        if (dueDate < today) {
+            overdueText = ' <span style="color: #e74c3c; font-weight: 600;">(Overdue)</span>';
+        }
+    }
+    
+    // Set favorite icon class
+    let favoriteIconClass = task.is_favorite ? 'fas fa-star text-warning' : 'far fa-star';
     
     return `
-      <div class="task-card" data-task-id="${task.id}" id="task-${task.id}" 
-           style="margin-bottom: 8px !important; border: 1px solid #e0e0e0; border-radius: 2px; background-color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+    <div class="task-card" data-task-id="${task.id}" id="task-${task.id}" 
+         style="margin-bottom: 8px !important; border: 1px solid #e0e0e0; border-radius: 2px; background-color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
         <div class="d-flex justify-content-between align-items-center" style="padding: 6px 8px;">
-          <div class="d-flex align-items-center" style="padding-left: 4px;">
-            <i class="${checkIcon} custom-check complete-task" 
-               data-task-id="${task.id}" 
-               onclick="completeTaskClick(event, ${task.id})"
-               style="font-size: 14px; cursor: pointer; position: relative; z-index: 10; color: #a0a0a0;"></i>
-            <div style="margin-left: 12px;">
-              <div class="task-title ${taskNameClass}" style="font-size: 13px;">${task.task_name}</div>
-              ${dueDateText ? `<div class="due-date" style="font-size: 11px; color: #767676;">${dueDateText}${overdueText}</div>` : ''}
+            <div class="d-flex align-items-center" style="padding-left: 4px;">
+                <i class="${checkIcon} custom-check complete-task" 
+                   data-task-id="${task.id}" 
+                   onclick="completeTaskClick(event, ${task.id})"
+                   style="font-size: 14px; cursor: pointer; position: relative; z-index: 10; color: ${checkColor};"></i>
+                <div style="margin-left: 12px;">
+                    <div class="task-title ${taskNameClass}" style="font-size: 13px;">${task.task_name}</div>
+                    ${dueDateText ? `<div class="due-date" style="font-size: 11px; color: #767676;">${dueDateText}${overdueText}</div>` : ''}
+                </div>
             </div>
-          </div>
-          <div style="padding-right: 4px;">
-            <i class="${favoriteIconClass} mark-favorite" data-id="${task.id}" data-task-id="${task.id}" style="font-size: 14px;"></i>
-          </div>
+            <div style="padding-right: 4px;">
+                <i class="${favoriteIconClass} mark-favorite" data-id="${task.id}" data-task-id="${task.id}" style="font-size: 14px; cursor: pointer;"></i>
+            </div>
         </div>
-      </div>`;
+    </div>`;
   }
   function updateTasksSection(tasks) {
     const tasksHtml = tasks.map((task) => createTaskCardHTML(task)).join("");
@@ -590,60 +631,105 @@
     });
   }
 
-  // Direct click handler for task completion
+  // Function to handle clicking the complete task icon
   function completeTaskClick(e, taskId) {
-    console.log("⭐ CLICK HANDLER ACTIVATED ⭐");
     e.preventDefault();
     e.stopPropagation();
     
-    if (!taskId) {
-      console.error("ERROR: No task ID provided to completeTaskClick function");
-      return;
+    console.log(`Completing task ID: ${taskId}`);
+    const clickedElement = $(e.currentTarget);
+    console.log("Clicked element:", clickedElement);
+    console.log("Clicked element classes:", clickedElement.attr('class'));
+    
+    // Determine if the task is currently complete based on icon class
+    const isCurrentlyComplete = clickedElement.hasClass('fas');
+    console.log("Is currently complete?", isCurrentlyComplete);
+    
+    // Immediately update UI to show action is pending
+    if (isCurrentlyComplete) {
+        // Mark as incomplete - change to empty circle and remove strikethrough
+        clickedElement.removeClass('fas fa-check-circle').addClass('far fa-circle');
+        clickedElement.css('color', '#a0a0a0'); // Change to gray
+        clickedElement.closest('.task-card').find('.task-title').removeClass('strikethrough');
+    } else {
+        // Mark as complete - change to checked circle and add strikethrough
+        clickedElement.removeClass('far fa-circle').addClass('fas fa-check-circle');
+        clickedElement.css('color', '#2ecc71'); // Change to green
+        clickedElement.closest('.task-card').find('.task-title').addClass('strikethrough');
     }
     
-    console.log("Complete task click function called with task ID:", taskId);
-    
-    var url = '/task_management/complete_task/' + taskId + '/';
-    console.log("Making AJAX request to:", url);
+    // Make the AJAX call to update on server
+    const url = `/task_management/complete_task/${taskId}/`;
+    console.log("AJAX URL:", url);
     
     $.ajax({
-      url: url,
-      type: 'GET',
-      success: function(response) {
-        console.log("Task completion response:", response);
-        
-        if (response && response.id) {
-          // Find the task card
-          var taskCard = $('#task-' + response.id);
-          console.log("Task card found:", taskCard.length > 0);
-          
-          // Find the icon element
-          var icon = taskCard.find('.custom-check');
-          console.log("Current icon class:", icon.attr('class'));
-          
-          // Update icon based on completion status
-          if (response.task_completed) {
-            icon.removeClass('far fa-circle').addClass('fas fa-check-circle');
-            taskCard.find('.task-title').addClass('strikethrough');
-            console.log("Task marked as completed - Added strikethrough");
-          } else {
-            icon.removeClass('fas fa-check-circle').addClass('far fa-circle');
-            taskCard.find('.task-title').removeClass('strikethrough');
-            console.log("Task marked as incomplete - Removed strikethrough");
-          }
-          
-          // Update task counts
-          updateBadgeCounts();
-        } else {
-          console.error("Invalid response format:", response);
+        url: url,
+        type: 'GET',
+        success: function(response) {
+            console.log("Success response:", response);
+            if (response.success) {
+                console.log(`Task ${taskId} completion toggled successfully.`);
+                // Ensure UI matches server response
+                const taskIsNowComplete = response.task_completed;
+                console.log("Task is now complete according to server:", taskIsNowComplete);
+                
+                const taskCard = $(`#task-${taskId}`);
+                console.log("Task card exists:", taskCard.length > 0);
+                
+                // Make sure the UI reflects the current server state
+                if (taskIsNowComplete) {
+                    console.log("Ensuring task appears complete");
+                    clickedElement.removeClass('far fa-circle').addClass('fas fa-check-circle');
+                    clickedElement.css('color', '#2ecc71'); // Bright green
+                    taskCard.find('.task-title').addClass('strikethrough');
+                } else {
+                    console.log("Ensuring task appears incomplete");
+                    clickedElement.removeClass('fas fa-check-circle').addClass('far fa-circle');
+                    clickedElement.css('color', '#a0a0a0'); // Gray
+                    taskCard.find('.task-title').removeClass('strikethrough');
+                }
+                
+                // Update the task counts/display
+                updateBadgeCounts();
+            } else {
+                console.error("Server reported failure:", response.error);
+                // Revert UI changes if the server reports an error
+                if (isCurrentlyComplete) {
+                    clickedElement.removeClass('far fa-circle').addClass('fas fa-check-circle');
+                    clickedElement.css('color', '#2ecc71');
+                    clickedElement.closest('.task-card').find('.task-title').addClass('strikethrough');
+                } else {
+                    clickedElement.removeClass('fas fa-check-circle').addClass('far fa-circle');
+                    clickedElement.css('color', '#a0a0a0');
+                    clickedElement.closest('.task-card').find('.task-title').removeClass('strikethrough');
+                }
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+            console.error("Response Text:", xhr.responseText);
+            
+            // Revert UI changes if there's an error
+            if (isCurrentlyComplete) {
+                clickedElement.removeClass('far fa-circle').addClass('fas fa-check-circle');
+                clickedElement.css('color', '#2ecc71');
+                clickedElement.closest('.task-card').find('.task-title').addClass('strikethrough');
+            } else {
+                clickedElement.removeClass('fas fa-check-circle').addClass('far fa-circle');
+                clickedElement.css('color', '#a0a0a0');
+                clickedElement.closest('.task-card').find('.task-title').removeClass('strikethrough');
+            }
         }
-      },
-      error: function(xhr, status, error) {
-        console.error("Error completing task:", status);
-        console.error("Error details:", error);
-        console.error("Response text:", xhr.responseText);
-      }
     });
+  }
+  
+  // Helper function to show error messages
+  function showErrorMessage(message) {
+    $('<div class="alert alert-danger task-update-alert" style="position: fixed; top: 15px; right: 15px; z-index: 9999;">' + 
+      message + '</div>')
+      .appendTo('body')
+      .delay(3000)
+      .fadeOut(500, function() { $(this).remove(); });
   }
 
   $(document).ready(function () {
@@ -973,10 +1059,52 @@
       $("#tasks-section").append(newTaskHtml);
     }
 
-    // Sync Google Tasks button
+    // Handle sync Google Tasks button
     $(document).on("click", "#sync-goog-tasks-btn", function (e) {
       console.log("Sync Task button clicked");
       syncGoogleTasks();
+    });
+
+    // Handle clicking on mark favorite (star) icon
+    $(document).on("click", ".mark-favorite", function (e) {
+      e.preventDefault();
+      e.stopPropagation(); // Prevent task card click
+      
+      var taskId = $(this).data("id");
+      console.log("Mark favorite clicked for task ID:", taskId);
+      
+      // Get CSRF token for the POST request
+      var csrfToken = $('meta[name="csrf-token"]').attr("content");
+      
+      $.ajax({
+        url: "{% url 'task_management:mark_favorite' %}",
+        type: "POST",
+        data: {
+          id: taskId,
+          csrfmiddlewaretoken: csrfToken
+        },
+        success: function (response) {
+          console.log("Mark favorite success:", response);
+          
+          // Update the star icon based on the response
+          var starElement = $(`#task-${response.task_id} .mark-favorite`);
+          
+          if (response.Important) {
+            // Task is now marked as important
+            starElement.removeClass("far").addClass("fas text-warning");
+          } else {
+            // Task is no longer marked as important
+            starElement.removeClass("fas text-warning").addClass("far");
+          }
+          
+          // Update badge counts after changing importance
+          updateBadgeCounts();
+        },
+        error: function (xhr, status, error) {
+          console.error("Error marking task as favorite:", error);
+          showErrorMessage("Failed to update task importance");
+        }
+      });
     });
 
     // Sync Microsoft Tasks button
