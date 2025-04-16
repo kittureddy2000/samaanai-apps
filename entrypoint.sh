@@ -7,24 +7,61 @@ set -e
 wait_for_db() {
     echo "Waiting for database..."
     
-    # Try to connect using Python instead of pg_isready
-    until python -c "
+    # Check if we're connecting to a Cloud SQL instance via Unix socket
+    if [[ "$DB_HOST" == /cloudsql/* ]]; then
+        echo "Detected Cloud SQL socket connection at $DB_HOST"
+        
+        # Try to connect using Python and Unix socket
+        until python -c "
 import sys
 import psycopg2
 try:
-    psycopg2.connect(
+    conn_params = {
+        'dbname': '$DB_NAME',
+        'user': '$DB_USER',
+        'password': '$DB_PASSWORD',
+    }
+    
+    # Use Unix socket for Cloud SQL
+    conn_params['host'] = '/cloudsql/$DB_INSTANCE_CONNECTION_NAME'
+    
+    conn = psycopg2.connect(**conn_params)
+    conn.close()
+    print('Database connection successful')
+except psycopg2.OperationalError as e:
+    print(f'Database connection error: {e}')
+    sys.exit(1)
+sys.exit(0)
+        "; do
+            echo "Database is unavailable - sleeping"
+            sleep 1
+        done
+    else
+        # Regular TCP connection for non-Cloud SQL or local development
+        echo "Using TCP connection to database at $DB_HOST"
+        
+        # Try to connect using Python with TCP connection
+        until python -c "
+import sys
+import psycopg2
+try:
+    conn = psycopg2.connect(
         dbname='$DB_NAME',
         user='$DB_USER',
         password='$DB_PASSWORD',
         host='$DB_HOST'
     )
-except psycopg2.OperationalError:
+    conn.close()
+    print('Database connection successful')
+except psycopg2.OperationalError as e:
+    print(f'Database connection error: {e}')
     sys.exit(1)
 sys.exit(0)
-    "; do
-        echo "Database is unavailable - sleeping"
-        sleep 1
-    done
+        "; do
+            echo "Database is unavailable - sleeping"
+            sleep 1
+        done
+    fi
     
     echo "Database is up - continuing..."
 }
