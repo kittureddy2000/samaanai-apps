@@ -50,10 +50,11 @@ echo "python manage.py migrate - Complete..."
 WORKERS=${GUNICORN_WORKERS:-1} # Default to 1 worker if not set
 THREADS=${GUNICORN_THREADS:-8} # Default to 8 threads if not set
 TIMEOUT=${GUNICORN_TIMEOUT:-0} # Default to 0 (infinite) if not set
+PORT=${PORT:-8080} # Default to 8080 if not set
 
 echo "Starting Gunicorn server on port $PORT with $WORKERS workers and $THREADS threads..."
 exec gunicorn samaanai.wsgi:application \
-    --bind :$PORT \
+    --bind 0.0.0.0:$PORT \
     --workers $WORKERS \
     --threads $THREADS \
     --timeout $TIMEOUT

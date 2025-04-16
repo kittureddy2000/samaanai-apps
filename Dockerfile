@@ -45,6 +45,7 @@ USER appuser
 
 # Expose port 8080
 EXPOSE 8080
+ENV PORT 8080
 
 # Copy the entrypoint script
 COPY --chown=appuser:appuser entrypoint.sh /app/entrypoint.sh
