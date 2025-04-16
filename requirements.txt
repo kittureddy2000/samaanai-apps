@@ -28,6 +28,7 @@ openai==1.13.3
 pandas==2.0.3
 pillow==10.2.0
 psycopg2-binary
+pg8000==1.30.3  # Database driver that works well with Cloud SQL
 python-dateutil==2.8.2
 python3-openid==3.2.0
 requests==2.31.0

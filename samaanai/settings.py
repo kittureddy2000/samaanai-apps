@@ -204,19 +204,61 @@ DEBUG = env.bool('DEBUG', default=(ENVIRONMENT == 'development'))
 
 logger.info("Setting up database configuration")
 
-# Database configuration
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': DB_PASSWORD if ENVIRONMENT == 'production' else env('DB_PASSWORD'),
-        'HOST': env('DB_HOST', default='db'),
-        'PORT': env('DB_PORT', default='5432'),
-    }
-}
+# Check if we're using Cloud SQL socket connection
+DB_HOST = env('DB_HOST', default='db')
+DB_NAME = env('DB_NAME')
+DB_USER = env('DB_USER')
+DB_PORT = env('DB_PORT', default='5432')
+DB_INSTANCE_CONNECTION_NAME = env('DB_INSTANCE_CONNECTION_NAME', default=None)
 
-logger.info(f"Database settings: {DATABASES}")
+# Get the password based on environment
+if ENVIRONMENT == 'production':
+    logger.info("Using Secret Manager password for database in production")
+    DB_PASSWORD = DB_PASSWORD  # Already fetched from Secret Manager above
+else:
+    logger.info("Using .env password for database in development")
+    DB_PASSWORD = env('DB_PASSWORD')
+
+# Database configuration
+if DB_HOST.startswith('/cloudsql/'):
+    logger.info(f"Using Cloud SQL socket connection at {DB_HOST}")
+    # Log database connection details (without the password)
+    logger.info(f"Database connection details - NAME: {DB_NAME}, USER: {DB_USER}, HOST: {DB_HOST}")
+    
+    # When using a Unix socket with Cloud SQL, use pg8000 as the database engine adapter
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASSWORD,
+            'HOST': DB_HOST,  # /cloudsql/project:region:instance
+            'PORT': '',  # Leave empty for Cloud SQL socket connection
+            'OPTIONS': {
+                'sslmode': 'disable',
+                'client_encoding': 'UTF8',
+                'engine': 'pg8000',  # Specify pg8000 as the database adapter
+            },
+        }
+    }
+else:
+    logger.info(f"Using standard TCP connection to database at {DB_HOST}")
+    # Log database connection details (without the password)
+    logger.info(f"Database connection details - NAME: {DB_NAME}, USER: {DB_USER}, HOST: {DB_HOST}, PORT: {DB_PORT}")
+    
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASSWORD,
+            'HOST': DB_HOST,
+            'PORT': DB_PORT,
+        }
+    }
+
+# Log that database configuration is complete (but don't log the actual config with password)
+logger.info("Database configuration complete")
 
 
 logger.info("Configuring installed apps and middleware")

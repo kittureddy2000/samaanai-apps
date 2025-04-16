@@ -11,24 +11,28 @@ wait_for_db() {
     if [[ "$DB_HOST" == /cloudsql/* ]]; then
         echo "Detected Cloud SQL socket connection at $DB_HOST"
         
-        # Try to connect using Python and Unix socket
+        # For Cloud SQL, print all environment variables for debugging
+        echo "DB_NAME: $DB_NAME"
+        echo "DB_USER: $DB_USER"
+        echo "DB_HOST: $DB_HOST"
+        
+        # Try to connect using Python and Unix socket - simplified approach
         until python -c "
 import sys
 import psycopg2
 try:
-    conn_params = {
-        'dbname': '$DB_NAME',
-        'user': '$DB_USER',
-        'password': '$DB_PASSWORD',
-    }
-    
-    # Use Unix socket for Cloud SQL
-    conn_params['host'] = '/cloudsql/$DB_INSTANCE_CONNECTION_NAME'
-    
-    conn = psycopg2.connect(**conn_params)
+    print('Connecting to PostgreSQL via Unix socket')
+    # For Cloud SQL with Unix socket, we connect by passing the socket directory
+    # directly to the Unix socket parameter
+    conn = psycopg2.connect(
+        dbname='$DB_NAME',
+        user='$DB_USER',
+        password='$DB_PASSWORD',
+        host='$DB_HOST'
+    )
     conn.close()
-    print('Database connection successful')
-except psycopg2.OperationalError as e:
+    print('Database connection successful via socket')
+except Exception as e:
     print(f'Database connection error: {e}')
     sys.exit(1)
 sys.exit(0)
@@ -40,16 +44,24 @@ sys.exit(0)
         # Regular TCP connection for non-Cloud SQL or local development
         echo "Using TCP connection to database at $DB_HOST"
         
+        # Export password to make it available in Python
+        export PGPASSWORD="$DB_PASSWORD"
         # Try to connect using Python with TCP connection
         until python -c "
 import sys
+import os
 import psycopg2
 try:
+    # Get password directly from environment variable
+    password = os.environ.get('PGPASSWORD')
+    print(f'Connecting to {os.environ.get(\"DB_NAME\")} as {os.environ.get(\"DB_USER\")} to host {os.environ.get(\"DB_HOST\")}')
+    
     conn = psycopg2.connect(
-        dbname='$DB_NAME',
-        user='$DB_USER',
-        password='$DB_PASSWORD',
-        host='$DB_HOST'
+        dbname=os.environ.get('DB_NAME'),
+        user=os.environ.get('DB_USER'),
+        password=password,
+        host=os.environ.get('DB_HOST'),
+        port=os.environ.get('DB_PORT', '5432')
     )
     conn.close()
     print('Database connection successful')
@@ -66,8 +78,8 @@ sys.exit(0)
     echo "Database is up - continuing..."
 }
 
-# Optional: Wait for DB if needed, uncomment if DB startup is slow
-wait_for_db 
+# Wait for DB if needed
+wait_for_db
 
 # Collect static files
 echo "Collecting static files..."
