@@ -23,14 +23,38 @@ else
   echo "PostgreSQL is up - continuing..."
 fi
 
-# Run database migrations
-echo "python manage.py Before Running Make Migrations"
-python manage.py makemigrations
+# Special handling for migrations in case tables are missing
+echo "Checking database tables"
 
-echo "python manage.py Before Running migrate"
-python manage.py migrate
+# First, try to fake-initial migrations to handle missing tables
+echo "Attempting to fake initial migrations (in case tables were manually deleted)..."
+python manage.py migrate --fake-initial || echo "Fake initial migration failed, continuing with regular migration"
 
-echo "python manage.py migrate - Complete..."
+# Run database migrations with better error handling
+echo "Running makemigrations..."
+python manage.py makemigrations || { echo "makemigrations failed but continuing"; }
+
+echo "Running migrate..."
+# Try migrating with a fake-initial first if there are issues
+python manage.py migrate || {
+  echo "Migration failed. Attempting recovery..."
+  
+  # Try creating the tables that might be missing (may fail for some tables)
+  echo "Trying to create missing tables..."
+  for app in task_management portfolio core spreturn; do
+    echo "Trying to recreate tables for $app"
+    # Try zeroed migrations first
+    python manage.py migrate $app zero --fake || echo "Failed to zero migrations for $app, continuing"
+    # Then try migrating
+    python manage.py migrate $app --fake-initial || echo "Failed to migrate $app with fake-initial, continuing"
+  done
+  
+  # Try a regular migrate again
+  echo "Retrying regular migrate after recovery attempt..."
+  python manage.py migrate || echo "Migration still failed, but continuing to start the server anyway"
+}
+
+echo "Migration process complete (with or without errors)"
 
 # Create superuser if not exists
 if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ] && [ -n "$DJANGO_SUPERUSER_EMAIL" ]; then
