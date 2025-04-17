@@ -214,10 +214,22 @@ DB_INSTANCE_CONNECTION_NAME = env('DB_INSTANCE_CONNECTION_NAME', default=None)
 # Get the password based on environment
 if ENVIRONMENT == 'production':
     logger.info("Using Secret Manager password for database in production")
-    DB_PASSWORD = DB_PASSWORD  # Already fetched from Secret Manager above
+    
+    try:
+        # Check if we already have a password from Secret Manager
+        if DB_PASSWORD:
+            logger.info("Password already loaded from Secret Manager")
+            logger.info(f"Password length: {len(DB_PASSWORD)}")
+        else:
+            logger.error("DB_PASSWORD is None from Secret Manager!")
+    except Exception as e:
+        logger.error(f"Error checking DB_PASSWORD: {e}")
 else:
     logger.info("Using .env password for database in development")
     DB_PASSWORD = env('DB_PASSWORD')
+    logger.info(f"Development password length: {len(DB_PASSWORD) if DB_PASSWORD else 0}")
+
+logger.info("Password check complete")
 
 # Database configuration
 if DB_HOST.startswith('/cloudsql/'):
@@ -228,19 +240,19 @@ if DB_HOST.startswith('/cloudsql/'):
     # When using a Unix socket with Cloud SQL, use pg8000 as the database engine adapter
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': DB_NAME,
             'USER': DB_USER,
             'PASSWORD': DB_PASSWORD,
             'HOST': DB_HOST,  # /cloudsql/project:region:instance
-            'PORT': '',  # Leave empty for Cloud SQL socket connection
+            'PORT': '',
             'OPTIONS': {
                 'sslmode': 'disable',
                 'client_encoding': 'UTF8',
-                'engine': 'pg8000',  # Specify pg8000 as the database adapter
             },
         }
     }
+    logger.info("Using PostgreSQL with Cloud SQL Unix socket")
 else:
     logger.info(f"Using standard TCP connection to database at {DB_HOST}")
     # Log database connection details (without the password)
@@ -256,6 +268,7 @@ else:
             'PORT': DB_PORT,
         }
     }
+    logger.info("Using standard PostgreSQL TCP connection")
 
 # Log that database configuration is complete (but don't log the actual config with password)
 logger.info("Database configuration complete")

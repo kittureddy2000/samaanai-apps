@@ -11,27 +11,42 @@ wait_for_db() {
     if [[ "$DB_HOST" == /cloudsql/* ]]; then
         echo "Detected Cloud SQL socket connection at $DB_HOST"
         
-        # For Cloud SQL, print all environment variables for debugging
+        # For Cloud SQL, print environment variables for debugging (except password)
         echo "DB_NAME: $DB_NAME"
         echo "DB_USER: $DB_USER"
         echo "DB_HOST: $DB_HOST"
+        echo "Password length: ${#DB_PASSWORD}"
         
-        # Try to connect using Python and Unix socket - simplified approach
+        # Install pg8000 explicitly if needed
+        pip install pg8000==1.30.3 --upgrade
+        
+        # Try to connect using Python with pg8000 driver for Cloud SQL
         until python -c "
 import sys
-import psycopg2
+import os
+import pg8000
+
 try:
-    print('Connecting to PostgreSQL via Unix socket')
-    # For Cloud SQL with Unix socket, we connect by passing the socket directory
-    # directly to the Unix socket parameter
-    conn = psycopg2.connect(
-        dbname='$DB_NAME',
+    print('Connecting to PostgreSQL via pg8000 with Unix socket')
+    
+    # For Cloud SQL with Unix socket, extract the instance connection name from DB_HOST
+    socket_dir = '$DB_HOST'
+    print(f'Socket directory: {socket_dir}')
+    
+    # Use pg8000 to connect, which handles Unix sockets better
+    conn = pg8000.connect(
+        database='$DB_NAME',
         user='$DB_USER',
         password='$DB_PASSWORD',
-        host='$DB_HOST'
+        unix_sock=socket_dir + '/.s.PGSQL.5432'
     )
+    
+    cursor = conn.cursor()
+    cursor.execute('SELECT 1')
+    result = cursor.fetchone()
+    print(f'Database connection successful, test query result: {result}')
+    cursor.close()
     conn.close()
-    print('Database connection successful via socket')
 except Exception as e:
     print(f'Database connection error: {e}')
     sys.exit(1)
@@ -44,24 +59,20 @@ sys.exit(0)
         # Regular TCP connection for non-Cloud SQL or local development
         echo "Using TCP connection to database at $DB_HOST"
         
-        # Export password to make it available in Python
-        export PGPASSWORD="$DB_PASSWORD"
         # Try to connect using Python with TCP connection
         until python -c "
 import sys
 import os
 import psycopg2
 try:
-    # Get password directly from environment variable
-    password = os.environ.get('PGPASSWORD')
-    print(f'Connecting to {os.environ.get(\"DB_NAME\")} as {os.environ.get(\"DB_USER\")} to host {os.environ.get(\"DB_HOST\")}')
+    print(f'Connecting to {os.environ.get(\"DB_NAME\", \"$DB_NAME\")} as {os.environ.get(\"DB_USER\", \"$DB_USER\")} to host {os.environ.get(\"DB_HOST\", \"$DB_HOST\")}')
     
     conn = psycopg2.connect(
-        dbname=os.environ.get('DB_NAME'),
-        user=os.environ.get('DB_USER'),
-        password=password,
-        host=os.environ.get('DB_HOST'),
-        port=os.environ.get('DB_PORT', '5432')
+        dbname='$DB_NAME',
+        user='$DB_USER',
+        password='$DB_PASSWORD',
+        host='$DB_HOST',
+        port='$DB_PORT'
     )
     conn.close()
     print('Database connection successful')
