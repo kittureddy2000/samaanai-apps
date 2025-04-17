@@ -936,16 +936,20 @@ def update_ms_task(user, task):
             logger.warning(f"Task description too large ({len(task_description)} chars), truncating to 10000 chars")
             task_description = task_description[:10000] + "... (truncated)"
 
+        # Build the request payload
         ms_task = {
             'title': task.task_name,
             'body': {'content': task_description, 'contentType': 'text'},
-            'dueDateTime': {
-                'dateTime': due_date_time.isoformat() if due_date_time else None,
-                'timeZone': 'UTC'
-            } if due_date_time else {},
             'status': 'completed' if task.task_completed else 'notStarted',
         }
         
+        # Only add dueDateTime if the task has a due date
+        if due_date_time:
+            ms_task['dueDateTime'] = {
+                'dateTime': due_date_time.isoformat(),
+                'timeZone': 'UTC'
+            }
+            
         # Update the Microsoft task
         logger.info(f"Sending PATCH request to Microsoft for task: {task.task_name}")
         response = requests.patch(
@@ -965,6 +969,9 @@ def update_ms_task(user, task):
         # Handle timeout separately from other errors
         logger.warning(f"Timeout while updating Microsoft task: {task.task_name}. Task will be marked for retry.")
         return {"status": "timeout", "message": "Request timed out, will retry"}
+    except requests.exceptions.HTTPError as e:
+        logger.error(f"HTTP Error updating Microsoft task: {task.task_name}, Error: {e}")
+        return {"status": "error", "message": str(e)}
     except Exception as e:
         logger.error(f"Error updating Microsoft task: {task.task_name}, Error: {e}", exc_info=True)
         return {"status": "error", "message": str(e)}
