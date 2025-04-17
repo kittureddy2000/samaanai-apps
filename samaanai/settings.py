@@ -237,19 +237,17 @@ if DB_HOST.startswith('/cloudsql/'):
     # Log database connection details (without the password)
     logger.info(f"Database connection details - NAME: {DB_NAME}, USER: {DB_USER}, HOST: {DB_HOST}")
     
-    # When using a Unix socket with Cloud SQL, use pg8000 as the database engine adapter
+    # When connecting to Cloud SQL using Unix socket, the format is different
+    # We should specify the socket directory as HOST
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': DB_NAME,
             'USER': DB_USER,
             'PASSWORD': DB_PASSWORD,
-            'HOST': DB_HOST,  # /cloudsql/project:region:instance
+            'HOST': DB_HOST,  # /cloudsql/<PROJECT-ID>:<REGION>:<INSTANCE-NAME>
             'PORT': '',
-            'OPTIONS': {
-                'sslmode': 'disable',
-                'client_encoding': 'UTF8',
-            },
+            'OPTIONS': {'sslmode': 'disable'},
         }
     }
     logger.info("Using PostgreSQL with Cloud SQL Unix socket")

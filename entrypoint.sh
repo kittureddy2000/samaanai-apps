@@ -1,15 +1,21 @@
-
+#!/bin/bash
+set -e
 
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
-
-
+# For Cloud SQL in production, we don't need the wait loop
+# as the connection happens through Unix socket
 DB_HOST="${DB_HOST:-db}"
 
-# Wait for PostgreSQL to be ready
-if [ "$ENVIRONMENT" != "production" ]; then
-
+if [ "$ENVIRONMENT" = "production" ]; then
+  echo "Running in production mode with Cloud SQL"
+  # Print environment variables for debugging (without showing password)
+  echo "DB_HOST: $DB_HOST"
+  echo "DB_NAME: $DB_NAME"
+  echo "DB_USER: $DB_USER"
+else
+  # Wait for PostgreSQL in non-production environments
   echo "Waiting for PostgreSQL at $DB_HOST:5432..."
   while ! nc -z $DB_HOST 5432; do
     sleep 1
@@ -43,7 +49,7 @@ else:
 "
 fi
 
-# Start the Gunicorn server
-gunicorn --bind 0.0.0.0:8080 samaanai.wsgi:application
-
-echo "gunicorn started"
+# Start the Gunicorn server with PORT env variable for Cloud Run
+PORT="${PORT:-8080}"
+echo "Starting Gunicorn on port $PORT"
+exec gunicorn samaanai.wsgi:application --bind 0.0.0.0:$PORT
