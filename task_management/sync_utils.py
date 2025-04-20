@@ -26,7 +26,7 @@ from .auth_utils import is_token_expired, refresh_microsoft_token
 logger = logging.getLogger(__name__)
 
 
-# Fetch and save Google Tasks
+# Fetches tasks from Google Tasks and saves them to the Samaan database
 def fetch_google_tasks_and_save(user, creds):
     updates = []
     logger.info(f"Starting Google Tasks sync for user: {user.username}")
@@ -302,15 +302,19 @@ def fetch_google_tasks_and_save(user, creds):
         logger.error(f"Unexpected error during Google sync for user {user.username}: {e}", exc_info=True)
         return [{'provider': 'Google Tasks', 'error': str(e), 'action': 'Error', 'timestamp': timezone.now()}]
 
-# Fetch and save Microsoft Tasks
+# Fetches tasks from Microsoft To Do and saves them to the Samaan database
 def fetch_microsoft_tasks_and_save(user, access_token):
     updates = []
     logger.info(f"Starting Microsoft Tasks sync for user: {user.username}")
     
     try:
+        # Log the token information (exclude actual token for security)
         token_record = UserToken.objects.get(user=user, provider='microsoft')
         last_synced_at = token_record.last_synced_at
-        logger.info(f"Last sync time: {last_synced_at}")
+        logger.info(f"Token info - Last sync: {last_synced_at}, Expires at: {token_record.token_expires_at}")
+        
+        # Debug OAuth token
+        logger.info(f"Using OAuth token (first 10 chars): {access_token[:10]}...")
         
         headers = {'Authorization': f'Bearer {access_token}', 'Content-Type': 'application/json'}
         
@@ -319,7 +323,15 @@ def fetch_microsoft_tasks_and_save(user, access_token):
         todo_lists_url = "https://graph.microsoft.com/v1.0/me/todo/lists"
         
         try:
+            logger.info(f"Making HTTP request to: {todo_lists_url}")
             response = requests.get(todo_lists_url, headers=headers, timeout=30)
+            
+            # Log the response status
+            logger.info(f"Microsoft API response status: {response.status_code}")
+            
+            if response.status_code != 200:
+                logger.error(f"Error response from Microsoft: {response.text}")
+            
             response.raise_for_status()
             microsoft_lists = response.json().get("value", [])
             logger.info(f"Found {len(microsoft_lists)} Microsoft To Do lists")
@@ -509,126 +521,9 @@ def fetch_microsoft_tasks_and_save(user, access_token):
         logger.error(f"Unexpected error during Microsoft sync for user {user.username}: {e}", exc_info=True)
         return [{'provider': 'Microsoft To Do', 'error': str(e), 'action': 'Error', 'timestamp': timezone.now()}]
 
-def process_ms_tasks(user, ms_task_list, ms_tasks, headers):
-    updates = []
-    new_tasks = []
-    existing_tasks_to_update = []
-    task_ids = set()
-    
-    logger.info(f"Processing {len(ms_tasks)} Microsoft tasks for list '{ms_task_list.list_name}'")
-    
-    for task_item in ms_tasks:
-        ms_task_id = task_item["id"]
-        task_ids.add(ms_task_id)
-        
-        title = task_item.get("title", "Untitled")
-        
-        # Microsoft uses 'status' field with 'completed' for completed tasks
-        raw_status = task_item.get("status", "notStarted")
-        is_completed = raw_status == 'completed'
-        logger.debug(f"Task '{title}' status from Microsoft: {raw_status}, interpreted as completed={is_completed}")
-        
-        # Handle due date
-        due_date_raw = task_item.get("dueDateTime")
-        due_date = None
-        if due_date_raw and "dateTime" in due_date_raw:
-            try:
-                naive_due_date = date_parser.parse(due_date_raw["dateTime"])
-                due_date = timezone.make_aware(naive_due_date, timezone.get_default_timezone())
-            except Exception as e:
-                logger.warning(f"Failed to parse due date for task '{title}': {e}")
-        
-        # Get task notes/description
-        task_notes = ""
-        if task_item.get("body") and task_item["body"].get("content"):
-            task_notes = task_item["body"]["content"]
-        
-        # Check if task already exists in database
-        existing_task = Task.objects.filter(user=user, source_id=ms_task_id, source='microsoft').first()
-        
-        if existing_task:
-            # Update existing task
-            updated = False
-            updated_fields = {}
-            
-            if existing_task.task_name != title:
-                existing_task.task_name = title
-                updated_fields['task_name'] = title
-                updated = True
-            
-            if existing_task.task_description != task_notes:
-                existing_task.task_description = task_notes
-                updated_fields['task_description'] = task_notes
-                updated = True
-            
-            # Explicitly log the completion status comparison
-            logger.debug(f"Task '{title}': DB status={existing_task.task_completed}, MS status={is_completed}")
-            if existing_task.task_completed != is_completed:
-                existing_task.task_completed = is_completed
-                updated_fields['task_completed'] = is_completed
-                updated = True
-                logger.info(f"Updating completion status for '{title}' to: {is_completed}")
-            
-            if existing_task.due_date != due_date:
-                existing_task.due_date = due_date
-                updated_fields['due_date'] = due_date.strftime('%Y-%m-%d') if due_date else None
-                updated = True
-            
-            if updated:
-                existing_task.last_update_date = timezone.now()
-                existing_tasks_to_update.append(existing_task)
-                logger.info(f"Updated Microsoft task '{title}' with changes: {', '.join(updated_fields.keys())}")
-                updates.append({
-                    'provider': 'Microsoft To Do',
-                    'task_name': title,
-                    'action': 'Updated',
-                    'timestamp': timezone.now(),
-                    'list_name': ms_task_list.list_name,
-                    'updated_fields': updated_fields
-                })
-        else:
-            # Create new task
-            logger.info(f"Creating new Microsoft task '{title}' with completed={is_completed}")
-            new_task = Task(
-                user=user, 
-                task_name=title, 
-                task_completed=is_completed, 
-                task_description=task_notes,
-                due_date=due_date,
-                list_name=ms_task_list, 
-                source='microsoft', 
-                source_id=ms_task_id,
-                creation_date=timezone.now(), 
-                last_update_date=timezone.now()
-            )
-            new_tasks.append(new_task)
-            updates.append({
-                'provider': 'Microsoft To Do',
-                'task_name': title,
-                'action': 'Created',
-                'timestamp': timezone.now(),
-                'list_name': ms_task_list.list_name
-            })
-    
-    # Bulk create and update operations for efficiency
-    if new_tasks:
-        for task in new_tasks:
-            try:
-                task.save()
-                logger.info(f"Successfully created Microsoft task: {task.task_name}")
-            except Exception as e:
-                logger.error(f"Failed to create Microsoft task '{task.task_name}': {e}")
-    
-    if existing_tasks_to_update:
-        logger.info(f"Bulk updating {len(existing_tasks_to_update)} existing Microsoft tasks")
-        Task.objects.bulk_update(
-            existing_tasks_to_update, 
-            ['task_name', 'task_description', 'task_completed', 'due_date', 'last_update_date']
-        )
-    
-    return updates, task_ids
-
-# Reusable sync function for both UI and background tasks
+# For UI sync, this function is called by the `trigger_background_sync` -- > Process Sync Task(Cloud Tasks Queue function)
+# For background sync, this function is called by the `Google Cloud Task Directly` endpoint
+# This function validations authentication and calls the appropriate function to fetch tasks and save them to the Samaan database
 def sync_user_tasks(user, provider):
     try:
         logger.info(f"Starting sync for user: {user.username} with provider: {provider}")
@@ -682,6 +577,8 @@ def sync_user_tasks(user, provider):
         logger.error(f"Error syncing {provider} tasks for user {user.username}: {e}")
         raise
 
+# This function is called by the `trigger_background_sync` endpoint
+#Main job of this function is to enqueue sync tasks for all users
 @csrf_exempt
 def trigger_background_sync(request):
     """Endpoint triggered by Cloud Scheduler to enqueue sync tasks."""
@@ -765,6 +662,9 @@ def process_sync_task(request):
         return HttpResponse(f"Error processing sync task: {e}", status=500)
 
 
+# Note: This function is called by `process_google_task_update`
+# which acts as the endpoint handler for Cloud Tasks requests triggered
+# by the `sync_task_update` signal when a Task linked to Google is saved.
 def update_google_task(user, task):
     try:
         logger.info(f"Updating Google task: {task.task_name} (ID: {task.source_id})")
@@ -826,6 +726,7 @@ def update_google_task(user, task):
         logger.error(f"Error updating Google task: {task.task_name}, Error: {e}", exc_info=True)
         return {"status": "error", "message": str(e)}
 
+#This function is called by singals.py fucntion after the record is saved in the database. This function meant for putting in cloud tasks queue
 @csrf_exempt
 def process_google_task_update(request):
     """Endpoint to process Google task updates asynchronously."""
@@ -876,6 +777,7 @@ def process_google_task_update(request):
         logger.error(f"Unexpected error processing Google task update: {e}", exc_info=True)
         return JsonResponse({'error': str(e)}, status=500)
 
+#This function is called by singals.py fucntion after the record is saved in the database. This function meant for putting in cloud tasks queue
 def update_ms_task(user, task):
     access_token = get_ms_access_token(user)
     headers = {'Authorization': f'Bearer {access_token}', 'Content-Type': 'application/json'}
@@ -949,9 +851,10 @@ def update_ms_task(user, task):
                 'dateTime': due_date_time.isoformat(),
                 'timeZone': 'UTC'
             }
-            
+        
         # Update the Microsoft task
         logger.info(f"Sending PATCH request to Microsoft for task: {task.task_name}")
+        logger.debug(f"Request payload: {json.dumps(ms_task)}")
         response = requests.patch(
             f'https://graph.microsoft.com/v1.0/me/todo/lists/{list_id}/tasks/{task.source_id}',
             headers=headers,
@@ -976,6 +879,7 @@ def update_ms_task(user, task):
         logger.error(f"Error updating Microsoft task: {task.task_name}, Error: {e}", exc_info=True)
         return {"status": "error", "message": str(e)}
 
+#This function is called by singals.py fucntion after the record is saved in the database. This function meant for putting in cloud tasks queue
 @csrf_exempt
 def process_ms_task_update(request):
     """Endpoint to process Microsoft task updates asynchronously."""

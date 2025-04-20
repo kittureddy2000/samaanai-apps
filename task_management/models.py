@@ -2,6 +2,9 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from core.models import UserToken
 
 class TaskList(models.Model):
     LIST_TYPE_CHOICES = (
@@ -107,3 +110,16 @@ class TaskSyncStatus(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.provider} Sync Status: {self.is_complete}"
+
+@receiver(post_save, sender=UserToken)
+def ensure_task_sync_status(sender, instance, created, **kwargs):
+    """
+    Create TaskSyncStatus record when a new UserToken is created
+    """
+    if created or instance.provider in ['google', 'microsoft']:
+        # Get or create TaskSyncStatus
+        TaskSyncStatus.objects.get_or_create(
+            user=instance.user, 
+            provider=instance.provider,
+            defaults={'is_complete': False}
+        )

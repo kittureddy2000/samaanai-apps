@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Task, TaskList, TaskHistory
-from .forms import TaskForm, TaskListForm
+from .forms import TaskForm, TaskListForm, TaskEditForm
 from django.shortcuts import render
 from django.db.models import Q,Count
 from django.contrib.auth.decorators import login_required
@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 # Ensure predefined lists exist for the user
 def ensure_predefined_lists(user):
     predefined_lists = [
-        {"name": "Samaan List", "listcode": "SAMAAN_TASKS"},
+        {"name": "Samaan Tasks", "listcode": "SAMAAN_TASKS"},
         {"name": "Past Due", "listcode": "PAST_DUE"},
         {"name": "Important", "listcode": "IMPORTANT"},
         {"name": "All Tasks", "listcode": "ALL_TASKS"},
@@ -124,7 +124,7 @@ def search_tasks(request):
     if filter_param == 'completed':
         tasks = Task.objects.filter(user=request.user, task_completed=True)
     elif filter_param == 'all':
-        tasks = Task.objects.filter(user=request.user)
+        tasks = Task.objects.filter(user=request.user, task_completed=False)
     elif filter_param == 'past_due':
         # Show past-due tasks that are not completed.
         tasks = Task.objects.filter(user=request.user, task_completed=False, due_date__lt=timezone.now())
@@ -141,6 +141,7 @@ def search_tasks(request):
     if sort_by == 'important':
         tasks = tasks.order_by('-important')
     elif sort_by in ['due_date']:
+        
         tasks = tasks.order_by(sort_by)
 
     try:
@@ -180,12 +181,12 @@ def get_lists(request):
     special_lists = task_lists.filter(list_type='special')
     semi_special_lists = task_lists.filter(list_type__in=['google_primary', 'microsoft_primary']).order_by('list_name')
     normal_lists = task_lists.filter(list_type='normal').order_by('list_name')  # Sort alphabetically by list_name
-
     # Calculate counts for special lists dynamically
     special_counts = {
         "IMPORTANT": Task.objects.filter(user=request.user, important=True, task_completed=False).count(),
         "PAST_DUE": Task.objects.filter(user=request.user, due_date__lt=timezone.now(), task_completed=False).count(),
         "ALL_TASKS": Task.objects.filter(user=request.user, task_completed=False).count(),
+        "SAMAAN_TASKS": Task.objects.filter(user=request.user, list_name__list_name="Samaan Tasks"  , task_completed=False).count(),
     }
 
     # Calculate counts for semi-special lists
@@ -265,50 +266,126 @@ def complete_task(request, task_id):
     logger.info(f"complete_task view called with task_id: {task_id}, method: {request.method}")
     
     try:
-        task = Task.objects.get(id=task_id)
-        logger.info(f"Found task: ID={task.id}, Name='{task.task_name}', Current completed status={task.task_completed}")
+        task = Task.objects.get(id=task_id, user=request.user)
+        logger.info(f"Found task: {task.task_name} (ID: {task.id}, Source: {task.source}, List: {task.list_name.list_name if task.list_name else 'None'})")
         
-        # Toggle the completion status
-        task.task_completed = not task.task_completed
-        task.save()
+        # Create history record of this completion
+        TaskHistory.objects.create(
+            user=request.user,
+            task_name=task.task_name,
+            list_name=task.list_name,
+            task_description=task.task_description,
+            due_date=task.due_date,
+            recurrence=task.recurrence,
+            important=task.important,
+            assigned_to=task.assigned_to,
+            task_completed=True,  # Always true for history of completed instance
+            source_id=f"{task.id}-{timezone.now().strftime('%Y%m%d%H%M%S%f')}",  # Unique source_id
+            source='internal'  # Internal source for tracking
+        )
+        logger.info(f"Created task history record for task completion: {task.task_name}")
         
-        logger.info(f"Toggled task completion. New status={task.task_completed}")
-        
-        # Return the updated task information
-        response_data = {
-            'success': True,
-            'id': task.id,
-            'task_name': task.task_name,
-            'task_completed': task.task_completed
-        }
-        logger.info(f"Returning success response: {response_data}")
-        return JsonResponse(response_data)
+        # Handle based on recurrence pattern
+        if task.recurrence != Task.NO_RECURRENCE and task.recurrence and task.due_date:
+            # For recurring tasks, we'll update the due date instead of marking complete
+            new_due_date = None
+            
+            if task.recurrence == Task.DAILY:
+                new_due_date = task.due_date + timedelta(days=1)
+            elif task.recurrence == Task.WEEKLY:
+                new_due_date = task.due_date + timedelta(weeks=1)
+            elif task.recurrence == Task.MONTHLY:
+                new_due_date = task.due_date + relativedelta(months=1)
+            elif task.recurrence == Task.YEARLY:
+                new_due_date = task.due_date + relativedelta(years=1)
+            
+            task.due_date = new_due_date
+            # Reset completion status as this is now the next instance
+            task.task_completed = False
+            task.last_update_date = timezone.now()  # Ensure last_update_date is set
+            
+            # Save with specific update_fields to trigger signal properly
+            logger.info(f"Saving recurring task with new due date: {new_due_date}")
+            task.save(update_fields=['due_date', 'task_completed', 'last_update_date'])
+            
+            logger.info(f"Updated recurring task: {task.task_name} with new due date: {new_due_date}")
+            
+            return JsonResponse({
+                'status': 'success',
+                'task_id': task.id,
+                'task_name': task.task_name,
+                'recurring': True,
+                'next_due_date': task.due_date.isoformat() if task.due_date else None,
+                'completed': False  # The task itself isn't complete, just this instance
+            })
+        else:
+            # For non-recurring tasks, toggle completion as before
+            previous_state = task.task_completed
+            task.task_completed = not task.task_completed
+            task.last_update_date = timezone.now()  # Ensure last_update_date is set
+            
+            # Log the task's source and external sync eligibility
+            if task.source in ['microsoft', 'google']:
+                logger.info(f"Task {task.task_name} has source '{task.source}' - will be synced to external service")
+            else:
+                logger.info(f"Task {task.task_name} has no external source (source: '{task.source}') - no external sync needed")
+            
+            # Save with specific update_fields to trigger signal properly
+            logger.info(f"Saving task with completion toggled from {previous_state} to {task.task_completed}")
+            task.save(update_fields=['task_completed', 'last_update_date'])
+            
+            logger.info(f"Toggled completion status for task: {task.task_name} to {task.task_completed}")
+            
+            return JsonResponse({
+                'status': 'success',
+                'task_id': task.id, 
+                'task_name': task.task_name,
+                'completed': task.task_completed,
+                'recurring': False
+            })
+
     except Task.DoesNotExist:
         logger.error(f"Task with ID {task_id} not found")
-        return JsonResponse({'success': False, 'error': 'Task not found'}, status=404)
+        return JsonResponse({'status': 'error', 'message': 'Task not found'}, status=404)
     except Exception as e:
         logger.error(f"Error in complete_task: {str(e)}", exc_info=True)
-        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
 def mark_favorite(request):
     task_id = request.POST.get('id')
-    task = Task.objects.get(id=task_id, user=request.user)
-    task_name = task.task_name
-    print("Marking Task as Favorite : " + task_name)
+    try:
+        task = Task.objects.get(id=task_id, user=request.user)
+        task_name = task.task_name
+        logger.info(f"Toggling favorite status for task: {task_name} (ID: {task_id})")
 
-    if task.important:
-        task.important = False
-    else:
-        task.important = True
-    task.save()
+        task.important = not task.important # Toggle the important status
+        task.last_update_date = timezone.now() # Update timestamp
+        
+        # Save the change, specifying update_fields for signal handler
+        task.save(update_fields=['important', 'last_update_date'])
 
-    print("Task Saved in Mark_Favorite : ")
-    if task.important:
-        print("Task is important True ")
-    else:
-        print("Task important : False ")
+        logger.info(f"Task {task_name} important status set to: {task.important}")
 
-    return JsonResponse({'Important': task.important, 'task_name': task_name, 'task_id': task_id})
+        # Return the full task data needed by updateTaskCardUI
+        return JsonResponse({
+            'status': 'success', # Added for consistency
+            'task_id': task.id, 
+            'id': task.id, # Include 'id' as well for safety
+            'task_name': task.task_name,
+            'completed': task.task_completed,
+            'important': task.important,
+            'due_date': task.due_date.isoformat() if task.due_date else None,
+            # Add recurring fields if your UI needs them after marking favorite
+            # 'recurring': task.recurrence != Task.NO_RECURRENCE and task.recurrence,
+            # 'next_due_date': None # Usually not relevant here, but include if needed
+        })
+        
+    except Task.DoesNotExist:
+        logger.error(f"Task with ID {task_id} not found for mark_favorite")
+        return JsonResponse({'status': 'error', 'message': 'Task not found'}, status=404)
+    except Exception as e:
+        logger.error(f"Error in mark_favorite: {str(e)}", exc_info=True)
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
 def get_task_details(request, task_id):
     print("Function: Get Tasks Details " + str(task_id))
@@ -339,71 +416,95 @@ def get_task_details(request, task_id):
 
 
 @login_required
-def add_task(request, list_id):
-    print("Add Task Function request method: " + request.method)
-
-    # Fetch the task list or use default SAMAAN_TASKS if list_id is None
-    if list_id:
-        task_list = get_object_or_404(TaskList, id=list_id, user=request.user)
-    else:
-        # Default to SAMAAN_TASKS list if no list is specified
-        task_list = TaskList.objects.get(user=request.user, list_code="SAMAAN_TASKS", list_type='special')
-    image_data = []
-
-    if request.method == "POST":
-        add_task_form = TaskForm(request.POST, request.FILES)
-        print("Inside POST Request for Add Task")
-
-        if add_task_form.is_valid():
-            print("Add Task form is Valid")
+def add_task(request):
+    # Removed list_id parameter as it's not needed in the URL anymore
+    logger.debug(f"add_task view called. Method: {request.method}")
+    if request.method == 'POST':
+        logger.info(f"Received POST request for add_task from user {request.user.username}")
+        # Log POST data carefully - avoid logging sensitive info if applicable
+        # logger.debug(f"POST data: {request.POST}") 
+        # Log file data separately if needed
+        # logger.debug(f"FILES data: {request.FILES}") 
+        
+        # Get or create the Samaan Tasks list
+        try:
+            samaan_list, created = TaskList.objects.get_or_create(
+                user=request.user, # Ensure list is associated with the user
+                list_name="Samaan Tasks",
+                defaults={'list_type': 'normal'} # Provide default type if needed
+            )
+            logger.info(f"Using TaskList: {samaan_list.list_name} (ID: {samaan_list.id}), Created: {created}")
+        except Exception as e:
+            logger.error(f"Error getting/creating Samaan Tasks list for user {request.user.username}: {e}", exc_info=True)
+            return JsonResponse({'success': False, 'error': 'Could not retrieve task list.'}, status=500)
+            
+        form = TaskForm(request.POST, request.FILES) # Include request.FILES for image uploads
+        
+        if form.is_valid():
+            logger.info("Add task form is valid.")
             try:
-                task = Task(
-                    user=request.user,
-                    task_name=add_task_form.cleaned_data['task_name'],
-                    task_description=add_task_form.cleaned_data['task_description'],
-                    due_date=add_task_form.cleaned_data['due_date'],
-                    list_name=task_list,
-                    reminder_time=add_task_form.cleaned_data['reminder_time'],
-                    task_completed=False,
-                    assigned_to=request.user.username,
-                    creation_date=timezone.now(),
-                    last_update_date=timezone.now(),
-                )
+                task = form.save(commit=False)
+                task.user = request.user  # Explicitly set the user
+                task.list_name = samaan_list
+                
+                # Default reminder time to due date if due date exists
+                if task.due_date:
+                    task.reminder_time = task.due_date
+                    logger.debug(f"Setting reminder_time to due_date: {task.reminder_time}")
+                else:
+                    # If due_date is null, set it to tomorrow
+                    task.due_date = timezone.now() + timezone.timedelta(days=1)
+                    task.reminder_time = task.due_date
+                    logger.debug(f"Due date was null, setting to tomorrow: {task.due_date}")
+                    logger.debug(f"Setting reminder_time to new due_date: {task.reminder_time}")
+                
+                logger.info(f"Attempting to save task '{task.task_name}' for user {request.user.username}")
                 task.save()
-                print("Task Saved")
-                # Image Handling
-                images = request.FILES.getlist('images')
-                handle_image_upload(task, images)
+                logger.info(f"Task saved successfully with ID: {task.id}")
 
-
-                logger.info("Returning success response for Create task id : %s", task.task_name)
-                return JsonResponse({
-                    'id': task.id,
-                    'task_name': task.task_name,
-                    'task_description': task.task_description,
-                    'due_date': task.due_date.strftime('%Y-%m-%d') if task.due_date else None,
-                    'important': task.important,
-                    'task_completed': task.task_completed,
-                    'images': image_data
-                })
-
-
+                # Image Handling after task is saved
+                uploaded_images = request.FILES.getlist('images')
+                if uploaded_images:
+                    logger.info(f"Handling {len(uploaded_images)} uploaded images for task {task.id}")
+                    handle_image_upload(task, uploaded_images) # Assuming handle_image_upload exists and works
+                else:
+                    logger.info(f"No images uploaded for task {task.id}")
+                
+                response_data = {
+                    'success': True,
+                    'task': {
+                        'id': task.id,
+                        'task_name': task.task_name,
+                        'task_description': task.task_description,
+                        'completed': task.task_completed,
+                        'important': task.important,
+                        'due_date': task.due_date.isoformat() if task.due_date else None,
+                        'reminder_time': task.reminder_time.isoformat() if task.reminder_time else None,
+                        'recurrence': task.recurrence,
+                        'list_name': {'id': task.list_name.id, 'name': task.list_name.list_name} # Include list info
+                        # Add image info if needed
+                    }
+                }
+                logger.info(f"Returning success JSON response for task {task.id}")
+                # logger.debug(f"Success JSON data: {response_data}")
+                return JsonResponse(response_data)
             except Exception as e:
-                print(f"Error occurred: {e}")
-                return HttpResponse(f"Error occurred: {e}", status=500)
+                logger.error(f"Error saving task or handling images for user {request.user.username}: {e}", exc_info=True)
+                return JsonResponse({'success': False, 'error': 'Error saving task data.'}, status=500)
         else:
-            print("Add Task form is not valid")
-            print(add_task_form.errors)  # Debugging purpose
-            return HttpResponse("Invalid form submission.", status=400)
-
-    # Handle GET request or other methods
+            logger.warning(f"Add task form is invalid for user {request.user.username}. Errors: {form.errors.as_json()}")
+            # Return validation errors in the JSON response
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
+    
+    # Handle GET request (loading the form initially)
+    elif request.method == 'GET':
+        logger.debug("Received GET request for add_task form.")
+        form = TaskForm()
+        return render(request, 'task_management/add_task.html', {'add_task_form': form})
+    
     else:
-        print("This is a GET Request for Add Task")
-        form = TaskForm(initial={'list_name': list_id})
-        return render(request, "task_management/add_task.html", {"add_task_form": form})
-
-    # Fallback response to ensure all code paths return a response
-    return HttpResponse("Unexpected error occurred.", status=500)
+        logger.warning(f"Received unsupported method {request.method} for add_task.")
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 def edit_task(request, task_id):
     logger.info("Edit task Function Task id : %s", task_id)
@@ -413,79 +514,152 @@ def edit_task(request, task_id):
     image_data = []
 
     if request.method == 'POST':
+        logger.info(f"Received POST request for edit_task, Task id: {task_id}")
+        # logger.debug(f"POST data: {request.POST}") 
+
         try:
-            form = TaskForm(request.POST, request.FILES, instance=task)
-            logger.info("Received POST request, Task id: %s", task_id)
+            # Keep form instance for reference if needed, but process POST directly
+            form = TaskEditForm(request.POST, request.FILES, instance=task) 
+            
+            update_fields = ['last_update_date']
+            task.last_update_date = timezone.now()
 
-            if form.is_valid():
-                logger.info("Task form is valid, Task id: %s", task_id)
-                task = form.save(commit=False)
+            # --- Process fields directly from request.POST ---
 
-                # Make due_date and reminder_time timezone-aware
-                if form.cleaned_data.get('due_date'):
-                    due_date = form.cleaned_data['due_date']
-                    task.due_date = timezone.make_aware(datetime.combine(due_date, dt_time(6, 0)), timezone.get_default_timezone())
+            # Text fields
+            if 'task_name' in request.POST:
+                task.task_name = request.POST['task_name'].strip()
+                update_fields.append('task_name')
+            if 'task_description' in request.POST:
+                task.task_description = request.POST.get('task_description', '').strip()
+                update_fields.append('task_description')
 
-                if form.cleaned_data.get('reminder_time'):
-                    reminder_time = form.cleaned_data['reminder_time']
-                    task.reminder_time = timezone.make_aware(datetime.combine(reminder_time, dt_time(6, 0)), timezone.get_default_timezone())
+            # Date fields 
+            if 'due_date' in request.POST:
+                if request.POST['due_date']: # If date string is present
+                    try:
+                        parsed_date = datetime.strptime(request.POST['due_date'], '%Y-%m-%d').date()
+                        naive_datetime = datetime.combine(parsed_date, dt_time.min) 
+                        task.due_date = timezone.make_aware(naive_datetime, timezone.get_default_timezone())
+                        logger.debug(f"Processed due_date: {task.due_date}")
+                    except ValueError:
+                        logger.warning(f"Invalid due_date format received: {request.POST['due_date']}")
+                else: # Empty string means clear the date
+                    task.due_date = None
+                    logger.debug("Processed empty due_date (cleared)")
+                update_fields.append('due_date')
 
-                # Set last_update_date to current time
-                task.last_update_date = timezone.now()
-                
-                # Save task with update_fields to signal this is a user-initiated update
-                # This helps our signal handler distinguish between automatic and user updates
-                update_fields = ['task_name', 'task_description', 'due_date', 'reminder_time', 'last_update_date']
-                if 'task_completed' in form.cleaned_data:
-                    task.task_completed = form.cleaned_data['task_completed']
-                    update_fields.append('task_completed')
-                if 'important' in form.cleaned_data:
-                    task.important = form.cleaned_data['important']
-                    update_fields.append('important')
-                
-                task.save(update_fields=update_fields)
+            if 'reminder_time' in request.POST:
+                if request.POST['reminder_time']:
+                    try:
+                        parsed_date = datetime.strptime(request.POST['reminder_time'], '%Y-%m-%d').date()
+                        naive_datetime = datetime.combine(parsed_date, dt_time(9, 0)) # Default time 9 AM
+                        task.reminder_time = timezone.make_aware(naive_datetime, timezone.get_default_timezone())
+                        logger.debug(f"Processed reminder_time: {task.reminder_time}")
+                    except ValueError:
+                        logger.warning(f"Invalid reminder_time format received: {request.POST['reminder_time']}")
+                else: # Empty string means clear the date
+                    task.reminder_time = None
+                    logger.debug("Processed empty reminder_time (cleared)")
+                update_fields.append('reminder_time')
 
-                logger.info("Task saved successfully, Task id: %s", task_id)
+            # Choice field (Recurrence)
+            if 'recurrence' in request.POST:
+                recurrence_value = request.POST['recurrence']
+                valid_choices = [choice[0] for choice in Task.RECURRENCE_CHOICES]
+                if recurrence_value in valid_choices:
+                    task.recurrence = recurrence_value
+                    update_fields.append('recurrence')
+                    logger.debug(f"Processed recurrence: {task.recurrence}")
+                else:
+                     logger.warning(f"Invalid recurrence value received: {recurrence_value}")
 
-                # Image Handling
-                uploaded_images = request.FILES.getlist('images')
-                handle_image_upload(task, uploaded_images)
-
-                logger.info("Returning success response for edit task id : %s", task_id)
-                return JsonResponse({
-                    'id': task.id,
-                    'task_name': task.task_name,
-                    'task_description': task.task_description,
-                    'due_date': task.due_date.strftime('%Y-%m-%d') if task.due_date else None,
-                    'important': task.important,
-                    'task_completed': task.task_completed,
-                    'images': image_data
-                })
+            # Boolean fields - More robust check
+            if 'task_completed' in request.POST:
+                # Checkbox sends 'on' or specific value when checked. Absence means False.
+                task.task_completed = request.POST.get('task_completed') == 'on' # Adjust 'on' if your checkbox sends a different value
+                logger.debug(f"Processing task_completed: Found in POST, Value='{request.POST.get('task_completed')}', Set={task.task_completed}")
             else:
-                logger.warning("Task form is invalid, Task id: %s", task_id)
-                for field, errors in form.errors.items():
-                    logger.warning("Form Field: %s,  Errors: %s", field, errors)
-                return JsonResponse({'errors': form.errors}, status=400)
+                task.task_completed = False
+                logger.debug(f"Processing task_completed: Not in POST, Set=False")
+            update_fields.append('task_completed')
+
+            if 'important' in request.POST:
+                task.important = request.POST.get('important') == 'on' # Adjust 'on' if value differs
+                logger.debug(f"Processing important: Found in POST, Value='{request.POST.get('important')}', Set={task.important}")
+            else:
+                task.important = False
+                logger.debug(f"Processing important: Not in POST, Set=False")
+            update_fields.append('important')
+            
+            # List Name (if editable)
+            if 'list_name' in request.POST:
+                 try:
+                      list_id = int(request.POST['list_name'])
+                      task.list_name = TaskList.objects.get(id=list_id, user=request.user)
+                      update_fields.append('list_name')
+                      logger.debug(f"Processed list_name: ID={list_id}")
+                 except (ValueError, TaskList.DoesNotExist, TypeError): # Added TypeError for safety
+                      logger.warning(f"Invalid or non-existent list_name ID received: {request.POST.get('list_name')}")
+
+            # --- Log final values before saving ---
+            final_update_fields = sorted(list(set(update_fields))) # Ensure uniqueness and sort for clarity
+            logger.info(f"--- FINAL CHECK BEFORE SAVE (Task ID: {task_id}) ---")
+            logger.info(f"  Fields to update: {final_update_fields}")
+            logger.info(f"  task.due_date: {task.due_date} (Type: {type(task.due_date)})")
+            logger.info(f"  task.reminder_time: {task.reminder_time} (Type: {type(task.reminder_time)})")
+            logger.info(f"  task.recurrence: {task.recurrence}")
+            logger.info(f"  task.task_completed: {task.task_completed}")
+            logger.info(f"  task.important: {task.important}")
+            logger.info(f"  task.task_name: {task.task_name}")
+            # Add other fields as needed for debugging
+
+            # --- Save the changes ---
+            if len(final_update_fields) > 1: 
+                task.save(update_fields=final_update_fields) 
+                logger.info(f"Task {task_id} save executed.")
+            else:
+                logger.info(f"No effective changes detected for task {task_id}; skipping save.")
+
+            # --- Image Handling ---
+            uploaded_images = request.FILES.getlist('images')
+            if uploaded_images:
+                logger.info(f"Handling {len(uploaded_images)} uploaded images for task {task.id}")
+                handle_image_upload(task, uploaded_images)
+            
+            # --- Return success response ---
+            image_data = [{'url': img.image_url, 'image_name': img.image_name, 'id': img.id} for img in task.images.all()] # Refresh image data
+            logger.info(f"Returning success response for edit task id : {task_id}")
+            return JsonResponse({
+                'id': task.id,
+                'task_name': task.task_name,
+                'task_description': task.task_description,
+                'due_date': task.due_date.isoformat() if task.due_date else None,
+                'reminder_time': task.reminder_time.isoformat() if task.reminder_time else None,
+                'recurrence': task.recurrence,
+                'important': task.important,
+                'task_completed': task.task_completed,
+                'images': image_data,
+                'list_name': {'id': task.list_name.id, 'name': task.list_name.list_name}
+            })
 
         except Exception as e:
-            logger.error("An unexpected error occurred while processing task id : %s, Error: %s", task_id, e, exc_info=True)
-            return HttpResponse(f"An error occurred: {e}", status=500)
+            logger.error(f"An unexpected error occurred while processing POST for edit task id: {task_id}, Error: {e}", exc_info=True)
+            return JsonResponse({'success': False, 'error': f"An server error occurred: {e}"}, status=500)
 
     elif request.method == 'GET':
         try:
-            form = TaskForm(instance=task)
-            logger.info("Edit Task in Get method id : %s ", task_id)
+            # Use TaskEditForm for GET if it exists and is different, otherwise TaskForm is fine
+            form = TaskEditForm(instance=task) if 'TaskEditForm' in locals() else TaskForm(instance=task) 
+            logger.info(f"Edit Task - GET method - Using form: {type(form).__name__} for task {task_id}")
             image_data = []
-
             for image in images:
-                logger.info("Image URL: %s ; Image ID: %s", image.image_url, image.id)
                 image_data.append({'url': image.image_url, 'image_name': image.image_name, 'id': image.id})
 
             return render(request, 'task_management/edit_task.html', {'edit_task_form': form, 'images': images, 'task_id': task_id})
         except Exception as e:
-            logger.error("An unexpected error occurred in GET method for task id %s : Error %s", task_id, e,
-                         exc_info=True)
-            return HttpResponse(f"An error occurred: {e}", status=500)
+            logger.error(f"An unexpected error occurred in GET method for edit task id {task_id} : Error {e}", exc_info=True)
+            return HttpResponse(f"An error occurred loading the edit form: {e}", status=500)
 
 def edit_task_in_panel(request, task_id):
     task = get_object_or_404(Task, id=task_id, user=request.user)
@@ -537,25 +711,13 @@ def serve_attachment(request, path):
         logger.error("Error loading file : %s ; Error : %s", file_path, e, exc_info=True)
         raise Http404(f"Error loading file")
 
-@login_required
-def sync_google_tasks(request):
-    sync_user_tasks(request.user, 'google')
-    return JsonResponse({'message': 'Google Tasks synced successfully!'})
-
-@login_required
-def sync_microsoft_tasks(request):
-    sync_user_tasks(request.user, 'microsoft')
-    return JsonResponse({'message': 'Microsoft Tasks synced successfully!'})
 
 # Background task endpoint triggered by Cloud Scheduler
-# This api is called from Google Cloud Tasks
-
-
 
 @csrf_exempt
 @login_required
 def trigger_user_sync(request):
-    """Endpoint triggered from UI to enqueue sync tasks for the current user."""
+    """Endpoint triggered from UI both when page loads and when user clicks on sync button to enqueue sync tasks for the current user."""
     logger.info(f"Triggering user sync for user: {request.user.username}")
     if request.method != 'POST':
         return HttpResponse("Method not allowed", status=405)
@@ -635,11 +797,12 @@ def get_task_counts(request):
     # Convert to a dictionary for easier lookup
     counts = {str(tl['id']): tl['task_count'] for tl in task_lists}
 
-    # Special list counts (dynamic special lists: Important, Past Due, All Tasks)
+    # Special list counts (dynamic special lists: Important, Past Due, All Tasks, Samaan Tasks)
     special_counts = {
         "IMPORTANT": Task.objects.filter(user=request.user, important=True, task_completed=False).count(),
         "PAST_DUE": Task.objects.filter(user=request.user, due_date__lt=timezone.now(), task_completed=False).count(),
         "ALL_TASKS": Task.objects.filter(user=request.user, task_completed=False).count(),
+        "SAMAAN_TASKS": Task.objects.filter(user=request.user, list_name__list_name="Samaan Tasks", task_completed=False).count(),
     }
 
     # Semi-special list counts (G My Tasks and MS Tasks)

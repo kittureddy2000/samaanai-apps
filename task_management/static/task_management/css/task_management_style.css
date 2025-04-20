@@ -6,37 +6,49 @@
 /* ==                            Variables & Base                          == */
 /* ========================================================================== */
 
-/* CSS variables for a consistent color scheme and spacing */
+/* 
+ * CSS variables for a consistent color scheme and spacing
+ * These variables are used throughout the application to maintain:
+ * - Consistent branding and UI design
+ * - Easier theme updates (changing one value affects all instances)
+ * - Coordinated color scheme between different UI components
+ * - Standardized spacing between elements
+ */
 :root {
-    /* Primary colors */
+    /* Primary colors - Used for important UI elements, buttons, and highlighted areas */
     --primary-color: #2980b9;  /* More subdued blue */
     --primary-light: #3498db;  /* Lighter blue for hover states */
     --primary-dark: #1a365d;   /* Dark blue for headers */
-    --microsoft-blue: #0078d7; /* Microsoft blue */
+    --microsoft-blue: #0078d7; /* Microsoft blue - Used for Microsoft-related elements */
     
-    /* Secondary colors */
+    /* Secondary colors - Used for backgrounds and subtle UI elements */
     --secondary-color: #f8f9fa; /* Light background */
     --secondary-dark: #e9ecef;  /* Slightly darker background for hover/active states */
     
-    /* Accent colors */
+    /* Accent colors - Used sparingly for important call-to-action elements */
     --accent-color: #e67e22;    /* Orange for important actions */
     
-    /* Text colors */
+    /* Text colors - Used for various text elements to create visual hierarchy */
     --text-primary: #343a40;    /* Dark gray for main text */
     --text-secondary: #606060;  /* Slightly darker grey for better readability */
     --text-light: #767676;      /* Keep for less important text */
     
-    /* Status colors */
-    --success: #28a745;         /* Green */
-    --danger: #dc3545;          /* Red */
-    --warning: #ffc107;         /* Yellow */
-    --info: #17a2b8;            /* Teal */
+    /* Status colors - Used for feedback and status indicators */
+    --success: #28a745;         /* Green - For completion, success messages */
+    --danger: #dc3545;          /* Red - For errors, warnings, deletion actions */
+    --warning: #ffc107;         /* Yellow - For important tasks, alerts */
+    --info: #17a2b8;            /* Teal - For informational messages */
   
-    /* Border colors */
+    /* Border colors - Used throughout the app for separation and delineation */
     --border-light: #ebebeb;    
     --border-medium: #e0e0e0;   /* Use this more consistently for subtle borders */
   
-    /* Consistent spacing system */
+    /* 
+     * Consistent spacing system - Used for:
+     * - Padding and margins
+     * - Component sizing
+     * - Layout spacing
+     */
     --space-xs: 4px;
     --space-sm: 8px;
     --space-md: 16px;
@@ -44,7 +56,10 @@
     --space-xl: 32px;
   }
   
-/* Base styles */
+/* 
+ * Base styles - Applied to the entire application 
+ * Sets fundamental typography and colors used across all pages
+ */
 body {
   font-family: 'Inter', 'Roboto', sans-serif;
   background-color: var(--secondary-color);
@@ -52,15 +67,26 @@ body {
   line-height: 1.5;
 }
 
-/* Import Google Font */
+/* 
+ * Import Google Font - 'Inter' font used throughout the application
+ * Provides a modern, clean look with good readability on all device sizes
+ */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Global consistency overrides */
+/* 
+ * Global consistency overrides
+ * Ensures box-sizing is consistent across all elements
+ * Prevents unexpected layout issues with padding/borders
+ */
 * {
   box-sizing: border-box !important;
 }
 
-/* Consistent font sizes throughout */
+/* 
+ * Consistent font sizes throughout the application
+ * Applied to common UI elements to maintain visual harmony
+ * Uses 13px as the base size for most interactive elements
+ */
 .form-control, .btn, .dropdown-item, .nav-link, .task-title {
   font-size: 13px !important;
 }
@@ -69,31 +95,59 @@ body {
 /* ==                        Core Layout & Grid                            == */
 /* ========================================================================== */
 
-/* Direct grid structure fixes to remove Bootstrap default spacing */
+/* 
+ * Main container settings
+ * Applied to the container-fluid that wraps the entire task dashboard
+ * Controls the overall width and padding of the application
+ */
 .container-fluid {
   padding: 0 !important;
   margin: 0 !important; /* Ensure no margin */
 }
 
+/* 
+ * Row settings within the main container
+ * Applied to the main row that contains:
+ * - Sidebar/left navigation panel
+ * - Task list middle panel
+ * - Task details right panel
+ */
 .container-fluid > .row {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* Consistent top starting point for all columns in the main row */
+/* 
+ * Column settings within the main row
+ * Ensures all three main columns:
+ * - Start at the same vertical position
+ * - Have no unexpected top spacing
+ * - Align properly with each other
+ */
 .container-fluid > .row > * {
   padding-top: 0 !important;
   margin-top: 0 !important;
 }
 
-/* Reset padding/margin on common container elements */
+/* 
+ * Container element consistency
+ * Applied to wrapper containers to ensure proper vertical alignment
+ * Prevents inconsistent spacing at the top of the application
+ */
 #mainAppContainer,
 .content-container {
   padding-top: 0 !important;
   margin-top: 0 !important;
 }
 
-/* Make all panels the same height, accounting for the header */
+/* 
+ * Panel height and scrolling settings
+ * Applied to the three main panels of the application:
+ * - Left: Navigation sidebar with task lists
+ * - Middle: Task cards display area
+ * - Right: Task details and editing panel
+ * This ensures they all have the same height and independent scrolling
+ */
 #sidebarMenu, 
 #task-middle-panel,
 #task-details-panel {
@@ -146,7 +200,7 @@ header.navbar {
 
 #sidebarMenu .nav-item {
   margin-top: 0 !important;
-  margin-bottom: 1px !important; /* Small gap between items */
+  margin-bottom: 3px !important; /* Increased from 1px to 8px for more spacing between items */
 }
 
 #sidebarMenu .nav-item:first-child {
@@ -158,16 +212,20 @@ header.navbar {
   padding-top: 6px !important; /* Align first item text with others */
 }
 
-/* Sidebar List Item Links */
+/* Sidebar Navigation List Items (Links - <a> tags)
+ * Applied to each link within the sidebar navigation
+ * Controls font size, padding, color, and hover effects
+ */
 #sidebarMenu .nav-link.task-list-item {
   font-size: 13px !important;
-  padding: 6px 10px !important;
+  padding: 6px 10px !important; /* Adjusted from inline style */
   color: #333 !important;
   height: 32px !important;
   display: flex !important;
   align-items: center !important;
   text-decoration: none !important; 
   transition: background-color 0.15s ease !important; 
+  position: relative; /* Needed for badge absolute positioning */
 }
 
 #sidebarMenu .nav-link.task-list-item:hover {
@@ -182,45 +240,70 @@ header.navbar {
   border-left: 2px solid var(--microsoft-blue) !important; 
 }
 
-/* Sidebar Icons */
-#sidebarMenu .icon-container i {
+/* Sidebar Icons (within links)
+ * Applied to <i> tags used for icons in the sidebar lists
+ * Ensures consistent size and alignment
+ */
+#sidebarMenu .nav-link.task-list-item .icon-container i,
+.sidebar-icon { /* Add a general class for other sidebar icons if needed */
   font-size: 14px !important;
   width: 16px !important;
   text-align: center !important;
+  /* color already handled by icon-subtle-* classes */
 }
 
-.icon-subtle-dark,
-.icon-subtle-google,
-.icon-subtle-microsoft {
-  color: var(--text-secondary) !important; /* Consistent icon color */
-  opacity: 0.9;
-  font-size: 15px;
-}
-
-/* Sidebar Task Count Badge */
-#sidebarMenu .task-count {
+/* Sidebar Task Count Badge
+ * Applied to the <span> showing the number of tasks in a list
+ * Styles the appearance (background, color, padding, rounding)
+ * Positioned absolutely to the right end of the list item
+ */
+#sidebarMenu .nav-link.task-list-item .task-count {
   font-size: 11px !important;
-  background-color: #e0e0e0 !important; /* Slightly darker grey */
+  background-color: #e0e0e0 !important; 
   color: #555 !important;
   padding: 1px 6px !important;
   border-radius: 10px !important;
   font-weight: normal !important;
-  margin-left: auto !important; /* Push to the right */
+  margin-left: auto !important; /* Keep pushing to right */
+  /* Alternative absolute positioning if margin-left fails:
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%); */
 }
 
-/* Sidebar Divider */
+/* Sidebar Divider
+ * Styles the <hr> element used to separate list sections
+ * Uses a subtle color and standard margins
+ */
 #sidebarMenu .divider-blue {
   margin: 8px 0 !important;
-  border-color: #e0e0e0 !important; /* Match border color */
+  border: none; /* Remove default border */
+  border-top: 1px solid var(--border-medium) !important; /* Use consistent border color */
   opacity: 0.7 !important;
-  border-top: 1px solid #e0e0e0 !important; 
+}
+
+/* Create List Link Icon
+ * Specific styling for the plus icon in the 'Create list' link
+ */
+#create-list-link .icon-container i {
+   /* font-size already handled by .sidebar-icon if applied */
+   /* color: var(--primary-color) !important; /* Already has text-primary */
 }
 
 /* ========================================================================== */
 /* ==                  Task List Panel (Middle Panel)                      == */
 /* ========================================================================== */
 
-/* Base styling for middle panel */
+/* 
+ * Base styling for the middle panel
+ * This is the main content area that displays task cards
+ * Features:
+ * - White background to distinguish from sidebar
+ * - Border separating it from the sidebar
+ * - Relative positioning to allow for the sticky search bar
+ * - Smooth transitions for responsive behavior
+ */
 #task-middle-panel {
   position: relative; /* Needed for sticky search bar */
   /* Height, overflow, padding-top set in Core Layout */
@@ -231,142 +314,123 @@ header.navbar {
   transition: all 0.3s ease;
 }
 
-/* Ensure content starts below header */
+/* 
+ * Content alignment in middle panel
+ * Ensures all content starts at a consistent position
+ * Prevents unexpected spacing at the top of the panel
+ */
 #task-middle-panel > * {
   margin-top: 0 !important;
 }
 
-/* Search Row */
+/* 
+ * Search Row / Toolbar
+ * The sticky bar at the top containing search, add, filter, sort, sync
+ */
 #searchbar_row {
-  position: sticky;
-  top: 0; /* Stick to the top of the panel */
+    position: sticky;
+  top: 0; 
   z-index: 1000;
-  padding: 10px 0px; /* Adjust padding */
+  padding: 10px 0px; /* Keep vertical padding */
   margin-bottom: 8px !important;
   margin-top: 0 !important;
   padding-top: 0 !important;
-    display: flex;
+  display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: nowrap;
   gap: 10px;
-  background-color: #ffffff; /* Match panel background */
-  border-bottom: 1px solid var(--border-medium) !important; /* Lighter border */
+  background-color: #ffffff; 
+  border-bottom: 1px solid var(--border-medium) !important; 
 }
 
-#searchbar_row .position-relative {
-  flex-grow: 1;
-  margin-right: 10px;
+/* 
+ * Search Input Field
+ * Styles the text input used for searching tasks
+ */
+#searchbar_row #search-task {
+  height: 32px; /* Consistent height with buttons */
+  font-size: 13px; /* Consistent font size */
+  /* Other styles like padding-left are handled by .search-input */
 }
 
-.search-input {
-  width: 100%;
-  padding-left: 35px !important;
+/* 
+ * Toolbar Buttons (General)
+ * Base styling for Add, Filter, Sort, Sync buttons
+ * Ensures consistent height
+ */
+#searchbar_row .btn {
   height: 32px;
-  border-radius: 2px;
-  border: 1px solid var(--border-light);
-  background-color: #ffffff; /* White background */
-  font-size: 13px;
-}
-
-.search-input:focus {
-  background-color: #fff;
-  border-color: var(--microsoft-blue);
-  box-shadow: none;
-  outline: none;
-}
-
-/* Search Icon */
-.position-absolute.ms-3 {
-  left: 10px !important;
-  top: 50% !important; /* Vertically center */
-  transform: translateY(-50%) !important;
-  z-index: 5;
-  color: var(--text-secondary) !important;
-}
-
-/* Add Task Button (in Search Row) */
-.add-task-btn {
-  background-color: white;
-  color: var(--microsoft-blue);
-  width: 32px;
-  height: 32px;
-  border-radius: 2px;
-  border: 1px solid var(--border-medium) !important; /* Use medium border */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  padding: 0;
-}
-
-.add-task-btn:hover {
-  background-color: #f5f5f5;
-}
-
-.add-task-btn i {
-  font-size: 16px; /* Slightly larger plus */
-}
-
-/* Filter/Sort Dropdowns (in Search Row) */
-.dropdown {
-  margin-left: 5px;
-}
-
-.btn-light.dropdown-toggle {
-  height: 32px;
-  border: 1px solid var(--border-medium) !important; /* Use medium border */
-  background-color: white;
-  color: var(--text-secondary); /* Use secondary text color */
-  font-size: 13px;
-    display: flex;
-    align-items: center;    
-  padding: 0 12px;
-}
-
-.btn-light.dropdown-toggle:hover {
-  background-color: #f5f5f5;
-}
-
-.dropdown-menu {
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border: 1px solid var(--border-light);
-  padding: 4px 0;
-}
-
-.dropdown-item {
-  font-size: 13px;
-  padding: 6px 12px;
-  color: var(--text-primary);
-}
-
-.dropdown-item:hover {
-  background-color: #f5f5f5;
-}
-
-/* Sync Button (in Search Row) */
-.sync-btn, #manual-sync-btn /* Target both if used */ {
-  height: 32px;
-  padding: 0 12px;
-  font-size: 13px;
-  color: var(--microsoft-blue);
-  background-color: white;
-  border: 1px solid var(--border-medium) !important; /* Use medium border */
-  border-radius: 2px;
-  display: flex;
+  font-size: 13px; /* Consistent font size */
+  padding-top: 0;    /* Align text vertically */
+  padding-bottom: 0; /* Align text vertically */
+  display: inline-flex; /* Align icon and text */
   align-items: center;
-  text-decoration: none;
 }
 
-.sync-btn:hover, #manual-sync-btn:hover {
-  background-color: #f5f5f5;
-  text-decoration: none;
+/* 
+ * Add Task Button Specifics
+ * Styles the '+' button in the toolbar
+ */
+#searchbar_row .add-task-btn {
+  width: 32px; /* Make it square */
+  padding-left: 0; /* Reset padding for centering */
+  padding-right: 0; /* Reset padding for centering */
+  justify-content: center; /* Center the icon */
+  /* Other styles inherited from .btn and defined in add-task-btn class */
 }
 
-.sync-icon, .filter-icon, .sort-icon {
-  font-size: 13px;
-  margin-right: 6px;
-  color: var(--microsoft-blue); 
+/* 
+ * Add Task Button Icon
+ * Styles the '+' icon inside the button
+ */
+#searchbar_row .add-task-btn i {
+  /* font-size is set in add-task-btn i rule */
+  cursor: pointer; /* Indicate clickability */
+}
+
+/* 
+ * Toolbar Icons (within Filter/Sort labels and Sync button)
+ * Ensures consistent size and vertical alignment
+ */
+#searchbar_row .toolbar-icon {
+  font-size: 18px !important; /* Increased from 14px */
+  vertical-align: middle; /* Helps alignment */
+  margin-right: 5px; /* Add some spacing between icon and text */
+}
+
+#searchbar_row .toolbar-icon.fa-sort { /* Specific size for sort icon */
+  font-size: 20px !important; /* Increased from 16px */
+}
+
+/* 
+ * Filter/Sort Dropdown Buttons
+ * Styles the buttons that toggle the dropdown menus
+ */
+#searchbar_row .flat-dropdown-toggle {
+  width: auto; /* Allow button to size to content */
+  text-align: left !important;
+  /* height, font-size inherited from .btn */
+  /* Other styles from .flat-dropdown-toggle class */
+}
+
+/* 
+ * Sync Button Specifics
+ * Styles the 'Sync' button in the toolbar
+ */
+#searchbar_row #manual-sync-btn {
+  padding-left: 12px;
+  padding-right: 12px;
+  /* height, font-size inherited from .btn */
+  /* Other styles from .sync-btn class */
+}
+
+/* 
+ * Sync Spinner Icon
+ * Styles the spinning icon shown during sync initiation
+ */
+#searchbar_row #sync-spinner i {
+  font-size: 16px;
 }
 
 /* Task Card Styling */
@@ -375,88 +439,120 @@ header.navbar {
   border-radius: 4px;
 }
 
+/* 
+ * Task Card Container
+ * Applied to each individual task card in the task list
+ * Features:
+ * - Subtle border and shadow for card-like appearance
+ * - Transition effects for hover interactions
+ * - Consistent spacing between cards
+ * - White background to distinguish from panel background
+ * This is a key component that users interact with frequently
+ */
 .task-card {
-  transition: all 0.2s ease !important;
   margin-bottom: 8px !important;
   border: 1px solid var(--border-medium) !important;
-  border-radius: 2px !important;
+  border-radius: 6px !important; /* Increased border radius for a softer look */
   background-color: white !important;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06) !important; /* Enhanced shadow */
+  transition: all 0.2s ease !important;
 }
 
-.task-card > div {
+/* Add hover effect for better interaction */
+.task-card:hover {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* 
+ * Task Card Inner Padding Div
+ * The first div inside the task card, controlling padding
+ */
+.task-card > div:first-child { /* Target the flex container */
   padding: 6px 8px !important;
 }
-  
-.task-card:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
-  border-color: var(--border-medium) !important;
-  cursor: pointer !important;
+
+/* 
+ * Task Card Clickable Area (Flex container)
+ * Styles the flex container holding the checkmark/title and favorite icon
+ */
+.task-card-clickable-area {
+   padding-left: 4px; /* Space before checkmark */
 }
 
-/* Task Card Content */
-.task-title {
-  /* font-size set globally */
-}
-
-.due-date {
-  font-size: 11px !important;
-  color: var(--text-secondary) !important;
-}
-
-/* Task Completion Checkmark */
-.custom-check, .complete-task {
-  cursor: pointer !important;
-  margin-right: 8px !important;
+/* 
+ * Task Completion Checkmark Icon
+ * Styles the <i> tag used for the checkmark
+ */
+.task-card .complete-task {
   font-size: 14px !important;
-  transition: all 0.2s ease !important;
-  position: relative !important;
-  z-index: 10 !important;
-  width: 18px !important;
-  height: 18px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  cursor: pointer !important;
+  position: relative !important; /* Keep for z-index */
+  z-index: 10 !important; 
+  /* color is set dynamically by JS */
 }
 
-/* Incomplete task circle */
-.custom-check.far.fa-circle {
-  color: #a0a0a0 !important;
-  border-radius: 50% !important;
+/* 
+ * Task Text Container (Title and Due Date)
+ * The div wrapping the task title and due date
+ */
+.task-text-container {
+  margin-left: 12px; /* Space between checkmark and text */
 }
 
-/* Completed task check */
-.custom-check.fas.fa-check-circle,
-.complete-task.fas.fa-check-circle { 
-  color: #2ecc71 !important; /* Bright green */
-  animation: checkPulse 0.3s ease-in-out !important;
+/* 
+ * Task Title
+ * Styles the main task name text
+ */
+.task-card .task-title {
+  font-weight: 500 !important; 
+  margin-bottom: 2px !important; 
+  color: var(--text-primary) !important;
+  line-height: 1.4 !important; 
+  transition: color 0.2s ease !important;
 }
 
-/* Animation for check mark when clicked */
-@keyframes checkPulse {
-  0% { transform: scale(0.8); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-/* Task title strikethrough for completed tasks */
-.strikethrough {
+/* Add this rule for strikethrough */
+.task-card .task-title.strikethrough {
   text-decoration: line-through !important;
-  color: #9e9e9e !important;
-  font-style: italic !important;
+  color: var(--text-light) !important; /* Optional: Make completed text lighter */
 }
 
-/* Favorite/Star Icon */
-.fav-icon, .mark-favorite {
+/* 
+ * Task Due Date Text
+ * Styles the text displaying the due date below the title
+ */
+.task-card .due-date {
+  font-size: 11px !important;
+  color: var(--text-light) !important;
+  margin-bottom: 2px !important; 
+}
+
+/* 
+ * Overdue Text Styling (within due date span)
+ * Styles the '(Overdue)' text added by JS
+ */
+.task-card .due-date .overdue-text {
+  color: var(--danger) !important; /* Use danger color variable */
+  font-weight: 600 !important;
+}
+
+/* 
+ * Favorite Icon Container
+ * The div wrapping the star icon on the right
+ */
+.task-fav-icon-container {
+  padding-right: 4px; /* Space on the right */
+}
+
+/* 
+ * Favorite (Star) Icon
+ * Styles the <i> tag used for the favorite star
+ */
+.task-card .mark-favorite {
   font-size: 14px !important;
-  color: var(--text-secondary); /* Default star color */
-}
-
-.fav-icon.text-primary,
-.mark-favorite.text-primary, 
-.mark-favorite.fas.fa-star {
-  color: var(--microsoft-blue) !important; 
+  cursor: pointer !important;
+  /* color class (text-warning) added by JS/updateTaskCardUI */
 }
 
 /* ========================================================================== */
@@ -465,14 +561,26 @@ header.navbar {
 
 /* Base styles for details panel */
 #task-details-panel {
-  /* Height, overflow, padding-top set in Core Layout */
-  position: sticky !important; 
-  top: 0 !important; 
-  padding: 16px !important; 
-  border-left: 1px solid var(--border-medium) !important; 
-  background-color: white !important; 
-  transition: all 0.3s ease !important; 
-  font-size: 13px !important; 
+  border-left: 1px solid var(--border-light) !important; /* Lighter border */
+  height: calc(100vh - 72px) !important; /* Adjusted height estimate */
+  overflow-y: auto !important;
+  background-color: #fdfdfd !important; /* Slightly off-white background */
+  padding: 0; /* Remove default padding if any, handle inside */
+  /* Initially hidden with d-none */
+}
+
+/* Inner Padding for Details Panel
+ * Add padding to the direct child div for content spacing
+ */
+#task-details-panel > .p-3 {
+   /* Bootstrap class already adds padding */
+}
+
+/* Content Container within Details Panel
+ * The div where the actual form/details are loaded
+ */
+#task-details-content {
+  /* Specific styles for content within the panel can go here */
 }
 
 /* Task Action Buttons in Edit Panel */
@@ -490,7 +598,7 @@ header.navbar {
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;
-  border: none;
+    border: none;
   border-radius: 4px;
   background-color: white;
   color: #333;
@@ -510,11 +618,19 @@ header.navbar {
 }
 
 .task-action-btn.complete {
-  color: var(--success);
+  color: var(--text-primary);
+}
+
+.task-action-btn.complete i.fas {
+  color: var(--primary-color) !important;
 }
 
 .task-action-btn.important {
-  color: var(--warning);
+  color: var(--text-primary);
+}
+
+.task-action-btn.important i.fas {
+  color: var(--primary-color) !important;
 }
 
 /* Card spacing in edit task panel */
@@ -1055,4 +1171,130 @@ cursor: pointer;
   .dropdown, .sync-btn, .add-task-btn {
     margin-top: 5px;
   }
+}
+
+/* Add the styles extracted from task_dashboard.html */
+
+/* 
+ * Flat Dropdown Toggle Style
+ * Used for:
+ * - Filter dropdown in task dashboard (All/Completed/Past Due options)
+ * - Sort dropdown in task dashboard (No Sort/Due Date/Important options)
+ * Found in searchbar_row within task-middle-panel
+ */
+.flat-dropdown-toggle {
+  background-color: white !important;
+  border: 1px solid var(--border-medium) !important;
+  color: var(--text-secondary) !important;
+  font-size: 13px !important;
+  padding: 4px 24px 4px 8px !important; /* Padding adjusted to accommodate the dropdown arrow */
+  border-radius: 2px !important;
+  /* Override default button focus/hover */
+  box-shadow: none !important;
+  text-align: left !important;
+}
+
+/* 
+ * Hover and focus states for dropdown toggles
+ * Applied when:
+ * - User hovers over the filter/sort dropdowns
+ * - User focuses on the dropdown buttons (keyboard navigation)
+ */
+.flat-dropdown-toggle:hover,
+.flat-dropdown-toggle:focus {
+  background-color: #f8f8f8 !important; /* Subtle hover background */
+  border-color: var(--border-medium) !important;
+  box-shadow: none !important;
+}
+
+/* 
+ * Positioning for the dropdown caret/arrow
+ * Ensures the caret appears correctly aligned on the right side of dropdown buttons
+ * Used in both filter and sort dropdowns in the task dashboard
+ */
+.flat-dropdown-toggle::after {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 
+ * Completed task check mark styling
+ * Applied to:
+ * - Task completion checkbox icons in task cards
+ * - Both initial render and after user clicks to complete a task
+ * - Used in task cards in the middle panel task list
+ * - Targeted via completeTaskClick() JavaScript function
+ */
+.custom-check.fas.fa-check-circle,
+.complete-task.fas.fa-check-circle { 
+  color: #2ecc71 !important; /* Bright green for completed tasks */
+  animation: checkPulse 0.3s ease-in-out !important; /* Animation when status changes */
+}
+
+/* 
+ * Animation for checkbox when clicked
+ * Applied when:
+ * - User clicks on a task checkbox to mark complete/incomplete
+ * - Provides visual feedback through a pulse animation
+ * - The animation is triggered in the completeTaskClick() JavaScript function
+ */
+@keyframes checkPulse {
+  0% { transform: scale(0.8); } /* Start slightly smaller */
+  50% { transform: scale(1.2); } /* Grow larger mid-animation */
+  100% { transform: scale(1); } /* Return to normal size */
+}
+
+/* 
+ * Sync Spinner Styling
+ * Aligns the spinner vertically with the sync button
+ * Initially hidden via d-none in HTML
+ */
+#sync-spinner {
+  display: inline-flex; /* Use flex to align icon vertically */
+  align-items: center;  /* Center icon vertically */
+}
+
+/* ========================================================================== */
+/* ==                           Helper Classes                             == */
+/* ========================================================================== */
+
+/* 
+ * Task Update Alert Message (Dynamically added by JS)
+ * Styles the success/error pop-up messages
+ */
+.task-update-alert {
+  position: fixed !important;
+  top: 20px !important; /* Slightly lower */
+  right: 20px !important;
+  z-index: 1060 !important; /* Ensure it's above modals (Bootstrap modal z-index is 1050) */
+  min-width: 250px; /* Give it some minimum width */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Add shadow */
+}
+
+/* Add styles for .task-count added by JS if needed */
+.task-count {
+    font-size: 11px !important;
+    background-color: #e0e0e0 !important;
+    color: #555 !important;
+    padding: 1px 6px !important;
+    border-radius: 10px !important;
+    font-weight: normal !important;
+    margin-left: auto !important; /* Push to right in flex container */
+    /* Ensure vertical alignment if needed in flex container */
+    align-self: center; 
+}
+
+/* Style for overdue text span */
+.overdue-text {
+    color: var(--danger) !important;
+    font-weight: 600 !important;
+}
+
+/* Selected task highlight */
+.task-card.selected {
+    background-color: #e6f2ff !important; /* Brighter blue background */
+    border-left: 4px solid #1976d2 !important; /* Thicker blue left border */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important; /* Add shadow for depth */
 }

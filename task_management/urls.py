@@ -8,7 +8,7 @@ app_name = 'task_management'
 urlpatterns = [
     path('^task_management/attachments/(?P<path>.*)$', views.serve_attachment),
     path('', views.get_lists, name='get_lists'),
-    path('add/<int:list_id>/', views.add_task, name='add_task'),
+    path('add/', views.add_task, name='add_task'),
     path('get_all_tasks/', views.get_all_tasks, name='get_all_tasks'),
     path('complete_task/<int:task_id>/', views.complete_task, name='complete_task'),
     path('mark_favorite/', views.mark_favorite, name='mark_favorite'),   
@@ -23,16 +23,17 @@ urlpatterns = [
     path('delete_tasks/', views.delete_tasks, name='delete_tasks'),
 
     #Google and Micrsoft Task Sync
-    path('sync_google_tasks/', views.sync_google_tasks, name='sync_google_tasks'),
-    path('connect_microsoft/', auth_utils.connect_microsoft, name='connect_microsoft'),
-    path('microsoft_callback/', auth_utils.microsoft_callback, name='microsoft_callback'),
-    path('sync_microsoft_tasks/', views.sync_microsoft_tasks, name='sync_microsoft_tasks'),    
-    path('sync_tasks/', sync_utils.trigger_background_sync, name='trigger_background_sync'),
-    path('process_sync_task/', sync_utils.process_sync_task, name='process_sync_task'),
-    path('trigger_user_sync/', views.trigger_user_sync, name='trigger_user_sync'),
-    path('get_task_counts/', views.get_task_counts, name='get_task_counts'),
-    path('process_ms_task_update/', sync_utils.process_ms_task_update, name='process_ms_task_update'),
-    path('process_google_task_update/', sync_utils.process_google_task_update, name='process_google_task_update'),
+    path('get_task_counts/', views.get_task_counts, name='get_task_counts'),  # Returns count of tasks by status and source
+    path('trigger_user_sync/', views.trigger_user_sync, name='trigger_user_sync'),  # Initiates manual sync for current user
+
+    path('connect_microsoft/', auth_utils.connect_microsoft, name='connect_microsoft'),  # Redirects to Microsoft OAuth flow
+    path('microsoft_callback/', auth_utils.microsoft_callback, name='microsoft_callback'),  # Handles OAuth callback from Microsoft
+
+    path('sync_tasks/', sync_utils.trigger_background_sync, name='trigger_background_sync'),  # Starts background sync process for all users
+    path('process_sync_task/', sync_utils.process_sync_task, name='process_sync_task'),  # Processes individual sync tasks from queue
+
+    path('process_ms_task_update/', sync_utils.process_ms_task_update, name='process_ms_task_update'),  # Handles webhook updates from Microsoft
+    path('process_google_task_update/', sync_utils.process_google_task_update, name='process_google_task_update'),  # Handles webhook updates from Google
 
 ] 
 

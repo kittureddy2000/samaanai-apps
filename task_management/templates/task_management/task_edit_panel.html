@@ -1,11 +1,15 @@
 <form id="edit-task-form" data-task-id="{{ task.id }}" style="max-width: 100%;" enctype="multipart/form-data">
   {% csrf_token %}
-  
+
+  <span id="panel-save-status" class="text-muted small ms-2"></span>
+
   <!-- Task title input - no card, simpler design -->
   <div class="mb-3">
     <input type="text" class="form-control form-control-sm border-0 fs-5 fw-medium" id="task_name" name="task_name" value="{{ task.task_name }}" style="padding: 0.5rem 0.25rem; background-color: transparent; box-shadow: none;">
   </div>
   
+
+
   <!-- Due date with smaller compact design -->
   <div class="d-flex align-items-center mb-3 py-2" style="border-bottom: 1px solid #f0f0f0;">
     <i class="fas fa-calendar text-muted me-3" style="width: 20px;"></i>
@@ -65,7 +69,7 @@
     </div>
   </div>
   
-  <!-- Lists with compact design -->
+  {% comment %} <!-- Lists with compact design -->
   <div class="d-flex align-items-center mb-3 py-2" style="border-bottom: 1px solid #f0f0f0;">
     <i class="fas fa-list-ul text-muted me-3" style="width: 20px;"></i>
     <div class="dropdown flex-grow-1">
@@ -80,7 +84,7 @@
         {% endfor %}
       </ul>
     </div>
-  </div>
+  </div> {% endcomment %}
   
   <!-- Current Images section with better formatting -->
   {% if task.images.all %}

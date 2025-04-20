@@ -28,19 +28,41 @@ class TaskListForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['task_name', 'task_description', 'list_name', 'due_date', 'reminder_time', 'recurrence', 'task_completed', 'important']
+        fields = ['task_name', 'task_description', 'due_date', 'recurrence', 'task_completed', 'important']
         widgets = {
             'task_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Task name'}),
-            'task_description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Task description'}),
-            'list_name': forms.Select(attrs={'class': 'form-control'}),
-            'reminder_time': forms.DateTimeInput(attrs={'type':'datetime-local'}),
-            'due_date': forms.DateTimeInput(attrs={'type':'datetime-local'}),
-            'recurrence': forms.Select(attrs={'class': 'd-none'}) # removed the default select element and hid this.
+            'task_description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Task description', 'rows': 3}),
+            'due_date': forms.DateTimeInput(attrs={'type':'datetime-local', 'class': 'form-control'}),
+            'recurrence': forms.Select(attrs={'class': 'form-select'}),
+            'important': forms.CheckboxInput(attrs={'class': 'form-check-input'})
+            # 'task_completed' uses default widget
         }
 
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
-        self.fields['list_name'].queryset = TaskList.objects.all()
-        
+
+class TaskListCreateForm(forms.ModelForm):
+    class Meta:
+        model = TaskList
+        fields = ['list_name']
+        widgets = {
+            'list_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter list name'}),
+        }
+
+class TaskEditForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['task_name', 'task_description', 'due_date', 'reminder_time', 'recurrence', 'task_completed', 'important']
+        widgets = {
+            'task_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Task name'}),
+            'task_description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Task description', 'rows': 3}),
+            'due_date': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}),
+            'reminder_time': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}),
+            'recurrence': forms.Select(attrs={'class': 'form-select'}),
+            'important': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 

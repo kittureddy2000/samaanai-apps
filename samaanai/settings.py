@@ -186,10 +186,15 @@ else:
 
 
     if CLOUDRUN_SERVICE_URL:
-        CSRF_TRUSTED_ORIGINS = [CLOUDRUN_SERVICE_URL]
+        CSRF_TRUSTED_ORIGINS = [
+            CLOUDRUN_SERVICE_URL,
+            'https://samaanai.com',
+            'https://www.samaanai.com'
+        ]
     else:
-        CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
-    logger.info(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
+        CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', 
+                                       default=['https://samaanai.com', 'https://www.samaanai.com'])
+    logger.info(f"CSRF_TRUSTED_ORIGINS: {CSRF_TRUSTED_ORIGINS}")
     
     # Setup Google Cloud Logging
     try:
@@ -379,13 +384,17 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 logger.info("setting up Microsoft OAuth2 configuration")
+# Ensure consistent redirect URI format
+MICROSOFT_REDIRECT_URI = env('REDIRECT_URI', default='https://samaanai.com/task_management/microsoft_callback/')
+logger.info(f"Microsoft redirect URI: {MICROSOFT_REDIRECT_URI}")
+
 MICROSOFT_AUTH = {
     "CLIENT_ID": env('MS_CLIENT_ID'),
     "CLIENT_SECRET": env('MS_CLIENT_SECRET'),
     "TENANT_ID": env('MS_TENANT_ID', default='common'),  
-    "REDIRECT_URI": env('REDIRECT_URI'),
+    "REDIRECT_URI": MICROSOFT_REDIRECT_URI,
     "AUTHORITY": "https://login.microsoftonline.com/common", 
-    'SCOPE': ['Tasks.Read']
+    'SCOPE': ['Tasks.ReadWrite']  # Using ReadWrite instead of just Read
 }
 
 

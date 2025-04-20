@@ -4,49 +4,7 @@
 {% block title %}Task Management{% endblock %}
 {% block additional_head %}
 <meta name="csrf-token" content="{{ csrf_token }}" />
-<style>
-  /* Styles moved to task_management_style.css */
-  .flat-dropdown-toggle {
-    background-color: white !important;
-    border: 1px solid var(--border-medium) !important;
-    color: var(--text-secondary) !important;
-    font-size: 13px !important;
-    padding: 4px 24px 4px 8px !important; /* Adjust padding */
-    border-radius: 2px !important;
-    /* Override default button focus/hover */
-    box-shadow: none !important;
-    text-align: left !important;
-  }
-
-  .flat-dropdown-toggle:hover,
-  .flat-dropdown-toggle:focus {
-    background-color: #f8f8f8 !important; /* Subtle hover */
-    border-color: var(--border-medium) !important;
-    box-shadow: none !important;
-  }
-
-  /* Ensure Bootstrap's caret (arrow) is positioned correctly */
-  .flat-dropdown-toggle::after {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  /* Completed task check */
-  .custom-check.fas.fa-check-circle,
-  .complete-task.fas.fa-check-circle { 
-    color: #2ecc71 !important; /* Bright green */
-    animation: checkPulse 0.3s ease-in-out !important;
-  }
-
-  /* Animation for check mark when clicked */
-  @keyframes checkPulse {
-    0% { transform: scale(0.8); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-  }
-</style>
+<link rel="stylesheet" href="{% static 'task_management/css/task_management_style.css' %}">
 {% endblock %}
 {% block content %}
 
@@ -60,31 +18,9 @@
 ></div>
 
 <div class="container-fluid">
-  <div class="row">
-    <!-- Hamburger Icon for smaller screens Start -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="col col-auto d-block d-lg-none">
-        <button
-          class="btn btn-light"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#sidebarMenu"
-          aria-controls="sidebarMenu"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i
-            class="fas fa-bars text-primary"
-            aria-hidden="true"
-            style="cursor: pointer"
-          ></i>
-        </button>
-      </div>
-    </nav>
-    <!-- Hamburger Icon for smaller screens End -->
-
+  <div class="row h-100">
     <!-- Bootstrap Sidebar Start -->
-    <nav id="sidebarMenu" class="col-md-2 d-md-block collapse">
+    <nav id="sidebarMenu" class="col-md-2 d-md-block sidebar collapse">
       <ul class="nav flex-column">
         <!-- Special Lists -->
         {% for tasklist in special_lists %}
@@ -144,20 +80,20 @@
 
         <!-- Normal Lists (sorted alphabetically) -->
         <div id="normal-lists-container">
-          {% for tasklist in normal_lists %}
-            <li class="nav-item">
+        {% for tasklist in normal_lists %}
+          <li class="nav-item">
               <a href="#" class="nav-link task-list-item d-flex align-items-center" data-id="{{ tasklist.id }}" style="font-size: 13px; padding: 6px 8px; color: #333;">
                 <span class="icon-container me-3">
                   {# Temporarily use a default icon for ALL normal lists #}
                   <i class="far fa-list-alt icon-subtle-dark" style="font-size: 14px;"></i>
-                </span>
+              </span>
                 <span class="flex-grow-1">{{ tasklist.list_name }}</span>
-                {% if tasklist.task_count > 0 %}
+              {% if tasklist.task_count > 0 %}
                   <span class="task-count" style="font-size: 11px; background-color: #f0f0f0; color: #555; padding: 1px 6px; border-radius: 10px; font-weight: normal;">{{ tasklist.task_count }}</span>
-                {% endif %}
-              </a>
-            </li>
-          {% endfor %}
+              {% endif %}
+            </a>
+          </li>
+        {% endfor %}
         </div>
 
         <!-- Create List Link -->
@@ -173,40 +109,41 @@
     </nav>
     <!-- Bootstrap Sidebar End -->
 
-    <main id="task-middle-panel" class="col-md-9">
+    <main id="task-middle-panel" class="col-md-10" style="background-color: #f9f9f9; min-height: calc(100vh - 70px); padding-top: 15px; padding-bottom: 20px; border-radius: 5px;">
       <!-- Search row Section Start-->
       <div id="searchbar_row" class="mb-3">
         <div class="d-flex align-items-center flex-nowrap">
-          <!-- Search Box: grows to fill available space -->
+          <!-- Search Box -->
+          <div class="flex-grow-1 me-3">
           <input
             type="text"
-            class="form-control form-control-sm flex-grow-1 me-3"
+              class="form-control"
             id="search-task"
             placeholder="Search"
-            style="height: 32px; font-size: 13px;"
+              style="height: 38px; font-size: 14px;"
           />
+          </div>
       
           <!-- Add Task Button -->
-          <button class="btn btn-light add-task-btn me-3" type="button" style="padding: 4px 8px; height: 32px; width: 32px;">
-            {% comment %} <i class="fas fa-plus text-primary" aria-hidden="true" style="cursor: pointer;"></i> {% endcomment %}
-            <i class="fa-solid fa-plus text-primary" aria-hidden="true" style="cursor: pointer;"></i>
+          <button class="btn btn-light me-3 d-flex align-items-center justify-content-center add-task-btn" type="button" style="height: 38px; width: 38px;">
+            <i class="fa-solid fa-plus text-primary" style="font-size: 14px;"></i>
           </button>
       
           <!-- Filter Dropdown -->
-          <div class="d-flex align-items-center me-3 dropdown">
-            <label class="form-label me-2" title="Filter">
+          <div class="d-flex align-items-center me-3">
+            <label class="form-label me-2 mb-0 d-flex align-items-center" title="Filter">
               <i class="fa-solid fa-filter text-primary" style="font-size: 14px;"></i>
             </label>
             <input type="hidden" id="filter-value" name="filter" value="all">
-            <button class="btn dropdown-toggle flat-dropdown-toggle"
+            <button class="btn dropdown-toggle flat-dropdown-toggle d-flex align-items-center"
                     type="button"
                     id="filter-button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                    style="width: auto; height: 32px; text-align: left;">
+                    style="height: 38px; font-size: 14px; padding: 0 12px;">
               All
             </button>
-            <ul class="dropdown-menu" aria-labelledby="filter-button">
+            <ul class="dropdown-menu" aria-labelledby="filter-button" style="font-size: 14px;">
               <li><a class="dropdown-item" href="#" data-value="all">All</a></li>
               <li><a class="dropdown-item" href="#" data-value="completed">Completed</a></li>
               <li><a class="dropdown-item" href="#" data-value="past_due">Past Due</a></li>
@@ -214,33 +151,37 @@
           </div>
       
           <!-- Sort Dropdown -->
-          <div class="d-flex align-items-center me-3 dropdown">
-            <label class="form-label me-2" title="Sort By">
-              <i class="fa-solid fa-sort text-primary" style="font-size: 16px;"></i>
+          <div class="d-flex align-items-center me-3">
+            <label class="form-label me-2 mb-0" title="Sort By">
+              <i class="fa-solid fa-sort text-primary" style="font-size: 14px;"></i>
             </label>
             <input type="hidden" id="sort-by-value" name="sort_by" value="">
-            <button class="btn dropdown-toggle flat-dropdown-toggle"
+            <button class="btn dropdown-toggle flat-dropdown-toggle d-flex align-items-center"
                     type="button"
                     id="sort-by-button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                    style="width: auto; height: 32px; text-align: left;">
+                    style="height: 38px; font-size: 14px; padding: 0 12px;">
               No Sort
             </button>
-            <ul class="dropdown-menu" aria-labelledby="sort-by-button">
+            <ul class="dropdown-menu" aria-labelledby="sort-by-button" style="font-size: 14px;">
               <li><a class="dropdown-item" href="#" data-value="">No Sort</a></li>
               <li><a class="dropdown-item" href="#" data-value="due_date">Due Date</a></li>
               <li><a class="dropdown-item" href="#" data-value="important">Important</a></li>
             </ul>
           </div>
       
-        <!-- Sort Dropdown End -->
-
           <!-- Sync Button -->
-          <button id="manual-sync-btn" class="btn btn-outline-primary d-flex align-items-center" style="height: 32px; padding: 4px 12px; font-size: 13px;">
+          <button id="manual-sync-btn" class="btn btn-outline-primary d-flex align-items-center me-2" 
+                  style="height: 38px; padding: 0 12px; font-size: 14px;">
             <i class="fa-solid fa-sync-alt me-2" style="font-size: 14px;"></i>
             Sync
           </button>
+
+          <!-- Sync Spinner -->
+          <div id="sync-spinner" class="d-none ms-2"> 
+            <i class="fas fa-spinner fa-spin text-primary" style="font-size: 14px;"></i>
+          </div>
         </div>
       </div>
       <!-- Search row Section End -->
@@ -255,10 +196,15 @@
     </main>
 
     <!-- Task Details Panel -->
-    <div class="col-md-3 d-none" id="task-details-panel" style="border-left: 1px solid #f0f0f0; height: calc(100vh - 70px); overflow-y: auto; background-color: #fdfdfd;">
+    <div id="task-details-panel" class="col-md-3 d-none" style="border-left: 1px solid #f0f0f0; height: calc(100vh - 70px); overflow-y: auto; background-color: #fdfdfd;">
+      <div class="d-flex justify-content-between align-items-center p-2 border-bottom">
+        <h5 class="mb-0">Task Details</h5>
+        <button type="button" class="btn-close close-details-btn" aria-label="Close"></button>
+      </div>
       <div class="p-3">
         <div id="task-details-content">
           <!-- Content will be loaded here -->
+          <span id="panel-save-status" class="text-muted small ms-2"></span>
         </div>
       </div>
     </div>
@@ -267,8 +213,9 @@
       <i class="fas fa-arrow-left"></i> Back
     </button>
   </div>
+  </div>
 
-  <!-- Task Modal -->
+<!-- Create Task Modal -->
   <div
     class="modal fade"
     id="taskModal"
@@ -312,7 +259,6 @@
       </div>
     </div>
   </div>
-</div>
 
 <!-- Create List Modal -->
 <div class="modal fade" id="createListModal" tabindex="-1" role="dialog" aria-labelledby="createListModalLabel" aria-hidden="true">
@@ -321,7 +267,7 @@
       <div class="modal-header">
         <h5 class="modal-title" id="createListModalLabel">Create New List</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+</div>
       <div class="modal-body">
         <!-- Form content will be loaded here -->
       </div>
@@ -337,94 +283,6 @@
 
 {% block script_block %}
 <script>
-  // Function to sync Google Tasks
-  function syncGoogleTasks() {
-    var csrfToken = $('meta[name="csrf-token"]').attr("content");
-    console.log("Dashboard HTML : syncGoogleTasks function called");
-    fetch("/task_management/sync_google_tasks/", {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken
-      }
-    })
-    .then((response) => {
-      if (!response.ok) {
-        console.log("Dashboard HTML : syncGoogleTasks: Response Status : " + response.status);
-        return response.json().then(data => {
-          console.error("Dashboard HTML : syncGoogleTasks: Error syncing tasks:", data.error);
-          if (response.status === 400) {
-            console.error("Dashboard HTML : syncGoogleTasks: User not authenticated");
-            return;
-          }
-          throw new Error(data.error || "Failed to sync tasks.");
-        });
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data) {
-        console.log("Dashboard HTML : syncGoogleTasks: Sync Task Success " + data.message);
-        $("#success-message").text(data.message).fadeIn();
-        setTimeout(function () {
-          $("#success-message").fadeOut();
-        }, 3000);
-        fetchTasksFromDb(); // Refresh the task table after success.
-        updateBadgeCounts(); // Update badges after sync
-      }
-    })
-    .catch((error) => {
-      console.error("Dashboard HTML : syncGoogleTasks: Error syncing tasks:", error);
-    })
-    .finally(() => {
-      $("#sync-status").fadeOut(); // Hide sync status on completion or error
-    });
-  }
-
-  // Function to sync Microsoft Tasks
-  function syncMSTasks() {
-    var csrfToken = $('meta[name="csrf-token"]').attr("content");
-
-    fetch("/task_management/sync_microsoft_tasks/", {
-      method: 'GET',
-      headers: {
-        'X-CSRFToken': csrfToken,
-        'Content-Type': 'application/json'
-      }
-    })
-    .then((response) => {
-      if (!response.ok) {
-        return response.json().then(data => {
-          if (data.error === "Microsoft account not connected." || data.error === "Authentication failed. Please reconnect your Microsoft account.") {
-            window.location.href = "/task_management/connect_microsoft/";
-          } else {
-            console.error("Error response:", data);
-            throw new Error(data.error || "Failed to sync tasks.");
-          }
-        });
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data.message) {
-        console.log("MS Tasks Sync:", data.message);
-        $("#success-message").text(data.message).fadeIn();
-        setTimeout(function () {
-          $("#success-message").fadeOut();
-        }, 3000);
-        fetchTasksFromDb();
-        updateBadgeCounts(); // Update badges after sync
-      } else {
-        console.error("MS Tasks Sync: No message in response");
-      }
-    })
-    .catch((error) => {
-      console.error("Error syncing MS tasks:", error);
-    })
-    .finally(() => {
-      $("#sync-status").fadeOut(); // Hide sync status on completion or error
-    });
-  }
 
   function createTaskCardHTML(task) {
     // Set icon classes based on task completion status
@@ -434,7 +292,8 @@
     
     // Format due date
     let dueDateText = '';
-    let overdueText = '';
+    let overdueSpan = '';
+    let dueDateAttr = task.due_date ? task.due_date.split('T')[0] : '';
     
     if (task.due_date) {
         const dueDate = new Date(task.due_date);
@@ -444,7 +303,7 @@
         const tomorrow = new Date(today);
         tomorrow.setDate(tomorrow.getDate() + 1);
         
-        // Format the date
+        // Format the date for display
         if (dueDate.getTime() === today.getTime()) {
             dueDateText = "Due Today";
         } else if (dueDate.getTime() === tomorrow.getTime()) {
@@ -454,33 +313,70 @@
         }
         
         // Check if overdue
-        if (dueDate < today) {
-            overdueText = ' <span style="color: #e74c3c; font-weight: 600;">(Overdue)</span>';
+        if (!task.task_completed && dueDate < today) {
+            overdueSpan = ' <span class="overdue-text">(Overdue)</span>';
+        }
+    }
+    
+    // Get list name for data attribute only (not for display)
+    let listDataAttr = '';
+    if (task.list_name && task.list_name.name) {
+        // Add special data attribute for list name to help with debugging
+        listDataAttr = `data-list-name="${task.list_name.name}"`;
+        
+        // Special logging for Samaan Tasks
+        if (task.list_name.name === "Samaan Tasks") {
+            console.log("Creating Samaan Task HTML for task ID:", task.id);
         }
     }
     
     // Set favorite icon class
-    let favoriteIconClass = task.is_favorite ? 'fas fa-star text-warning' : 'far fa-star';
+    let favoriteIconClass = task.important ? 'fas fa-star text-warning' : 'far fa-star'; // Use 'important' field
     
+    // Handle source for external tasks (Microsoft or Google)
+    let sourceAttr = '';
+    let sourceIndicator = '';
+    if (task.source) {
+        sourceAttr = `data-source="${task.source}"`;
+        
+        // Add a subtle source indicator if it's from an external service
+        if (task.source === 'microsoft') {
+            sourceIndicator = `<span class="badge bg-light text-primary border border-primary ms-1" style="font-size: 8px;">MS</span>`;
+        } else if (task.source === 'google') {
+            sourceIndicator = `<span class="badge bg-light text-danger border border-danger ms-1" style="font-size: 8px;">G</span>`;
+        }
+        
+        console.log(`Creating task card with source: ${task.source} for task ID: ${task.id}`);
+    }
+    
+    // --- ADDED data-* attributes and explicit z-index for icons --- 
     return `
-    <div class="task-card" data-task-id="${task.id}" id="task-${task.id}" 
-         style="margin-bottom: 8px !important; border: 1px solid #e0e0e0; border-radius: 2px; background-color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-        <div class="d-flex justify-content-between align-items-center" style="padding: 6px 8px;">
-            <div class="d-flex align-items-center" style="padding-left: 4px;">
-                <i class="${checkIcon} custom-check complete-task" 
+    <div class="task-card" 
+         data-task-id="${task.id}" 
+         id="task-${task.id}"
+         data-completed="${task.task_completed ? 'true' : 'false'}"
+         data-important="${task.important ? 'true' : 'false'}"
+         data-due-date="${dueDateAttr}"
+         ${listDataAttr}
+         ${sourceAttr}>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="${checkIcon} complete-task" 
                    data-task-id="${task.id}" 
-                   onclick="completeTaskClick(event, ${task.id})"
-                   style="font-size: 14px; cursor: pointer; position: relative; z-index: 10; color: ${checkColor};"></i>
-                <div style="margin-left: 12px;">
-                    <div class="task-title ${taskNameClass}" style="font-size: 13px;">${task.task_name}</div>
-                    ${dueDateText ? `<div class="due-date" style="font-size: 11px; color: #767676;">${dueDateText}${overdueText}</div>` : ''}
+                   style="color: ${checkColor}; cursor: pointer; padding: 10px; z-index: 10;"></i>
+                <div class="task-text-container">
+                    <div class="task-title ${taskNameClass}">${task.task_name}${sourceIndicator}</div>
+                    ${dueDateText ? `<div class="due-date">${dueDateText}${overdueSpan}</div>` : ''}
                 </div>
             </div>
-            <div style="padding-right: 4px;">
-                <i class="${favoriteIconClass} mark-favorite" data-id="${task.id}" data-task-id="${task.id}" style="font-size: 14px; cursor: pointer;"></i>
+            <div class="task-fav-icon-container">
+                <i class="${favoriteIconClass} mark-favorite" 
+                   data-id="${task.id}" 
+                   data-task-id="${task.id}" 
+                   style="cursor: pointer; padding: 10px; z-index: 10;"></i>
             </div>
         </div>
-    </div>`;
+      </div>`;
   }
   function updateTasksSection(tasks) {
     const tasksHtml = tasks.map((task) => createTaskCardHTML(task)).join("");
@@ -526,15 +422,10 @@
     var csrfToken = $('meta[name="csrf-token"]').attr("content");
     console.log(`Triggering async Process for all tasks`);
     
-    // Show a non-obtrusive sync notification
-    $("#sync-status").removeClass("d-none alert-danger").addClass("alert-info")
-      .html(`<div class="d-flex align-items-center">
-                <i class="fas fa-sync-alt fa-spin me-2"></i>
-                <span>Syncing tasks in background...</span>
-                <button type="button" class="btn-close ms-auto" aria-label="Close" id="dismiss-sync"></button>
-             </div>`)
-      .fadeIn();
+    // Show spinner
+    $("#sync-spinner").removeClass("d-none"); 
     
+    // Fetch call to backend to start sync
     fetch("/task_management/trigger_user_sync/", {  
       method: 'POST',
       headers: {
@@ -548,18 +439,16 @@
     })
     .then((data) => {
       console.log(`All syncs enqueued:`, data.message);
-      
-      // Start polling for completion (if using sync status endpoint)
-      checkSyncStatus();
+      // You might want to show a temporary success message or start polling
     })
     .catch((error) => {
       console.error(`Error triggering sync:`, error);
-      $("#sync-status").removeClass("alert-info").addClass("alert-danger")
-        .html(`<div class="d-flex align-items-center">
-                <i class="fas fa-exclamation-triangle me-2"></i> 
-                <span>Sync failed—please try again.</span>
-                <button type="button" class="btn-close ms-auto" aria-label="Close" id="dismiss-sync"></button>
-               </div>`);
+      // Optionally display an error message to the user
+      // E.g., $("#sync-status").text("Error starting sync.").show(); 
+    })
+    .finally(() => {
+      // Hide spinner regardless of success or failure
+      $("#sync-spinner").addClass("d-none"); 
     });
   }
 
@@ -609,16 +498,20 @@
       type: "GET",
       dataType: "json",
       success: function (response) {
+        console.log("updateBadgeCounts received counts:", response.counts); 
+        
         const counts = response.counts;
         $('.task-list-item').each(function () {
           const listId = $(this).data('id');
           const count = counts[listId] || 0;
           const badge = $(this).find('.task-count');
+          
           if (count > 0) {
             if (badge.length) {
               badge.text(count); // Update existing badge
             } else {
-                $(this).append(`<span class="task-count">${count}</span>`);
+              // Add new badge with proper styling
+              $(this).append(`<span class="task-count" style="font-size: 11px; background-color: #f0f0f0; color: #555; padding: 1px 6px; border-radius: 10px; font-weight: normal;">${count}</span>`);
             }
           } else {
             badge.remove(); // Remove badge if count is 0
@@ -631,120 +524,192 @@
     });
   }
 
-  // Function to handle clicking the complete task icon
-  function completeTaskClick(e, taskId) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    console.log(`Completing task ID: ${taskId}`);
-    const clickedElement = $(e.currentTarget);
-    console.log("Clicked element:", clickedElement);
-    console.log("Clicked element classes:", clickedElement.attr('class'));
-    
-    // Determine if the task is currently complete based on icon class
-    const isCurrentlyComplete = clickedElement.hasClass('fas');
-    console.log("Is currently complete?", isCurrentlyComplete);
-    
-    // Immediately update UI to show action is pending
-    if (isCurrentlyComplete) {
-        // Mark as incomplete - change to empty circle and remove strikethrough
-        clickedElement.removeClass('fas fa-check-circle').addClass('far fa-circle');
-        clickedElement.css('color', '#a0a0a0'); // Change to gray
-        clickedElement.closest('.task-card').find('.task-title').removeClass('strikethrough');
-    } else {
-        // Mark as complete - change to checked circle and add strikethrough
-        clickedElement.removeClass('far fa-circle').addClass('fas fa-check-circle');
-        clickedElement.css('color', '#2ecc71'); // Change to green
-        clickedElement.closest('.task-card').find('.task-title').addClass('strikethrough');
-    }
-    
-    // Make the AJAX call to update on server
-    const url = `/task_management/complete_task/${taskId}/`;
-    console.log("AJAX URL:", url);
-    
-    $.ajax({
-        url: url,
-        type: 'GET',
-        success: function(response) {
-            console.log("Success response:", response);
-            if (response.success) {
-                console.log(`Task ${taskId} completion toggled successfully.`);
-                // Ensure UI matches server response
-                const taskIsNowComplete = response.task_completed;
-                console.log("Task is now complete according to server:", taskIsNowComplete);
-                
-                const taskCard = $(`#task-${taskId}`);
-                console.log("Task card exists:", taskCard.length > 0);
-                
-                // Make sure the UI reflects the current server state
-                if (taskIsNowComplete) {
-                    console.log("Ensuring task appears complete");
-                    clickedElement.removeClass('far fa-circle').addClass('fas fa-check-circle');
-                    clickedElement.css('color', '#2ecc71'); // Bright green
-                    taskCard.find('.task-title').addClass('strikethrough');
-                } else {
-                    console.log("Ensuring task appears incomplete");
-                    clickedElement.removeClass('fas fa-check-circle').addClass('far fa-circle');
-                    clickedElement.css('color', '#a0a0a0'); // Gray
-                    taskCard.find('.task-title').removeClass('strikethrough');
-                }
-                
-                // Update the task counts/display
-                updateBadgeCounts();
-            } else {
-                console.error("Server reported failure:", response.error);
-                // Revert UI changes if the server reports an error
-                if (isCurrentlyComplete) {
-                    clickedElement.removeClass('far fa-circle').addClass('fas fa-check-circle');
-                    clickedElement.css('color', '#2ecc71');
-                    clickedElement.closest('.task-card').find('.task-title').addClass('strikethrough');
-                } else {
-                    clickedElement.removeClass('fas fa-check-circle').addClass('far fa-circle');
-                    clickedElement.css('color', '#a0a0a0');
-                    clickedElement.closest('.task-card').find('.task-title').removeClass('strikethrough');
-                }
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("AJAX Error:", status, error);
-            console.error("Response Text:", xhr.responseText);
-            
-            // Revert UI changes if there's an error
-            if (isCurrentlyComplete) {
-                clickedElement.removeClass('far fa-circle').addClass('fas fa-check-circle');
-                clickedElement.css('color', '#2ecc71');
-                clickedElement.closest('.task-card').find('.task-title').addClass('strikethrough');
-            } else {
-                clickedElement.removeClass('fas fa-check-circle').addClass('far fa-circle');
-                clickedElement.css('color', '#a0a0a0');
-                clickedElement.closest('.task-card').find('.task-title').removeClass('strikethrough');
-            }
-        }
-    });
-  }
-  
   // Helper function to show error messages
-  function showErrorMessage(message) {
-    $('<div class="alert alert-danger task-update-alert" style="position: fixed; top: 15px; right: 15px; z-index: 9999;">' + 
-      message + '</div>')
+  function showErrorMessage(message, type = 'danger') {
+    // Remove existing alerts of the same type to prevent stacking
+    $('.task-update-alert.alert-' + type).remove(); 
+    
+    // --- MODIFICATION --- 
+    // Use classes for styling, including Bootstrap alert type
+    $('<div class="alert task-update-alert alert-' + type + ' alert-dismissible fade show" role="alert">' + 
+      message + 
+      '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' + // Add dismiss button
+      '</div>')
+      // --- END MODIFICATION ---
       .appendTo('body')
-      .delay(3000)
+      .delay(4000) // Increased delay slightly
       .fadeOut(500, function() { $(this).remove(); });
   }
 
-  $(document).ready(function () {
-    console.log("Dashboard HTML : In Document Ready Function");
-    const userId = {{ user.id }};
+  // Helper function to show success messages
+  function showSuccessMessage(message) {
+    // Use the same error message function but with success type
+    showErrorMessage(message, 'success');
+  }
 
-    // DEBUG: Log normal lists from template to JS
-    console.log("DEBUG - Normal Lists in template context:", [
-      {% for list in normal_lists %}
-        { id: {{ list.id }}, name: "{{ list.list_name }}", source: "{{ list.list_source|default:'none' }}" },
-      {% endfor %}
-    ]);
+  // Central function to update a task card's UI based on data
+  function updateTaskCardUI(taskData) {
+    const taskId = taskData.id || taskData.task_id; // Handle potential variations in response key
+    if (!taskId) {
+        console.error("updateTaskCardUI called without task ID", taskData);
+        return;
+    }
+    
+    const taskCard = $(`#task-${taskId}`);
+    if (!taskCard.length) {
+        console.warn(`Task card not found for ID: ${taskId}`);
+        return;
+    }
+
+    console.log(`Updating UI for task ${taskId}`, taskData);
+
+    // --- Helper: Safely get boolean values from response --- 
+    const isCompleted = String(taskData.completed) === 'true'; 
+    const isImportant = String(taskData.important) === 'true';
+    const isRecurring = String(taskData.recurring) === 'true';
+    const nextDueDate = taskData.next_due_date;
+    const currentDueDate = taskData.due_date; // Original due date
+    const taskName = taskData.task_name;
+
+    // --- Update data attributes (source of truth for future clicks) --- 
+    taskCard.attr('data-completed', isCompleted ? 'true' : 'false');
+    taskCard.attr('data-important', isImportant ? 'true' : 'false');
+    // Update due date attribute - use next due date if recurring, otherwise current
+    const effectiveDueDate = isRecurring && nextDueDate ? nextDueDate.split('T')[0] : (currentDueDate ? currentDueDate.split('T')[0] : '');
+    taskCard.attr('data-due-date', effectiveDueDate);
+
+    // --- Update Visuals --- 
+    const checkIcon = taskCard.find('.complete-task'); 
+    const title = taskCard.find('.task-title');
+    const favIcon = taskCard.find('.mark-favorite');
+    let dueDateSpan = taskCard.find('.due-date'); // Use let as it might be reassigned
+
+    // --- Title --- 
+    if (taskName) {
+      title.text(taskName);
+    }
+
+    // --- Completion Status & Strikethrough --- 
+    if (isCompleted) {
+        checkIcon.removeClass('far fa-circle').addClass('fas fa-check-circle').css('color', '#2ecc71'); // Green
+        title.addClass('strikethrough');
+    } else {
+        checkIcon.removeClass('fas fa-check-circle').addClass('far fa-circle').css('color', '#a0a0a0'); // Gray
+        title.removeClass('strikethrough');
+    }
+
+    // --- Due Date Text & Overdue --- 
+    let dueDateText = '';
+    let overdueSpan = ''; // Changed variable name
+    let displayDateStr = effectiveDueDate;
+
+    if (displayDateStr) {
+        try {
+            const displayDate = new Date(displayDateStr + 'T00:00:00'); // Ensure it's parsed as local date
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
+            // Format display text
+            if (displayDate.getTime() === today.getTime()) {
+                dueDateText = "Due Today";
+            } else if (displayDate.getTime() === tomorrow.getTime()) {
+                dueDateText = "Due Tomorrow";
+            } else {
+                // Use toLocaleDateString for formatting Month Day
+                 dueDateText = `Due ${displayDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+            }
+
+            // Check if overdue (only if not completed)
+            if (!isCompleted && displayDate < today) {
+                // --- MODIFICATION --- 
+                overdueSpan = ' <span class="overdue-text">(Overdue)</span>'; // Use class
+                // --- END MODIFICATION ---
+            }
+        } catch (e) {
+            console.error("Error parsing date:", displayDateStr, e);
+            dueDateText = displayDateStr; // Fallback to raw string if parsing fails
+        }
+    }
+
+    if (dueDateText) {
+        // Check if .due-date span exists, create if not
+        if (dueDateSpan.length === 0) {
+            // --- MODIFICATION --- 
+            // Create div with only the class, no inline style
+             title.after('<div class="due-date"></div>');
+             // --- END MODIFICATION ---
+             // Re-select the newly created span
+             dueDateSpan = taskCard.find('.due-date'); 
+        }
+        // --- MODIFICATION --- 
+        dueDateSpan.html(dueDateText + overdueSpan); // Use overdueSpan variable
+        // --- END MODIFICATION ---
+    } else {
+        dueDateSpan.remove(); // Remove the due date span if there's no date
+    }
+    
+    // --- Importance Status --- 
+    if (isImportant) {
+        favIcon.removeClass('far').addClass('fas text-warning'); // Use text-warning for important star
+    } else {
+        favIcon.removeClass('fas text-warning').addClass('far');
+    }
+
+    // Optional: Could call updateBadgeCounts() here, but might be better 
+    // to call it once after a batch of operations if applicable.
+    // updateBadgeCounts(); 
+  }
+
+  // Helper function to format date (can be adapted or removed if not needed elsewhere)
+  function formatDate(dateString) {
+      if (!dateString) return '';
+      try {
+          // Assuming dateString is ISO format like 'YYYY-MM-DDTHH:mm:ssZ'
+          // or just 'YYYY-MM-DD'
+          const date = new Date(dateString);
+          // Format as Month Day (e.g., Sep 21)
+          return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      } catch (e) {
+          console.error("Error formatting date:", dateString, e);
+          return dateString; // Return original string on error
+      }
+  }
+
+  $(document).ready(function () {
+    console.debug("Task Dashboard: Document ready event firing, jQuery version:", $.fn.jquery);
+
+    // Test function that can be called from console
+    window.testTaskClick = function(taskId) {
+      console.log("Manual test: clicking complete for task", taskId);
+      const selector = `#task-${taskId} .complete-task`;
+      console.log("Looking for element with selector:", selector);
+      const element = $(selector);
+      if (element.length) {
+        console.log("Element found, triggering click event");
+        element.trigger('click');
+      } else {
+        console.error("Element not found with selector:", selector);
+      }
+    };
+
+    const userId = {{ user.id }};
 
     // Call fetchTasksFromDb function to fetch tasks from the database
     fetchTasksFromDb();
+
+    // Set a delay before triggering background sync to ensure UI loads first
+    setTimeout(() => {
+    // Trigger async syncs for all tasks in the background (single call)
+    triggerAsyncSync();
+    }, 1000);
+
+    // Optional: Add a manual sync button for users (already in HTML as #manual-sync-btn)
+    $("#manual-sync-btn").on("click", function(e) {
+      e.preventDefault();
+      triggerAsyncSync();
+    });
 
     // Make textareas auto-grow
     $(document).on('input', '#task-details-panel textarea', function() {
@@ -762,17 +727,7 @@
       }, 100);
     });
 
-    // Set a delay before triggering background sync to ensure UI loads first
-    setTimeout(() => {
-      // Trigger async syncs for all tasks in the background (single call)
-      triggerAsyncSync();
-    }, 1000);
 
-    // Optional: Add a manual sync button for users (already in HTML as #manual-sync-btn)
-    $("#manual-sync-btn").on("click", function(e) {
-      e.preventDefault();
-      triggerAsyncSync();
-    });
 
     // Handle clicking on a task category in the sidebar
     $(".task-list-item").click(function () {
@@ -782,6 +737,22 @@
       $(".task-list-item").removeClass("highlighted");
       this.classList.add("highlighted");
 
+      // First, hide the task details panel
+      var detailsPanel = $("#task-details-panel");
+      detailsPanel.addClass("d-none");
+      
+      // Remove selected state from any selected task card
+      $('.task-card.selected').removeClass('selected')
+                           .css({
+                               'background-color': '',
+                               'border-left': '',
+                               'box-shadow': ''
+                           });
+      
+      // Expand the middle panel to fill the available space
+      $("#task-middle-panel").removeClass("col-md-6 col-md-9 col-md-10").addClass("col-md-10");
+      console.log("Expanded middle panel to fill available space");
+
       $.ajax({
         url: `/task_management/get_tasks_by_list/${listId}`,
         type: "GET",
@@ -789,7 +760,6 @@
         success: function (response) {
           console.log("Received data:", response);
           updateTasksSection(response.tasks);
-          $("#task-details-panel").addClass("d-none");
 
           if (window.innerWidth < 768) {
             var sidebarMenu = $("#sidebarMenu");
@@ -810,120 +780,152 @@
       var taskId = $(this).data("task-id");
       console.log("Clicked on task row with Task Id : " + taskId);
 
-      // Show loading indicator inside details panel
-      $("#task-details-panel").removeClass("d-none").html('<div class="p-4 text-center"><i class="fas fa-spinner fa-spin"></i> Loading task details...</div>');
-      document.getElementById("task-middle-panel").classList.remove("col-md-9");
-      document.getElementById("task-middle-panel").classList.add("col-md-6");
-
-      url = "{% url 'task_management:edit_task' 999 %}".replace("999", taskId);
-
-      // Use a timeout to prevent UI hanging
-      var taskDetailTimeout = setTimeout(function() {
-        $("#task-details-panel").html('<div class="alert alert-warning m-3">Request is taking longer than expected. <button class="btn btn-sm btn-primary retry-load-task" data-task-id="' + taskId + '">Retry</button></div>');
-      }, 5000); // 5 second timeout
-
-      $.ajax({
-        url: url,
-        type: "GET",
-        timeout: 10000, // 10 second timeout 
-        success: function (response) {
-          clearTimeout(taskDetailTimeout);
-          console.log("In Success message for getting edit_task_panel");
-          $("#task-details-panel").html(response);
-
-          if ($(window).width() < 768) {
-            $("#tasks-section").toggleClass("d-none");
-            $("#back-button").removeClass("d-none");
-            $("#searchbar_row").addClass("d-none");
-          }
-        },
-        error: function (xhr, status, error) {
-          clearTimeout(taskDetailTimeout);
-          console.log("Error fetching task details:", xhr.status, error);
-          $("#task-details-panel").html(
-            '<div class="alert alert-danger m-3">' +
-            '<p>Error loading task details: ' + (xhr.status === 0 ? 'Connection timeout' : error) + '</p>' +
-            '<button class="btn btn-primary retry-load-task" data-task-id="' + taskId + '">Retry</button>' +
-            '</div>'
-          );
-        }
-      });
-    });
-
-    // Add retry handler for task loading failures
-    $(document).on("click", ".retry-load-task", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var taskId = $(this).data("task-id");
-      $("#task-details-panel").html('<div class="p-4 text-center"><i class="fas fa-spinner fa-spin"></i> Retrying...</div>');
-      
-      url = "{% url 'task_management:edit_task' 999 %}".replace("999", taskId);
-      
-      $.ajax({
-        url: url,
-        type: "GET",
-        success: function (response) {
-          $("#task-details-panel").html(response);
-        },
-        error: function (xhr, status, error) {
-          $("#task-details-panel").html(
-            '<div class="alert alert-danger m-3">' +
-            '<p>Error loading task details: ' + error + '</p>' +
-            '<button class="btn btn-primary retry-load-task" data-task-id="' + taskId + '">Retry</button>' +
-            '</div>'
-          );
-        }
-      });
+      // Use the dedicated function to open task details
+      openTaskDetails(taskId);
     });
 
     // Handle clicking the add task button
     $(document).on("click", ".add-task-btn", function () {
-      var listId = $("#current-list").data("list-id");
-      if (listId === undefined) {
-        listId = 1;
-      }
-      console.log("listid in Add Task Form : " + listId);
-      $("#taskModal").data("mode", "add");
-      console.log(" Task Model Mode in Create mode ");
-      $("#taskModal .modal-body").load("/task_management/add/" + listId, function () {
-        $("#taskModal").modal("show");
+      // Get the Samaan Tasks list ID from the sidebar
+      var samaanListId = $('.task-list-item').filter(function() {
+        return $(this).find('.flex-grow-1').text().trim() === 'Samaan Tasks';
+      }).data('id') || 1; // Fallback, though not needed for URL
+
+      console.log("Add Task button clicked. Using Samaan Tasks list ID (for context, not URL):", samaanListId);
+      
+      // Set mode using both jQuery .data() and HTML attribute
+      $("#taskModal").data("mode", "add").attr("data-mode", "add"); 
+      
+      $("#taskModalLabel").text("Add Task"); 
+      
+      var addTaskUrl = "{% url 'task_management:add_task' %}";
+      console.log("Loading form from URL:", addTaskUrl);
+
+      $("#taskModal .modal-body").load(addTaskUrl, function (response, status, xhr) { 
+         if (status !== "error") {
+            console.log("Add task form loaded successfully. Modal data-mode:", $("#taskModal").attr("data-mode")); // Log mode after load
+            
+            // Initialize date inputs after the form is loaded
+            setTimeout(function() {
+                // Initialize the date input with today's date if empty
+                const today = new Date().toISOString().split('T')[0];
+                const dueDateInput = $('#dueDateInput');
+                
+                if (!dueDateInput.val()) {
+                    dueDateInput.val(today);
+                }
+                
+                // Add event listener for date changes
+                dueDateInput.on('change', function() {
+                    console.log('Due date changed:', $(this).val());
+                });
+                
+                console.log("Date inputs initialized in Add Task form");
+            }, 100);
+            
+            // Use Bootstrap 5's way of showing the modal
+            try {
+                // First check if we can use Bootstrap 5 modal directly
+                if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                    console.log("Using Bootstrap 5 modal");
+                    var modalElement = document.getElementById('taskModal');
+                    var modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    
+                    if (!modalInstance) {
+                        modalInstance = new bootstrap.Modal(modalElement);
+                    }
+                    
+                    modalInstance.show();
+                } 
+                // Fall back to jQuery method if bootstrap namespace is not available
+                else if ($.fn.modal) {
+                    console.log("Using jQuery modal");
+                    $("#taskModal").modal("show");
+                } else if ($.fn.modal) {
+                    console.log("Using jQuery modal - DEPRECATED - switching to Bootstrap 5 method");
+                    var modalElement = document.getElementById('taskModal');
+                    var modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    if (!modalInstance) {
+                        modalInstance = new bootstrap.Modal(modalElement);
+                    }
+                    modalInstance.show();
+                }
+                else {
+                    console.error("Neither Bootstrap 5 nor jQuery modal functionality available");
+                    alert("Error: Could not display the modal. Please refresh the page.");
+                }
+            } catch (error) {
+                console.error("Error showing modal:", error);
+                alert("Error: Could not display the modal. Please refresh the page.");
+            }
+         } else {
+             console.error("Error loading add task form. Status:", status, "Response:", response, "XHR:", xhr);
+             $("#taskModal .modal-body").html("<div class='alert alert-danger'>Sorry, couldn't load the task form. Please try again later.</div>");
+             
+             // Try to show the modal despite error
+             try {
+                if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                    var modalElement = document.getElementById('taskModal');
+                    var modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                    modalInstance.show();
+                } else if ($.fn.modal) {
+                    $("#taskModal").modal("show");
+                }
+             } catch (error) {
+                console.error("Error showing modal with error content:", error);
+             }
+         }
       });
     });
 
-    // Handle saving a task (create/edit)
-    $("#saveTask").click(function () {
-      console.log("Saving Task function called");
-      var mode = $("#taskModal").data("mode");
-      var taskId = $("#taskModal").data("taskId");
-      var url = mode === "edit" ? `/task_management/edit_task/${taskId}/` : "/task_management/add/1/";
-      var formData = new FormData($("#taskModal form")[0]);
+    // Handle Create List Link Click
+    $("#create-list-link").on("click", function (e) {
+        e.preventDefault();
+        console.log("Create list link clicked");
+        
+        // Set mode using both jQuery .data() and HTML attribute
+        $("#taskModalLabel").text("Create New List");
+        $("#taskModal").data("mode", "create-list").attr("data-mode", "create-list"); 
 
-      $.ajax({
-        url: url,
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-          console.log("Success in Ajax Save Task");
-          var newTask = response.new_task || response; // Handle add/edit response
-          addNewTasktoDisplay(newTask);
+        var createListUrl = "{% url 'task_management:create_task_list' %}";
+        console.log("Loading create list form from URL:", createListUrl);
 
-          if ($(window).width() < 768) {
-            $("#task-details-panel").addClass("d-none");
-          }
-
-          setTimeout(function () {
-            $("#taskModal").modal("hide");
-          }, 500);
-
-          // Update badge counts after adding the task
-          updateBadgeCounts();
-        },
-        error: function (xhr, status, error) {
-          console.log("Ajax error in Save Task: " + error);
-        },
-      });
+        // Load the create list form into the modal body
+        $("#taskModal .modal-body").load(createListUrl, function(response, status, xhr) {
+            if (status == "error") {
+                console.error("Error loading create list form:", xhr.status, xhr.statusText);
+                $("#taskModal .modal-body").html("<p>Error loading form. Please try again.</p>");
+            }
+             console.log("Create list form loaded. Modal data-mode:", $("#taskModal").attr("data-mode")); // Log mode after load
+             
+             // Use Bootstrap 5's way of showing the modal
+             try {
+                 // First check if we can use Bootstrap 5 modal directly
+                 if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                     console.log("Using Bootstrap 5 modal for create list");
+                     var modalElement = document.getElementById('taskModal');
+                     var modalInstance = bootstrap.Modal.getInstance(modalElement);
+                     
+                     if (!modalInstance) {
+                         modalInstance = new bootstrap.Modal(modalElement);
+                     }
+                     
+                     modalInstance.show();
+                 } 
+                 // Fall back to jQuery method if bootstrap namespace is not available
+                 else if ($.fn.modal) {
+                     console.log("Using jQuery modal for create list");
+                     $("#taskModal").modal("show");
+                 }
+                 else {
+                     console.error("Neither Bootstrap 5 nor jQuery modal functionality available");
+                     alert("Error: Could not display the create list modal. Please refresh the page.");
+                 }
+             } catch (error) {
+                 console.error("Error showing create list modal:", error);
+                 alert("Error: Could not display the create list modal. Please refresh the page.");
+             }
+        });
     });
 
     // Handle searching tasks
@@ -988,61 +990,171 @@
       doSearch();
     });
 
-    // Handle submitting the edit task form in the panel
-    $(document).on("submit", "#edit-task-form", function (e) {
-      console.log("Edit Task Save function called from Side Panel");
-      e.preventDefault();
-      var taskId = $(this).data("task-id");
-      url = "/task_management/edit_task/" + taskId + "/";
+    // Handle Save button click in the modal
+    $("#saveTask").on("click", function () {
+        console.log("#saveTask clicked!"); 
+        
+        // Prioritize reading HTML attribute, fall back to jQuery data
+        var mode = $("#taskModal").attr("data-mode") || $("#taskModal").data("mode"); 
+        console.log("Modal mode detected (read from attr/data):", mode); 
 
-      // Ensure form has proper enctype
-      $(this).attr('enctype', 'multipart/form-data');
-      
-      // Debug file upload field
-      var fileInput = $(this).find('input[type="file"]');
-      if (fileInput.length) {
-        console.log("File input found:", fileInput.attr('name'));
-        console.log("Files selected:", fileInput[0].files.length);
-        if (fileInput[0].files.length > 0) {
-          console.log("File name:", fileInput[0].files[0].name);
-          console.log("File size:", fileInput[0].files[0].size, "bytes");
+        var form;
+        var url;
+
+        if (mode === "add") {
+            form = $("#add-task-form-modal"); 
+            url = "{% url 'task_management:add_task' %}"; 
+            console.log("Mode is 'add'. Selected form:", form, "URL:", url); 
+        } else if (mode === "create-list") {
+            form = $("#create-list-form-modal"); 
+             url = "{% url 'task_management:create_task_list' %}"; 
+            console.log("Mode is 'create-list'. Selected form:", form, "URL:", url);
+        } else if (mode === "edit") {
+             form = $("#edit-task-form-modal"); 
+             console.log("Mode is 'edit'. Attempting to select form:", form);
+             if (!form.length) {
+                 console.error("Edit form #edit-task-form-modal not found in modal body!");
+                 form = $("#task-details-panel #edit-task-form");
+                 console.log("Attempting to select form from panel:", form);
+             }
+             var taskId = form.data('task-id'); 
+             console.log("Selected edit form:", form, "Task ID from form data:", taskId);
+             if (!taskId) {
+                 console.error("Task ID not found on edit form.");
+                 alert("Error: Could not determine the task to edit."); 
+                 return; 
+             }
+             url = `/task_management/edit_task/${taskId}/`; 
+             console.log("Mode is 'edit'. Selected form:", form, "Task ID:", taskId, "URL:", url); 
+        } else {
+            console.error("Unknown or undefined modal mode detected after read:", mode);
+            alert("Error: Cannot determine action (add/edit/create list). Please try reopening the form."); // Slightly more helpful message
+            return; 
         }
-      } else {
-        console.log("No file input found in the form");
-      }
+        
+        // Common AJAX submission logic
+        if (form && form.length > 0) { // Ensure form exists
+            console.log("Form found. Proceeding with AJAX submission."); // <<< Log: Form found
+            var formData = new FormData(form[0]); // Use FormData for file uploads
+             console.log("Submitting form for mode:", mode, "URL:", url); // <<< Log: About to submit
+             // console.log("Form data:", formData); // Note: Logging FormData directly is complex
+             formData.forEach((value, key) => {
+                console.log(`FormData: ${key} = ${value}`); // Log FormData entries
+             });
+            
+            // Get CSRF token just before sending
+            const csrftoken = getCookie('csrftoken'); // Ensure getCookie function is defined
+            if (!csrftoken) {
+                console.error("CSRF token not found! Cannot submit form.");
+                alert("Security token missing. Please refresh the page.");
+                return;
+            }
+            console.log("Using CSRF Token:", csrftoken);
 
-      var formData = new FormData(this);
-      var taskHtml = "";
       $.ajax({
-        url: url,
+                url: url,
         type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
+                data: formData,
+                processData: false, // Needed for FormData
+                contentType: false, // Needed for FormData
+                headers: { "X-CSRFToken": csrftoken }, // Ensure CSRF token is sent
         success: function (response) {
-          console.log("edit-task-form Ajax : Success from Save Task : " + response.task_name);
-          console.log("edit-task-form Ajax : Task ID : " + response.id);
-          const taskHtml = createTaskCardHTML(response);
-          $("#task-" + response.id).replaceWith(taskHtml);
-          $("#task-details-panel").addClass("d-none");
-          $("#task-middle-panel").removeClass("col-md-6");
-          $("#task-middle-panel").addClass("col-md-9");
-          updateBadgeCounts(); // Update badges after editing a task
+                    console.log("AJAX Success:", response);
+                    
+                    // Use Bootstrap 5 way of hiding the modal
+                    var modalElement = document.getElementById('taskModal');
+                    var modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    if (modalInstance) {
+                        modalInstance.hide();
+                    }
+
+                    if (mode === 'create-list' && response.success) {
+                       // Add the new list to the sidebar
+                       appendNewListToSidebar(response.list);
+                       showFlashMessage("List created successfully!", "success");
+                    } else if (mode === 'add' && response.success) {
+                        console.log("Add task successful, prepending new task card...");
+                        if (response.task && response.task.id) {
+                            const newTaskHtml = createTaskCardHTML(response.task);
+                            $("#tasks-section").prepend(newTaskHtml); // Add new task to the top
+                            showFlashMessage("Task added successfully!", "success");
+                            
+                            // Ensure badge counts update after DOM has been updated
+                            setTimeout(function() {
+                                console.log("Updating badge counts after adding task");
+                                updateBadgeCounts();
+                            }, 300);
+                        } else {
+                            console.error("Add task success response missing task data:", response);
+                            showFlashMessage("Task added, but UI update failed. Please refresh.", "warning");
+                            // Fallback to full refresh if needed
+                            // fetchTasksFromDb(); 
+                        }
+                    } else if (mode === 'edit' && response.id) { 
+                        // Update the specific task card
+                        console.log("Edit task successful, updating UI...");
+                        updateTaskCardUI(response);
+                        // Optionally update panel if still open
+                        // showFlashMessage("Task updated successfully!", "success");
+                        // Close the details panel after saving from modal edit
+                        $("#task-details-panel").addClass("d-none");
+                        $("#task-middle-panel").removeClass("col-md-9").addClass("col-md-12");
+                        showFlashMessage("Task updated successfully!", "success");
+                        
+                        // Update counts after editing
+                        setTimeout(function() {
+                            console.log("Updating badge counts after editing task");
+                            updateBadgeCounts();
+                        }, 300);
+                    } else if (!response.success && response.errors) {
+                        // Handle form validation errors (display them somehow)
+                        console.error("Form validation errors:", response.errors); // <<< Log: Validation errors
+                         // Example: Display errors in an alert or next to fields
+                         // Improved error display:
+                         let errorHtml = '<ul class="text-danger">';
+                         for (const field in response.errors) {
+                             errorHtml += `<li><strong>${field}:</strong> ${response.errors[field].join(', ')}</li>`;
+                         }
+                         errorHtml += '</ul>';
+                         // Prepend error message to the modal body
+                         $('#taskModal .modal-body').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert">Validation errors:' + errorHtml + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+                         // Don't close the modal on validation error
+                         // $("#taskModal").modal("hide"); 
+                    } else {
+                        console.warn("AJAX success, but response indicates failure or is malformed:", response); // <<< Log: Unexpected success response
+                        // Generic error message if success format isn't right
+                        alert("Saved successfully, but there might have been an issue updating the display.");
+                    }
         },
         error: function (xhr, status, error) {
-          console.error("Error uploading file:", status, error);
-          console.error("Server response:", xhr.responseText);
-          
-          // Display error to user
-          var errorMsg = "Error saving task: " + (xhr.responseJSON?.error || error);
-          $("#edit-task-form").before('<div class="alert alert-danger">' + errorMsg + '</div>');
-          
-          // Auto-hide after 5 seconds
-          setTimeout(function() {
-            $(".alert-danger").fadeOut();
-          }, 5000);
+                    console.error("AJAX Error. Status:", status, "Error:", error, "Response Text:", xhr.responseText); // <<< Log: AJAX error
+                    let errorMsg = "An error occurred while saving.";
+                    try {
+                        const errResponse = JSON.parse(xhr.responseText);
+                        if (errResponse && errResponse.error) {
+                            errorMsg = errResponse.error;
+                        } else if (errResponse && errResponse.errors) {
+                            // Handle validation errors returned on general error
+                             let errorHtml = '<ul class="text-danger">';
+                             for (const field in errResponse.errors) {
+                                 errorHtml += `<li><strong>${field}:</strong> ${errResponse.errors[field].join(', ')}</li>`;
+                             }
+                             errorHtml += '</ul>';
+                             errorMsg = "Validation Errors:" + errorHtml;
+                        } else if (xhr.responseText) {
+                            errorMsg = `Server Error: ${xhr.responseText.substring(0, 200)}`; // Show part of raw response
+                        }
+                    } catch (e) { /* Ignore parsing error */ }
+                    // Prepend error message to the modal body
+                    $('#taskModal .modal-body').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + errorMsg + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+                    // Don't close the modal on error
+                    // $("#taskModal").modal("hide"); 
         },
       });
+        } else {
+             console.error("Could not find form for mode:", mode, "or form length is 0.", form); // <<< Log: Form not found
+             alert("Error: Could not find the form to submit."); // User feedback
+        }
     });
 
     // Handle clicking the back button
@@ -1051,13 +1163,50 @@
       $("#tasks-section").toggleClass("d-none");
       $("#back-button").addClass("d-none");
       $("#searchbar_row").removeClass("d-none");
+      
+      // Remove selected class and styles from any task when closing panel
+      $('.task-card.selected').removeClass('selected')
+                            .css({
+                                'background-color': '',
+                                'border-left': '',
+                                'box-shadow': ''
+                            });
     });
 
-    // Add new task to display
-    function addNewTasktoDisplay(newTask) {
-      const newTaskHtml = createTaskCardHTML(newTask);
-      $("#tasks-section").append(newTaskHtml);
-    }
+    // Clear task selection when clicking outside tasks
+    $(document).on('click', function(e) {
+      if ($(e.target).closest('.task-card').length === 0 &&
+          $(e.target).closest('#task-details-panel').length === 0 &&
+          $(e.target).closest('#back-button').length === 0) {
+        $('.task-card.selected').removeClass('selected')
+                               .css({
+                                   'background-color': '',
+                                   'border-left': '',
+                                   'box-shadow': ''
+                               });
+        
+        // Only hide panel if it's currently shown and we're on mobile view
+        if ($(window).width() < 768 && !$("#task-details-panel").hasClass('d-none')) {
+          $("#task-details-panel").addClass("d-none");
+          $("#tasks-section").removeClass("d-none");
+          $("#back-button").addClass("d-none");
+          $("#searchbar_row").removeClass("d-none");
+        }
+      }
+    });
+
+    // Clear task selection when changing lists
+    $(".task-list-item").click(function () {
+      // Existing code...
+      
+      // Also clear any selected task
+      $('.task-card.selected').removeClass('selected')
+                            .css({
+                                'background-color': '',
+                                'border-left': '',
+                                'box-shadow': ''
+                            });
+    });
 
     // Handle sync Google Tasks button
     $(document).on("click", "#sync-goog-tasks-btn", function (e) {
@@ -1066,6 +1215,8 @@
     });
 
     // Handle clicking on mark favorite (star) icon
+    // REMOVE THIS HANDLER - It's causing conflicts with our consolidated handler
+    /*
     $(document).on("click", ".mark-favorite", function (e) {
       e.preventDefault();
       e.stopPropagation(); // Prevent task card click
@@ -1075,7 +1226,7 @@
       
       // Get CSRF token for the POST request
       var csrfToken = $('meta[name="csrf-token"]').attr("content");
-      
+
       $.ajax({
         url: "{% url 'task_management:mark_favorite' %}",
         type: "POST",
@@ -1084,7 +1235,7 @@
           csrfmiddlewaretoken: csrfToken
         },
         success: function (response) {
-          console.log("Mark favorite success:", response);
+          console.log("Mark favorite response:", response);
           
           // Update the star icon based on the response
           var starElement = $(`#task-${response.task_id} .mark-favorite`);
@@ -1106,11 +1257,7 @@
         }
       });
     });
-
-    // Sync Microsoft Tasks button
-    $(document).on("click", "#sync-ms-tasks-btn", function () {
-      syncMSTasks();
-    });
+    */
 
     // Handle manual sync link in empty state
     $("#tasks-section").on("click", "#manual-sync-btn", function(e) {
@@ -1128,8 +1275,37 @@
         if (status == "error") {
           console.error("Error loading create list form:", xhr.status, xhr.statusText);
           // Optionally display an error message to the user
+          $("#createListModal .modal-body").html("<p>Error loading form. Please try again.</p>");
         } else {
-          $("#createListModal").modal("show");
+          console.log("Create list form loaded successfully for createListModal");
+        }
+        
+        // Use Bootstrap 5's way of showing the modal
+        try {
+            // First check if we can use Bootstrap 5 modal directly
+            if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                console.log("Using Bootstrap 5 modal for createListModal");
+                var modalElement = document.getElementById('createListModal');
+                var modalInstance = bootstrap.Modal.getInstance(modalElement);
+                
+                if (!modalInstance) {
+                    modalInstance = new bootstrap.Modal(modalElement);
+                }
+                
+                modalInstance.show();
+            } 
+            // Fall back to jQuery method if bootstrap namespace is not available
+            else if ($.fn.modal) {
+                console.log("Using jQuery modal for createListModal");
+                $("#createListModal").modal("show");
+            }
+            else {
+                console.error("Neither Bootstrap 5 nor jQuery modal functionality available for createListModal");
+                alert("Error: Could not display the create list modal. Please refresh the page.");
+            }
+        } catch (error) {
+            console.error("Error showing createListModal:", error);
+            alert("Error: Could not display the create list modal. Please refresh the page.");
         }
       });
     });
@@ -1137,11 +1313,18 @@
     // Handle clicking the Close button after successful list creation
     $(document).on("click", "#closeListModal", function() {
       var button = $(this);
-      $("#createListModal").modal("hide");
+      
+      // Use Bootstrap 5 way of hiding the modal
+      var modalElement = document.getElementById('createListModal');
+      var modalInstance = bootstrap.Modal.getInstance(modalElement);
+      if (modalInstance) {
+          modalInstance.hide();
+      }
+      
       // Reset the modal for next use
       setTimeout(function() {
-        button.text('Save').attr('id', 'saveNewList');
-        $("#createListModal .btn-secondary").show();
+          button.text('Save').attr('id', 'saveNewList');
+          $("#createListModal .btn-secondary").show();
       }, 500);
     });
 
@@ -1207,11 +1390,17 @@
             
             // Close after delay or let user close manually
             setTimeout(function() {
-              $("#createListModal").modal("hide");
+              // Use Bootstrap 5 way of hiding the modal
+              var modalElement = document.getElementById('createListModal');
+              var modalInstance = bootstrap.Modal.getInstance(modalElement);
+              if (modalInstance) {
+                  modalInstance.hide();
+              }
+              
               // Reset the modal for next use
               setTimeout(function() {
-                saveButton.text(originalText).attr('id', 'saveNewList');
-                $("#createListModal .btn-secondary").show();
+                  saveButton.text(originalText).attr('id', 'saveNewList');
+                  $("#createListModal .btn-secondary").show();
               }, 500);
             }, 1500);
           } else {
@@ -1264,6 +1453,836 @@
       });
     });
     // ---- End Create New List Modal Logic ----
+
+    // Set up event delegation for complete task click
+    $(document).on('click', '.complete-task', function(e) {
+        e.stopPropagation();
+        console.debug("Complete button clicked");
+        console.debug("Element clicked:", this);
+        console.debug("Classes:", $(this).attr('class'));
+        console.debug("Task ID from data attribute:", $(this).data('taskId'));
+        console.debug("Task ID from attribute:", $(this).attr('data-task-id'));
+        
+        const taskId = $(this).data('taskId') || $(this).attr('data-task-id');
+        if (!taskId) {
+            console.error("No task ID found on clicked element");
+            return;
+        }
+        
+        const taskCard = $(`#task-${taskId}`);
+        console.debug("Task card exists:", taskCard.length > 0);
+        if (taskCard.length > 0) {
+            console.debug("Task list:", taskCard.attr('data-list-name'));
+        }
+        
+        try {
+            handleCompleteClick(taskId);
+        } catch (error) {
+            console.error("Error in handleCompleteClick:", error);
+        }
+    });
+
+    // Set up event delegation for mark favorite click
+    $(document).on('click', '.mark-favorite', function(e) {
+        e.stopPropagation();
+        console.debug("Favorite button clicked");
+        console.debug("Element clicked:", this);
+        console.debug("Classes:", $(this).attr('class'));
+        console.debug("Task ID from data attribute:", $(this).data('taskId'));
+        console.debug("Task ID from attribute:", $(this).attr('data-task-id'));
+        
+        const taskId = $(this).data('taskId') || $(this).attr('data-task-id') || $(this).data('id');
+        if (!taskId) {
+            console.error("No task ID found on clicked element");
+            return;
+        }
+        
+        const taskCard = $(`#task-${taskId}`);
+        console.debug("Task card exists:", taskCard.length > 0);
+        if (taskCard.length > 0) {
+            console.debug("Task list:", taskCard.attr('data-list-name'));
+        }
+        
+        try {
+            handleMarkFavoriteClick(taskId);
+        } catch (error) {
+            console.error("Error in handleMarkFavoriteClick:", error);
+        }
+    });
+
+    // Task card click (excluding the icons)
+    $(document).on('click', '.task-card', function(e) {
+        // Only proceed if the click wasn't on an icon
+        if (!$(e.target).closest('.complete-task').length && 
+            !$(e.target).closest('.mark-favorite').length) {
+            const taskId = $(this).data('task-id');
+            console.log("Task card clicked for ID:", taskId);
+            openTaskDetails(taskId);
+        }
+    });
+
+    // ---- Helper Functions for Consolidated Handler ----
+    function handleCompleteClick(taskId) {
+        if (!taskId) {
+            console.error("handleCompleteClick called without a valid taskId");
+            return;
+        }
+        
+        // Prevent default event behavior and stop propagation
+        event.preventDefault();
+        event.stopPropagation();
+        
+        console.log(`Handling complete click for task ID: ${taskId}`);
+        
+        // Get task elements
+        const taskCard = $(`#task-${taskId}`);
+        if (!taskCard.length) {
+            console.error(`Task card not found for ID: task-${taskId}`);
+            return;
+        }
+        
+        const checkIcon = taskCard.find('.complete-task');
+        if (!checkIcon.length) {
+            console.error(`Complete task icon not found in task card #task-${taskId}`);
+            return;
+        }
+        
+        const taskTitle = taskCard.find('.task-title');
+        
+        // Check for data attributes that indicate external task source
+        const taskSource = taskCard.attr('data-source') || '';
+        const isExternalTask = taskSource === 'microsoft' || taskSource === 'google';
+        
+        console.log(`Task source: ${taskSource}, Is external task: ${isExternalTask}`);
+        
+        // Get current state
+        const isCurrentlyComplete = checkIcon.hasClass('fas');
+        console.log("Current completion state:", isCurrentlyComplete);
+        
+        // Update UI immediately for responsive feel
+        if (isCurrentlyComplete) {
+            // Currently complete, so mark as incomplete
+            console.log("Updating UI: Setting task to incomplete");
+            checkIcon.removeClass('fas fa-check-circle').addClass('far fa-circle');
+            checkIcon.css('color', '#a0a0a0'); // Make sure to use gray for incomplete
+            taskTitle.removeClass('strikethrough');
+            taskCard.attr('data-completed', 'false');
+        } else {
+            // Currently incomplete, so mark as complete
+            console.log("Updating UI: Setting task to complete");
+            checkIcon.removeClass('far fa-circle').addClass('fas fa-check-circle');
+            checkIcon.css('color', '#2ecc71'); // Make sure to use green for complete
+            taskTitle.addClass('strikethrough');
+            taskCard.attr('data-completed', 'true');
+        }
+        
+        // Add a sync indicator if it's an external task
+        if (isExternalTask) {
+            // Add a small sync indicator next to the checkbox
+            const syncIndicator = $('<span class="sync-indicator ms-1"><i class="fas fa-sync-alt fa-spin text-primary" style="font-size: 10px;"></i></span>');
+            checkIcon.after(syncIndicator);
+            console.log(`Added sync indicator for ${taskSource} task`);
+        }
+
+        console.log(`Sending AJAX request to toggle completion for task ${taskId}`);
+        $.ajax({
+            url: `/task_management/complete_task/${taskId}/`,
+            type: 'GET', 
+            success: function(response) {
+                console.log("Complete task response:", response);
+                
+                // Check if this is a recurring task
+                const isRecurring = response.recurring === true;
+                console.log("Is recurring task:", isRecurring);
+                
+                if (isRecurring) {
+                    // For recurring tasks, we need special handling
+                    console.log("Handling recurring task completion");
+                    
+                    // The task was "completed" but is actually just moved to next occurrence
+                    // We should reset the UI to show as incomplete, but with the updated due date
+                    checkIcon.removeClass('fas fa-check-circle').addClass('far fa-circle');
+                    checkIcon.css('color', '#a0a0a0'); // Ensure consistent gray color for incomplete
+                    taskTitle.removeClass('strikethrough');
+                    taskCard.attr('data-completed', 'false');
+                    
+                    // Update the due date display
+                    if (response.next_due_date) {
+                        const nextDueDate = new Date(response.next_due_date);
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        
+                        const tomorrow = new Date(today);
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        
+                        let dueDateText = "";
+                        if (nextDueDate.getTime() === today.getTime()) {
+                            dueDateText = "Due Today";
+                        } else if (nextDueDate.getTime() === tomorrow.getTime()) {
+                            dueDateText = "Due Tomorrow";
+                        } else {
+                            dueDateText = `Due ${nextDueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+                        }
+                        
+                        // Update the due date text
+                        const dueDateElement = taskCard.find('.due-date');
+                        if (dueDateElement.length) {
+                            dueDateElement.html(dueDateText);
+                        } else {
+                            // If due date element doesn't exist, add it
+                            taskCard.find('.task-text-container').append(`<div class="due-date">${dueDateText}</div>`);
+                        }
+                        
+                        // Also update the data attribute
+                        taskCard.attr('data-due-date', response.next_due_date.split('T')[0]);
+                    }
+                    
+                    // Show success message for recurring tasks
+                    showSuccessMessage(`Task marked complete. Next occurrence due on ${new Date(response.next_due_date).toLocaleDateString()}`);
+                } else {
+                    // For non-recurring tasks, ensure UI accurately reflects server state
+                    const serverCompleted = response.completed === true || response.completed === 'true';
+                    console.log("Server completion status:", serverCompleted);
+                    
+                    // Confirm UI accurately reflects server state
+                    if (serverCompleted !== !isCurrentlyComplete) {
+                        console.warn("Server response doesn't match UI update, correcting...");
+                        
+                        if (serverCompleted) {
+                            checkIcon.removeClass('far fa-circle').addClass('fas fa-check-circle');
+                            checkIcon.css('color', '#2ecc71'); // Make sure it's green for complete
+                            taskTitle.addClass('strikethrough');
+                            taskCard.attr('data-completed', 'true');
+                        } else {
+                            checkIcon.removeClass('fas fa-check-circle').addClass('far fa-circle');
+                            checkIcon.css('color', '#a0a0a0'); // Make sure it's gray for incomplete
+                            taskTitle.removeClass('strikethrough');
+                            taskCard.attr('data-completed', 'false');
+                        }
+                    }
+                }
+                
+                // Update any open edit panel if showing this task
+                const editPanel = $('#task-details-panel');
+                if (!editPanel.hasClass('d-none')) {
+                    const editForm = editPanel.find('#edit-task-form');
+                    const currentTaskId = editForm.data('task-id');
+                    
+                    if (currentTaskId == taskId) {
+                        const completeBtn = editPanel.find('#toggle-complete-btn');
+                        if (response.completed === true) {
+                            completeBtn.html('<i class="fas fa-check-circle"></i>Completed');
+                        } else {
+                            completeBtn.html('<i class="far fa-circle"></i>Mark Complete');
+                        }
+                    }
+                }
+                
+                // Remove sync indicator if present
+                taskCard.find('.sync-indicator').remove();
+                
+                // For external tasks, show a confirmation message
+                if (isExternalTask && !isRecurring) {
+                    const actionText = response.completed ? "marked complete" : "marked incomplete";
+                    showSuccessMessage(`Task ${actionText} and synced with ${taskSource.charAt(0).toUpperCase() + taskSource.slice(1)}`);
+                }
+                
+                // Update sidebar badge counts
+                setTimeout(function() {
+                    console.log("Updating badge counts after task completion toggle");
+                    updateBadgeCounts();
+                }, 300);
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error completing task:", status, error);
+                console.error("Response text:", xhr.responseText);
+                
+                // Remove sync indicator if present
+                taskCard.find('.sync-indicator').remove();
+                
+                // Revert UI changes on error
+                if (isCurrentlyComplete) {
+                    // Was complete, revert to complete
+                    checkIcon.removeClass('far fa-circle').addClass('fas fa-check-circle');
+                    checkIcon.css('color', '#2ecc71'); // Make sure to use green for complete on revert
+                    taskTitle.addClass('strikethrough');
+                    taskCard.attr('data-completed', 'true');
+                } else {
+                    // Was incomplete, revert to incomplete
+                    checkIcon.removeClass('fas fa-check-circle').addClass('far fa-circle');
+                    checkIcon.css('color', '#a0a0a0'); // Make sure to use gray for incomplete on revert
+                    taskTitle.removeClass('strikethrough');
+                    taskCard.attr('data-completed', 'false');
+                }
+                
+                // Show more detailed error message for external tasks
+                if (isExternalTask) {
+                    showErrorMessage(`Failed to sync task with ${taskSource.charAt(0).toUpperCase() + taskSource.slice(1)}. Please try again.`);
+                } else {
+                    showErrorMessage("An error occurred while updating the task.");
+                }
+            }
+        });
+    }
+
+     function handleMarkFavoriteClick(taskId) {
+        if (!taskId) {
+            console.error("handleMarkFavoriteClick called without a valid taskId");
+            return;
+        }
+        
+        console.log(`Handling favorite click for task ID: ${taskId}`);
+        
+        // Get task elements
+        const taskCard = $(`#task-${taskId}`);
+        if (!taskCard.length) {
+            console.error(`Task card not found for ID: task-${taskId}`);
+            return;
+        }
+        
+        const starIcon = taskCard.find('.mark-favorite');
+        if (!starIcon.length) {
+            console.error(`Mark favorite icon not found in task card #task-${taskId}`);
+            return;
+        }
+        
+        // Get current state
+        const isCurrentlyImportant = starIcon.hasClass('fas');
+        console.log("Current important state:", isCurrentlyImportant);
+        
+        // The expected new state after toggle - what we're setting in the UI
+        const newImportantState = !isCurrentlyImportant;
+        console.log("Setting task importance to:", newImportantState);
+        
+        // Update UI immediately for responsive feel
+        if (newImportantState) {
+            // Setting to important
+            console.log("Updating UI: Setting task to important");
+            starIcon.removeClass('far').addClass('fas text-warning');
+            taskCard.attr('data-important', 'true');
+        } else {
+            // Setting to not important
+            console.log("Updating UI: Setting task to not important");
+            starIcon.removeClass('fas text-warning').addClass('far');
+            taskCard.attr('data-important', 'false');
+        }
+
+        console.log(`Sending AJAX request to toggle importance for task ${taskId}`);
+        // Get CSRF token for the POST request
+        var csrfToken = $('meta[name="csrf-token"]').attr("content");
+        
+        $.ajax({
+            url: `/task_management/mark_favorite/`, 
+            type: 'POST',
+            data: { 
+                id: taskId, 
+                csrfmiddlewaretoken: csrfToken
+            },
+            success: function(response) {
+                console.log("Mark favorite response:", response);
+                
+                // Ensure we have the correct data from server
+                const serverImportant = response.important === true || response.important === 'true' || 
+                                       response.Important === true || response.Important === 'true';
+                console.log("Server importance status:", serverImportant);
+                
+                // Check if the server state matches what we expected after our update
+                if (serverImportant !== newImportantState) {
+                    console.warn("Server returned different importance than expected, correcting UI...");
+                    
+                    // Update UI to match server state
+                    if (serverImportant) {
+                        // Server says it's important
+                        console.log("Server says task is important, updating UI to match");
+                        starIcon.removeClass('far').addClass('fas text-warning');
+                        taskCard.attr('data-important', 'true');
+                    } else {
+                        // Server says it's not important
+                        console.log("Server says task is not important, updating UI to match");
+                        starIcon.removeClass('fas text-warning').addClass('far');
+                        taskCard.attr('data-important', 'false');
+                    }
+                } else {
+                    console.log("Server importance matches UI state, no correction needed");
+                }
+                
+                // Update any open edit panel if showing this task
+                const editPanel = $('#task-details-panel');
+                if (!editPanel.hasClass('d-none')) {
+                    const editForm = editPanel.find('#edit-task-form');
+                    const currentTaskId = editForm.data('task-id');
+                    
+                    if (currentTaskId == taskId) {
+                        const importantBtn = editPanel.find('#toggle-important-btn');
+                        if (serverImportant) {
+                            importantBtn.html('<i class="fas fa-star"></i>Important');
+                        } else {
+                            importantBtn.html('<i class="far fa-star"></i>Mark Important');
+                        }
+                    }
+                }
+                
+                // Show success message
+                const actionText = serverImportant ? "marked important" : "unmarked as important";
+                showSuccessMessage(`Task ${actionText}`);
+                
+                // Update sidebar badge counts
+                setTimeout(function() {
+                    console.log("Updating badge counts after panel importance toggle");
+                    updateBadgeCounts();
+                }, 300);
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error marking favorite:", status, error);
+                console.error("Response text:", xhr.responseText);
+                
+                // Revert UI changes on error
+                if (isCurrentlyImportant) {
+                    // Was important, revert to important
+                    starIcon.removeClass('far').addClass('fas text-warning');
+                    taskCard.attr('data-important', 'true');
+                } else {
+                    // Was not important, revert to not important
+                    starIcon.removeClass('fas text-warning').addClass('far');
+                    taskCard.attr('data-important', 'false');
+                }
+                
+                showErrorMessage("An error occurred while updating task importance.");
+            }
+        });
+    }
+
+    // *** NEW: Function to initialize all dynamic elements in the edit panel ***
+    function initializeEditPanelListeners(panelElement) {
+        console.log("Initializing edit panel listeners...");
+
+        // Handle direct date inputs
+        const $dueDateInput = $(panelElement).find('#dueDateInput');
+        const $reminderInput = $(panelElement).find('#reminderInput');
+        
+        console.log("Found date inputs:", $dueDateInput.length, $reminderInput.length);
+        
+        // Set up change listeners for the date inputs
+        $dueDateInput.on('change', function() {
+            console.log('Due date changed:', $(this).val());
+            // Direct value change will be handled by the form change event
+        });
+        
+        $reminderInput.on('change', function() {
+            console.log('Reminder date changed:', $(this).val());
+            // Direct value change will be handled by the form change event
+        });
+
+        // Recurrence dropdown handler
+        $(panelElement).find('.recurrence-option').on('click', function(e) {
+            e.preventDefault();
+            const value = $(this).data('value');
+            const text = $(this).text();
+            console.log("Recurrence option clicked:", value, text);
+            
+            $('#recurrenceInput').val(value).trigger('change');
+            $('#recurrenceLabel').text(text);
+        });
+        
+        // List name dropdown handler
+        $(panelElement).find('.list-name-option').on('click', function(e) {
+            e.preventDefault();
+            const value = $(this).data('value');
+            const text = $(this).text();
+            console.log("List name option clicked:", value, text);
+            
+            $('#listNameInput').val(value).trigger('change');
+            $('#listNameLabel').text(text);
+        });
+
+        // Toggle complete button
+        $(panelElement).find('#toggle-complete-btn').on('click', function() {
+            const taskId = $(this).data('task-id');
+            console.log("Toggle complete clicked for task:", taskId);
+            const isCurrentlyComplete = $(this).find('i').hasClass('fa-check-circle');
+            
+            // Toggle appearance immediately
+            if (isCurrentlyComplete) {
+                $(this).html('<i class="far fa-circle"></i>Mark Complete');
+            } else {
+                $(this).html('<i class="fas fa-check-circle"></i>Completed');
+            }
+            
+            // Trigger task completion AJAX
+            $.ajax({
+                url: `/task_management/complete_task/${taskId}/`,
+                type: 'GET',
+                success: function(response) {
+                    console.log("Complete task response:", response);
+                    
+                    // Update the main task card in the middle panel
+                    const taskCard = $(`#task-${taskId}`);
+                    const checkIcon = taskCard.find('.complete-task');
+                    const taskTitle = taskCard.find('.task-title');
+                    
+                    console.log("Found task card:", taskCard.length > 0, "Task ID:", taskId);
+                    
+                    // Ensure we can access the response data
+                    const isCompleted = response.completed === true || response.completed === 'true';
+                    console.log("Task completed status from server:", isCompleted);
+                    
+                    if (isCompleted) {
+                        // Set to completed
+                        console.log("Setting task to completed state");
+                        checkIcon.removeClass('far fa-circle').addClass('fas fa-check-circle').css('color', '#2ecc71');
+                        taskTitle.addClass('strikethrough');
+                        taskCard.attr('data-completed', 'true');
+                    } else {
+                        // Set to not completed
+                        console.log("Setting task to not completed state");
+                        checkIcon.removeClass('fas fa-check-circle').addClass('far fa-circle').css('color', '#a0a0a0');
+                        taskTitle.removeClass('strikethrough');
+                        taskCard.attr('data-completed', 'false');
+                    }
+                    
+                    // Update sidebar badge counts
+                    setTimeout(function() {
+                        console.log("Updating badge counts after panel completion toggle");
+                        updateBadgeCounts();
+                    }, 300);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error toggling task completion:", error);
+                    // Revert UI on error
+                    alert("Failed to update task status. Please try again.");
+                    
+                    // Revert button appearance on error
+                    if (isCurrentlyComplete) {
+                        $(panelElement).find('#toggle-complete-btn').html('<i class="fas fa-check-circle"></i>Completed');
+                    } else {
+                        $(panelElement).find('#toggle-complete-btn').html('<i class="far fa-circle"></i>Mark Complete');
+                    }
+                }
+            });
+        });
+
+        // Toggle important button
+        $(panelElement).find('#toggle-important-btn').on('click', function() {
+            const taskId = $(this).data('task-id');
+            console.log("Toggle important clicked for task:", taskId);
+            const isCurrentlyImportant = $(this).find('i').hasClass('fa-star') && $(this).find('i').hasClass('fas');
+            
+            // Toggle appearance immediately
+            if (isCurrentlyImportant) {
+                $(this).html('<i class="far fa-star"></i>Mark Important');
+            } else {
+                $(this).html('<i class="fas fa-star"></i>Important');
+            }
+            
+            // Get CSRF token for the POST request
+            var csrfToken = $('meta[name="csrf-token"]').attr("content");
+            
+            // Trigger mark favorite AJAX
+            $.ajax({
+                url: "/task_management/mark_favorite/",
+                type: "POST",
+                data: {
+                    id: taskId,
+                    csrfmiddlewaretoken: csrfToken
+                },
+                success: function(response) {
+                    console.log("Mark important response:", response);
+                    
+                    // Update the main task card in the middle panel
+                    const taskCard = $(`#task-${taskId}`);
+                    const starIcon = taskCard.find('.mark-favorite');
+                    
+                    console.log("Found task card:", taskCard.length > 0, "Task ID:", taskId);
+                    
+                    // Ensure we have the correct data from server
+                    const isImportant = response.important === true || response.important === 'true' || 
+                                       response.Important === true || response.Important === 'true';
+                    console.log("Task important status from server:", isImportant);
+                    
+                    if (isImportant) {
+                        // Set to important
+                        console.log("Setting task to important state");
+                        starIcon.removeClass('far').addClass('fas text-warning');
+                        taskCard.attr('data-important', 'true');
+                    } else {
+                        // Set to not important
+                        console.log("Setting task to not important state");
+                        starIcon.removeClass('fas text-warning').addClass('far');
+                        taskCard.attr('data-important', 'false');
+                    }
+                    
+                    // Update sidebar badge counts
+                    updateBadgeCounts();
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error toggling task importance:", error);
+                    // Revert UI on error
+                    alert("Failed to update task importance. Please try again.");
+                    
+                    // Revert button appearance on error
+                    if (isCurrentlyImportant) {
+                        $(panelElement).find('#toggle-important-btn').html('<i class="fas fa-star"></i>Important');
+                    } else {
+                        $(panelElement).find('#toggle-important-btn').html('<i class="far fa-star"></i>Mark Important');
+                    }
+                }
+            });
+        });
+
+        console.log("All edit panel listeners initialized");
+    }
+    // *** END initializeEditPanelListeners ***
+
+
+    // Function to open task details panel
+    function openTaskDetails(taskId) {
+        console.log("Opening details for task:", taskId);
+        const panel = $("#task-details-panel"); // Cache panel selector
+
+        // Remove selected class and styles from any previously selected task
+        $('.task-card.selected').removeClass('selected')
+                               .css({
+                                   'background-color': '',
+                                   'border-left': '',
+                                   'box-shadow': ''
+                               });
+        
+        // Add selected class to the current task - make sure to use the correct ID format
+        const taskCard = $(`#task-${taskId}`);
+        if (taskCard.length) {
+            console.log("Found task card, adding selected class and styles");
+            taskCard.addClass('selected')
+                   .css({
+                       'background-color': '#e6f2ff',
+                       'border-left': '4px solid #1976d2',
+                       'box-shadow': '0 2px 8px rgba(0, 0, 0, 0.1)'
+                   });
+        } else {
+            console.warn(`Task card not found for ID: task-${taskId}`);
+        }
+
+        panel.removeClass("d-none").html('<div class="p-4 text-center"><i class="fas fa-spinner fa-spin"></i> Loading task details...</div>');
+        
+        // Adjust column sizes - middle panel to 7 columns, details panel already has col-md-3
+        $("#task-middle-panel").removeClass("col-md-6 col-md-9 col-md-10").addClass("col-md-7");
+        panel.removeClass("col-md-6").addClass("col-md-3");
+        
+        console.log("Adjusted column widths: middle panel = col-md-7, details panel = col-md-3");
+
+        const url = `/task_management/edit_task/${taskId}/`; 
+        console.log("Loading edit form from URL:", url);
+
+      $.ajax({
+        url: url,
+            type: "GET",
+        success: function (response) {
+                console.log("Successfully loaded edit form content.");
+                panel.html(response); // Load the content
+                
+                const loadedForm = panel.find('#edit-task-form');
+                if (loadedForm.length) {
+                    loadedForm.attr('data-task-id', taskId); // Set task ID on form
+                    console.log(`Set data-task-id=${taskId} on loaded form.`);
+                    
+                    // Initialize the edit panel listeners
+                    setTimeout(() => {
+                        initializeEditPanelListeners(panel);
+                    }, 10); // Small delay
+                    
+          } else {
+                    console.error("Could not find #edit-task-form in loaded panel content!");
+                    panel.html('<div class="alert alert-danger m-3">Error: Could not load form structure.</div>');
+          }
+        },
+        error: function (xhr, status, error) {
+                console.error("Error loading task details:", status, error);
+                panel.html('<div class="alert alert-danger m-3">Error loading task details. Please try again.</div>');
+                 // Restore layout on error
+                 $("#task-middle-panel").removeClass("col-md-6 col-md-7").addClass("col-md-10"); 
+                 panel.addClass("d-none");
+                 // Remove selected class if there was an error
+                 taskCard.removeClass('selected')
+                        .css({
+                            'background-color': '',
+                            'border-left': '',
+                            'box-shadow': ''
+                        });
+            }
+        });
+        
+        // Handle mobile layout adjustments
+        if ($(window).width() < 768) {
+            $("#tasks-section").addClass("d-none");
+            $("#back-button").removeClass("d-none");
+            $("#searchbar_row").addClass("d-none");
+        }
+    }
+
+    // Debounce utility function
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    };
+
+    // Function to handle saving changes from the details panel instantly
+    function savePanelChanges(taskId) {
+        console.log(`savePanelChanges called for potential task ID: ${taskId}`); // <<< Log: Function called
+        if (!taskId) {
+            console.error("savePanelChanges called without taskId");
+            return;
+        }
+        
+        const form = $('#task-details-panel #edit-task-form'); // <<< Make sure ID matches edit_task.html
+        if (!form.length) {
+            console.error("Could not find #edit-task-form in panel to save changes.");
+            return;
+        }
+        console.log("Found form for saving:", form); // <<< Log: Form found
+
+        const statusElement = $('#panel-save-status');
+        statusElement.html('<i class="fas fa-spinner fa-spin"></i> Saving...').removeClass('text-danger text-success').addClass('text-muted');
+        
+        var formData = new FormData(form[0]);
+        var url = `/task_management/edit_task/${taskId}/`;
+        console.log(`Instantly saving changes for task ${taskId} to ${url}`);
+
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+            headers: { "X-CSRFToken": getCookie('csrftoken') }, // Ensure getCookie exists and works
+        success: function (response) {
+                console.log("Instant Save Success:", response); 
+                if (response && (response.id || response.task_id)) {
+                    updateTaskCardUI(response); // Update middle panel card
+                    // Update sidebar counts
+                    setTimeout(function() {
+                        console.log("Updating badge counts after panel save");
+                        updateBadgeCounts();
+                    }, 300);
+                    statusElement.text('Saved').removeClass('text-muted text-danger').addClass('text-success');
+                    setTimeout(() => { statusElement.empty(); }, 2000);
+                } else {
+                    console.error("Invalid response after instant save:", response);
+                    statusElement.text('Error!').removeClass('text-muted text-success').addClass('text-danger');
+                    showErrorMessage("Error saving changes. Data might be inconsistent.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error instantly saving task:", status, error);
+                console.error("Server response:", xhr.responseText);
+                statusElement.text('Error saving!').removeClass('text-muted text-success').addClass('text-danger');
+                var errorMsg = xhr.responseJSON?.error || "An error occurred while saving.";
+                showErrorMessage(errorMsg);
+            }
+        });
+    }
+
+    // ---- Event Listeners for Instant Save in Details Panel ----
+    const debouncedSave = debounce(function(taskId) {
+        savePanelChanges(taskId);
+    }, 750); 
+
+    // Listen for input on text fields (debounced)
+    $('#task-details-panel').on('input', 'input[type=text]:not(.date-picker), textarea', function() { 
+        console.log("Input detected (debounced):", $(this).attr('name'));
+        const form = $(this).closest('form');
+        const taskId = form.data('task-id');
+        console.log("Task ID from form on input:", taskId);
+        if (taskId) {
+            const statusElement = $('#panel-save-status');
+            statusElement.html('<i class="fas fa-pencil-alt"></i> Typing...').removeClass('text-danger text-success').addClass('text-muted');
+            debouncedSave(taskId);
+        }
+    });
+
+    // Listen for changes on selects, date inputs, checkboxes, and dropdown hidden inputs
+    $('#task-details-panel').on('change', 
+        'select, input[type=date], input[type=datetime-local], input[type=checkbox], input[type=hidden][name=recurrence], input[type=hidden][name=list_name]', 
+        function() { 
+        console.log("Change detected (immediate save):", $(this).attr('name'), "Value:", $(this).val());
+        const form = $(this).closest('form');
+        const taskId = form.data('task-id');
+        console.log("Task ID from form on change:", taskId);
+        if (taskId) {
+            // Save immediately for these types of changes
+            savePanelChanges(taskId); 
+        }
+    });
+    
+    // IMPORTANT: Exclude file inputs from instant save
+    // File uploads should likely still require an explicit button or different handling.
+
+
+    // ---- Other Event Listeners ----
+    
+    // Handle submitting the (now removed) edit task form - REMOVE THIS HANDLER
+    // $(document).on("submit", "#edit-task-form", function (e) {
+    //   // ... old implementation ... 
+    // });
+
+    // ... (rest of document.ready, including back button, create list, manual sync etc.) ... 
+
+    // Add retry handler for task loading failures
+    $(document).on("click", ".retry-load-task", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var taskId = $(this).data("task-id");
+      console.log("Retrying to load task details for ID:", taskId);
+      
+      // Use the dedicated function to open task details
+      openTaskDetails(taskId);
+    });
+
+    // Function to close task details panel
+    function closeTaskDetails() {
+        console.log("Closing task details panel");
+        
+        // Hide the task details panel
+        const panel = $("#task-details-panel");
+        panel.addClass("d-none");
+        
+        // Remove selected state from any selected task card
+        $('.task-card.selected').removeClass('selected')
+                            .css({
+                                'background-color': '',
+                                'border-left': '',
+                                'box-shadow': ''
+                            });
+        
+        // Expand the middle panel to fill the available space
+        $("#task-middle-panel").removeClass("col-md-6 col-md-7").addClass("col-md-10");
+        console.log("Expanded middle panel to fill available space");
+        
+        // Handle mobile layout adjustments
+        if ($(window).width() < 768) {
+            $("#tasks-section").removeClass("d-none");
+            $("#back-button").addClass("d-none");
+            $("#searchbar_row").removeClass("d-none");
+        }
+    }
+    
+    // Handle back button click (on mobile)
+    $(document).on("click", "#back-button", function() {
+        closeTaskDetails();
+    });
+    
+    // Handle close button click in task details panel
+    $(document).on("click", ".close-details-btn", function() {
+        closeTaskDetails();
+    });
 
   }); // End $(document).ready
 </script>

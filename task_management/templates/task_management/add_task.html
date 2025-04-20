@@ -2,59 +2,98 @@
 {% block content %}
     <form method="post" id="add-task-form-modal" class="mb-0" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ add_task_form.non_field_errors }}
+        {% if add_task_form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ add_task_form.non_field_errors }}
+            </div>
+        {% endif %}
     
         <!-- Task Name -->
         <div class="mb-3">
-            <label for="{{ add_task_form.task_name.id_for_label }}" class="form-label">Task Name</label>
+            <label for="{{ add_task_form.task_name.id_for_label }}" class="form-label">Task Name <span class="text-danger">*</span></label>
             {{ add_task_form.task_name|add_class:"form-control" }}
-            {{ add_task_form.task_name.errors }}
+            {% if add_task_form.task_name.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ add_task_form.task_name.errors|striptags }}
+                </div>
+            {% endif %}
         </div>
 
         <!-- Task Description -->
         <div class="mb-3">
             <label for="{{ add_task_form.task_description.id_for_label }}" class="form-label">Description</label>
             {{ add_task_form.task_description|add_class:"form-control" }}
-            {{ add_task_form.task_description.errors }}
+             {% if add_task_form.task_description.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ add_task_form.task_description.errors|striptags }}
+                </div>
+            {% endif %}
         </div>
 
-        <!-- Due Date -->
+        <!-- Due Date - Simplified similar to edit_task.html -->
         <div class="mb-3">
-          <label for="{{ add_task_form.due_date.id_for_label }}" class="form-label d-flex align-items-center">
-            <i class="fas fa-calendar me-2 text-muted"></i>Due Date
-          </label>
-          {{ add_task_form.due_date|add_class:"form-control" }}
-            {{ add_task_form.due_date.errors }}
+            <div class="d-flex align-items-center">
+                <i class="fas fa-calendar-alt me-2 text-muted"></i>
+                <label for="dueDateInput" class="form-label me-2 mb-0">Due Date</label>
+                <input type="date" class="form-control" id="dueDateInput" name="due_date" 
+                       value="{% if add_task_form.due_date.value %}{{ add_task_form.due_date.value|date:'Y-m-d' }}{% endif %}">
+            </div>
+            {% if add_task_form.due_date.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ add_task_form.due_date.errors|striptags }}
                 </div>
+            {% endif %}
+        </div>
 
-        <!-- Reminder Time (Optional) -->
-        <!-- You might want to add the reminder_time field here similarly if needed -->
+        <div class="row gx-3 mb-3">
+            <!-- Recurrence -->
+            <div class="col-md-6">
+                <label for="{{ add_task_form.recurrence.id_for_label }}" class="form-label">Repeat</label>
+                <div class="input-group">
+                     <span class="input-group-text"><i class="fas fa-repeat text-muted"></i></span>
+                    {{ add_task_form.recurrence|add_class:"form-select" }}
+                 </div>
+                 {% if add_task_form.recurrence.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ add_task_form.recurrence.errors|striptags }}
+                    </div>
+                {% endif %}
+            </div>
+            <!-- Important Flag -->
+             <div class="col-md-6 d-flex align-items-end">
+                 <div class="form-check mb-2">
+                     {{ add_task_form.important|add_class:"form-check-input" }}
+                     <label class="form-check-label" for="{{ add_task_form.important.id_for_label }}">
+                         <i class="fas fa-star me-1 text-warning"></i>Mark as Important
+                     </label>
+                 </div>
+                 {% if add_task_form.important.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ add_task_form.important.errors|striptags }}
+                    </div>
+                 {% endif %}
+            </div>
+        </div>
         
-        <!-- Task List (Hidden or Select) -->
-        <!-- Assuming list_name is set by context, keep it hidden or use a select if needed -->
+        <!-- Task List (Hidden) -->
         {% if add_task_form.list_name %}
             {{ add_task_form.list_name.as_hidden }}
         {% endif %}
-        {{ add_task_form.list_name.errors }}
 
         <!-- Image Upload -->
         <div class="mb-3">
-            <label for="images" class="form-label d-flex align-items-center">
-                <i class="fas fa-paperclip me-2 text-muted"></i>Upload Images
-            </label>
-            <input type="file" name="images" id="images" multiple class="form-control">
+            <label for="images" class="form-label">Upload Images</label>
+             <div class="input-group">
+                 <span class="input-group-text"><i class="fas fa-paperclip text-muted"></i></span>
+                <input type="file" name="images" id="images" multiple class="form-control">
+             </div>
             <!-- Add image preview logic if desired -->
         </div>
 
-        <!-- Important / Completed Flags (Optional) -->
-        <!-- You might want checkboxes for 'important' or 'task_completed' -->
-        
     </form>
-     
+{% endblock %}
 
-    {% endblock %}
-
-    {% block script_block %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.x.x.min.js"></script>
-    {% endblock %}
+{% block script_block %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
