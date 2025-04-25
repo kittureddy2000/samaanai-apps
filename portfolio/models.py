@@ -179,6 +179,17 @@ class Stock(models.Model):
     symbol = models.CharField(max_length=10, unique=True, db_index=True)
     name = models.CharField(max_length=200, blank=True)
     
+    # Add fields that appear to be required in production
+    day_change = models.DecimalField(max_digits=15, decimal_places=2, default=0.0)
+    day_change_percentage = models.DecimalField(max_digits=8, decimal_places=2, default=0.0)
+    current_price = models.DecimalField(max_digits=15, decimal_places=2, default=0.0)
+    
+    # Optional fields
+    fifty_two_week_high = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
+    fifty_two_week_low = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
+    pe_ratio = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True)
+    dividend_yield = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
+    
     def __str__(self):
         return f"{self.symbol} - {self.name}"
     

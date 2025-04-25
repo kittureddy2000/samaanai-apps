@@ -103157,3 +103157,1553 @@ KeyError: 'task_name'
 [2025-04-20 18:13:45,166] INFO task_management.views /app/task_management/views.py:654 - Edit Task - GET method - Using form: TaskForm for task 1722
 [2025-04-20 18:13:45,175] INFO task_management.views /app/task_management/views.py:510 - Edit task Function Task id : 1722
 [2025-04-20 18:13:45,182] INFO task_management.views /app/task_management/views.py:654 - Edit Task - GET method - Using form: TaskForm for task 1722
+[2025-04-20 20:03:45,399] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-21 01:07:16,458] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-21 01:15:49,281] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-22 15:58:44,208] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 15:58:44,209] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 15:58:44,209] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 15:58:44,209] INFO task_management.views /app/task_management/views.py:308 - Saving recurring task with new due date: 2025-04-24 15:58:44.157430+00:00
+[2025-04-22 15:58:44,210] INFO task_management.views /app/task_management/views.py:311 - Updated recurring task: Test Task with new due date: 2025-04-24 15:58:44.157430+00:00
+[2025-04-22 15:58:44,327] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 15:58:44,328] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 15:58:44,328] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 15:58:44,328] INFO task_management.views /app/task_management/views.py:308 - Saving recurring task with new due date: 2025-04-30 15:58:44.327502+00:00
+[2025-04-22 15:58:44,329] INFO task_management.views /app/task_management/views.py:311 - Updated recurring task: Test Task with new due date: 2025-04-30 15:58:44.327502+00:00
+[2025-04-22 16:44:21,603] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 16:44:21,604] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 16:44:21,605] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 16:44:21,605] INFO task_management.views /app/task_management/views.py:308 - Saving recurring task with new due date: 2025-04-24 16:44:21.527121+00:00
+[2025-04-22 16:44:21,605] INFO task_management.views /app/task_management/views.py:311 - Updated recurring task: Test Task with new due date: 2025-04-24 16:44:21.527121+00:00
+[2025-04-22 16:44:21,724] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 16:44:21,725] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 16:44:21,725] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 16:44:21,725] INFO task_management.views /app/task_management/views.py:308 - Saving recurring task with new due date: 2025-04-30 16:44:21.724372+00:00
+[2025-04-22 16:44:21,726] INFO task_management.views /app/task_management/views.py:311 - Updated recurring task: Test Task with new due date: 2025-04-30 16:44:21.724372+00:00
+[2025-04-22 16:44:21,845] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 16:44:21,845] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 16:44:21,846] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 16:44:21,846] INFO task_management.views /app/task_management/views.py:308 - Saving recurring task with new due date: 2025-05-23 16:44:21.844951+00:00
+[2025-04-22 16:44:21,846] INFO task_management.views /app/task_management/views.py:311 - Updated recurring task: Test Task with new due date: 2025-05-23 16:44:21.844951+00:00
+[2025-04-22 16:44:21,965] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 16:44:21,966] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 16:44:21,966] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 16:44:21,966] INFO task_management.views /app/task_management/views.py:308 - Saving recurring task with new due date: 2026-04-23 16:44:21.965094+00:00
+[2025-04-22 16:44:21,966] INFO task_management.views /app/task_management/views.py:311 - Updated recurring task: Test Task with new due date: 2026-04-23 16:44:21.965094+00:00
+[2025-04-22 16:49:49,464] INFO task_management.views /app/task_management/views.py:423 - Received POST request for add_task from user testuser
+[2025-04-22 16:49:49,465] INFO task_management.views /app/task_management/views.py:436 - Using TaskList: Samaan Tasks (ID: 1), Created: False
+[2025-04-22 16:49:49,466] INFO task_management.views /app/task_management/views.py:444 - Add task form is valid.
+[2025-04-22 16:49:49,466] INFO task_management.views /app/task_management/views.py:461 - Attempting to save task 'New Task' for user testuser
+[2025-04-22 16:49:49,466] INFO task_management.views /app/task_management/views.py:463 - Task saved successfully with ID: 1
+[2025-04-22 16:49:49,467] INFO task_management.views /app/task_management/views.py:471 - No images uploaded for task 1
+[2025-04-22 16:49:49,467] INFO task_management.views /app/task_management/views.py:488 - Returning success JSON response for task 1
+[2025-04-22 16:49:49,707] INFO task_management.views /app/task_management/views.py:510 - Edit task Function Task id : 1
+[2025-04-22 16:49:49,708] INFO task_management.views /app/task_management/views.py:517 - Received POST request for edit_task, Task id: 1
+[2025-04-22 16:49:49,709] INFO task_management.views /app/task_management/views.py:607 - --- FINAL CHECK BEFORE SAVE (Task ID: 1) ---
+[2025-04-22 16:49:49,709] INFO task_management.views /app/task_management/views.py:608 -   Fields to update: ['due_date', 'important', 'last_update_date', 'recurrence', 'task_completed', 'task_description', 'task_name']
+[2025-04-22 16:49:49,709] INFO task_management.views /app/task_management/views.py:609 -   task.due_date: 2023-12-31 00:00:00+00:00 (Type: <class 'datetime.datetime'>)
+[2025-04-22 16:49:49,709] INFO task_management.views /app/task_management/views.py:610 -   task.reminder_time: 2025-04-22 18:49:49.706081+00:00 (Type: <class 'datetime.datetime'>)
+[2025-04-22 16:49:49,709] INFO task_management.views /app/task_management/views.py:611 -   task.recurrence: WEEKLY
+[2025-04-22 16:49:49,709] INFO task_management.views /app/task_management/views.py:612 -   task.task_completed: False
+[2025-04-22 16:49:49,709] INFO task_management.views /app/task_management/views.py:613 -   task.important: False
+[2025-04-22 16:49:49,709] INFO task_management.views /app/task_management/views.py:614 -   task.task_name: Updated Task Name
+[2025-04-22 16:49:49,710] INFO task_management.views /app/task_management/views.py:620 - Task 1 save executed.
+[2025-04-22 16:49:49,710] INFO task_management.views /app/task_management/views.py:632 - Returning success response for edit task id : 1
+[2025-04-22 16:49:50,109] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 16:49:50,111] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 16:49:50,111] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 16:49:50,111] INFO task_management.views /app/task_management/views.py:331 - Task Test Task has no external source (source: 'None') - no external sync needed
+[2025-04-22 16:49:50,111] INFO task_management.views /app/task_management/views.py:334 - Saving task with completion toggled from False to True
+[2025-04-22 16:49:50,111] INFO task_management.views /app/task_management/views.py:337 - Toggled completion status for task: Test Task to True
+[2025-04-22 16:49:50,351] INFO task_management.views /app/task_management/views.py:359 - Toggling favorite status for task: Test Task (ID: 1)
+[2025-04-22 16:49:50,352] INFO task_management.views /app/task_management/views.py:367 - Task Test Task important status set to: True
+[2025-04-22 16:49:50,591] INFO task_management.views /app/task_management/views.py:69 - Getting All Tasks called as main function
+[2025-04-22 16:49:50,830] INFO task_management.views /app/task_management/views.py:83 - Function: Get Tasks with list id : 1
+[2025-04-22 16:49:50,830] INFO task_management.views /app/task_management/views.py:90 - Sort By : due_date
+[2025-04-22 16:49:50,830] INFO task_management.views /app/task_management/views.py:97 - List Name : Samaan Tasks
+[2025-04-22 16:53:36,537] INFO task_management.views /app/task_management/views.py:510 - Edit task Function Task id : 1
+[2025-04-22 16:53:36,539] INFO task_management.views /app/task_management/views.py:517 - Received POST request for edit_task, Task id: 1
+[2025-04-22 16:53:36,540] INFO task_management.views /app/task_management/views.py:607 - --- FINAL CHECK BEFORE SAVE (Task ID: 1) ---
+[2025-04-22 16:53:36,540] INFO task_management.views /app/task_management/views.py:608 -   Fields to update: ['due_date', 'important', 'last_update_date', 'recurrence', 'task_completed', 'task_description', 'task_name']
+[2025-04-22 16:53:36,540] INFO task_management.views /app/task_management/views.py:609 -   task.due_date: 2023-12-31 00:00:00+00:00 (Type: <class 'datetime.datetime'>)
+[2025-04-22 16:53:36,540] INFO task_management.views /app/task_management/views.py:610 -   task.reminder_time: 2025-04-22 18:53:36.343583+00:00 (Type: <class 'datetime.datetime'>)
+[2025-04-22 16:53:36,541] INFO task_management.views /app/task_management/views.py:611 -   task.recurrence: WEEKLY
+[2025-04-22 16:53:36,541] INFO task_management.views /app/task_management/views.py:612 -   task.task_completed: False
+[2025-04-22 16:53:36,541] INFO task_management.views /app/task_management/views.py:613 -   task.important: True
+[2025-04-22 16:53:36,541] INFO task_management.views /app/task_management/views.py:614 -   task.task_name: Updated Task Name
+[2025-04-22 16:53:36,542] INFO task_management.views /app/task_management/views.py:620 - Task 1 save executed.
+[2025-04-22 16:53:36,542] INFO task_management.views /app/task_management/views.py:632 - Returning success response for edit task id : 1
+[2025-04-22 17:07:23,311] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 17:07:23,312] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 17:07:23,313] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 17:07:23,313] INFO task_management.views /app/task_management/views.py:308 - Saving recurring task with new due date: 2025-04-24 17:07:23.256567+00:00
+[2025-04-22 17:07:23,313] INFO task_management.views /app/task_management/views.py:311 - Updated recurring task: Test Task with new due date: 2025-04-24 17:07:23.256567+00:00
+[2025-04-22 17:07:23,432] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 17:07:23,432] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 17:07:23,433] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 17:07:23,433] INFO task_management.views /app/task_management/views.py:308 - Saving recurring task with new due date: 2025-04-30 17:07:23.431841+00:00
+[2025-04-22 17:07:23,433] INFO task_management.views /app/task_management/views.py:311 - Updated recurring task: Test Task with new due date: 2025-04-30 17:07:23.431841+00:00
+[2025-04-22 17:07:23,551] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 17:07:23,551] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 17:07:23,552] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 17:07:23,552] INFO task_management.views /app/task_management/views.py:308 - Saving recurring task with new due date: 2025-05-23 17:07:23.550797+00:00
+[2025-04-22 17:07:23,552] INFO task_management.views /app/task_management/views.py:311 - Updated recurring task: Test Task with new due date: 2025-05-23 17:07:23.550797+00:00
+[2025-04-22 17:07:23,670] INFO task_management.views /app/task_management/views.py:266 - complete_task view called with task_id: 1, method: GET
+[2025-04-22 17:07:23,671] INFO task_management.views /app/task_management/views.py:270 - Found task: Test Task (ID: 1, Source: None, List: Samaan Tasks)
+[2025-04-22 17:07:23,671] INFO task_management.views /app/task_management/views.py:286 - Created task history record for task completion: Test Task
+[2025-04-22 17:07:23,671] INFO task_management.views /app/task_management/views.py:308 - Saving recurring task with new due date: 2026-04-23 17:07:23.670292+00:00
+[2025-04-22 17:07:23,671] INFO task_management.views /app/task_management/views.py:311 - Updated recurring task: Test Task with new due date: 2026-04-23 17:07:23.670292+00:00
+[2025-04-22 17:11:24,322] INFO task_management.sync_utils /app/task_management/sync_utils.py:32 - Starting Google Tasks sync for user: testuser
+[2025-04-22 17:11:24,323] INFO task_management.sync_utils /app/task_management/sync_utils.py:38 - Last sync time: None
+[2025-04-22 17:11:24,323] INFO task_management.sync_utils /app/task_management/sync_utils.py:41 - Fetching Google Tasks lists
+[2025-04-22 17:11:24,323] INFO task_management.sync_utils /app/task_management/sync_utils.py:45 - Found 1 Google task lists
+[2025-04-22 17:11:24,323] INFO task_management.sync_utils /app/task_management/sync_utils.py:57 - Processing Google list: 'My Tasks' (ID: list1)
+[2025-04-22 17:11:24,324] INFO task_management.sync_utils /app/task_management/sync_utils.py:72 - Created primary Google list 'G My Tasks' for list 'My Tasks'
+[2025-04-22 17:11:24,324] INFO task_management.sync_utils /app/task_management/sync_utils.py:122 - Retrieved page 1 with 1 tasks from 'My Tasks'
+[2025-04-22 17:11:24,324] INFO task_management.sync_utils /app/task_management/sync_utils.py:136 - Total updated tasks found in 'My Tasks': 1
+[2025-04-22 17:11:24,324] WARNING task_management.sync_utils /app/task_management/sync_utils.py:162 - Failed to parse due date for task 'Google Task 1': Invalid isoformat string: '2025-04-23T17:11:24.321689+00:00+00:00'
+[2025-04-22 17:11:24,325] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Google Task 1' with completed=False
+[2025-04-22 17:11:24,325] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Google Task 1
+[2025-04-22 17:11:24,474] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Google Task 1 (ID: 1)
+[2025-04-22 17:11:24,474] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Google Task 1 (ID: task1)
+[2025-04-22 17:11:24,475] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-22 17:11:24,683] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-22 17:11:24,855] ERROR task_management.sync_utils /app/task_management/sync_utils.py:678 - Error retrieving Google task: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+[2025-04-22 17:11:24,856] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Google Task 1
+[2025-04-22 17:11:24,861] INFO task_management.sync_utils /app/task_management/sync_utils.py:231 - First sync detected - getting all task IDs to establish baseline
+[2025-04-22 17:11:24,861] INFO task_management.sync_utils /app/task_management/sync_utils.py:264 - Total task IDs found in list 'My Tasks': 1
+[2025-04-22 17:11:24,863] INFO task_management.sync_utils /app/task_management/sync_utils.py:274 - Found 0 tasks to mark as deleted (completed)
+[2025-04-22 17:11:24,868] INFO task_management.sync_utils /app/task_management/sync_utils.py:294 - Google sync completed successfully with 1 updates
+[2025-04-22 17:11:25,018] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Test Task (ID: google-task-id-123)
+[2025-04-22 17:11:25,019] WARNING task_management.sync_utils /app/task_management/sync_utils.py:685 - Error parsing updated date: Invalid isoformat string: '2025-04-22T17:11:25.018632+00:00+00:00'. Using current time instead.
+[2025-04-22 17:11:25,019] WARNING task_management.sync_utils /app/task_management/sync_utils.py:690 - External task Test Task is newer; skipping update
+[2025-04-22 17:41:56,894] INFO task_management.sync_utils /app/task_management/sync_utils.py:32 - Starting Google Tasks sync for user: testuser
+[2025-04-22 17:41:56,895] INFO task_management.sync_utils /app/task_management/sync_utils.py:38 - Last sync time: None
+[2025-04-22 17:41:56,895] INFO task_management.sync_utils /app/task_management/sync_utils.py:41 - Fetching Google Tasks lists
+[2025-04-22 17:41:56,895] INFO task_management.sync_utils /app/task_management/sync_utils.py:45 - Found 1 Google task lists
+[2025-04-22 17:41:56,895] INFO task_management.sync_utils /app/task_management/sync_utils.py:57 - Processing Google list: 'My Tasks' (ID: list1)
+[2025-04-22 17:41:56,896] INFO task_management.sync_utils /app/task_management/sync_utils.py:72 - Created primary Google list 'G My Tasks' for list 'My Tasks'
+[2025-04-22 17:41:56,896] INFO task_management.sync_utils /app/task_management/sync_utils.py:122 - Retrieved page 1 with 1 tasks from 'My Tasks'
+[2025-04-22 17:41:56,896] INFO task_management.sync_utils /app/task_management/sync_utils.py:136 - Total updated tasks found in 'My Tasks': 1
+[2025-04-22 17:41:56,896] WARNING task_management.sync_utils /app/task_management/sync_utils.py:162 - Failed to parse due date for task 'Google Task 1': Invalid isoformat string: '2025-04-23T17:41:56.893502+00:00+00:00'
+[2025-04-22 17:41:56,897] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Google Task 1' with completed=False
+[2025-04-22 17:41:56,897] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Google Task 1
+[2025-04-22 17:41:57,116] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Google Task 1 (ID: 1)
+[2025-04-22 17:41:57,116] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Google Task 1 (ID: task1)
+[2025-04-22 17:41:57,117] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-22 17:41:57,394] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-22 17:41:57,570] ERROR task_management.sync_utils /app/task_management/sync_utils.py:678 - Error retrieving Google task: ('invalid_grant: Bad Request', {'error': 'invalid_grant', 'error_description': 'Bad Request'})
+[2025-04-22 17:41:57,571] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Google Task 1
+[2025-04-22 17:41:57,576] INFO task_management.sync_utils /app/task_management/sync_utils.py:231 - First sync detected - getting all task IDs to establish baseline
+[2025-04-22 17:41:57,576] INFO task_management.sync_utils /app/task_management/sync_utils.py:264 - Total task IDs found in list 'My Tasks': 1
+[2025-04-22 17:41:57,579] INFO task_management.sync_utils /app/task_management/sync_utils.py:274 - Found 0 tasks to mark as deleted (completed)
+[2025-04-22 17:41:57,583] INFO task_management.sync_utils /app/task_management/sync_utils.py:294 - Google sync completed successfully with 1 updates
+[2025-04-22 17:41:57,760] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Test Task (ID: google-task-id-123)
+[2025-04-22 17:41:57,760] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Test Task
+[2025-04-22 17:41:57,760] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Test Task
+[2025-04-22 17:42:58,697] INFO task_management.sync_utils /app/task_management/sync_utils.py:308 - Starting Microsoft Tasks sync for user: testuser
+[2025-04-22 17:42:58,699] INFO task_management.sync_utils /app/task_management/sync_utils.py:314 - Token info - Last sync: None, Expires at: 2025-04-22 18:42:58.695423+00:00
+[2025-04-22 17:42:58,699] INFO task_management.sync_utils /app/task_management/sync_utils.py:317 - Using OAuth token (first 10 chars): fake-ms-ac...
+[2025-04-22 17:42:58,699] INFO task_management.sync_utils /app/task_management/sync_utils.py:322 - Fetching Microsoft To Do lists
+[2025-04-22 17:42:58,699] INFO task_management.sync_utils /app/task_management/sync_utils.py:326 - Making HTTP request to: https://graph.microsoft.com/v1.0/me/todo/lists
+[2025-04-22 17:42:58,699] INFO task_management.sync_utils /app/task_management/sync_utils.py:330 - Microsoft API response status: 200
+[2025-04-22 17:42:58,699] INFO task_management.sync_utils /app/task_management/sync_utils.py:337 - Found 1 Microsoft To Do lists
+[2025-04-22 17:42:58,699] INFO task_management.sync_utils /app/task_management/sync_utils.py:350 - Processing Microsoft list: 'Tasks' (ID: list1)
+[2025-04-22 17:42:58,700] INFO task_management.sync_utils /app/task_management/sync_utils.py:400 - Retrieved page 1 with 1 tasks from 'Tasks'
+[2025-04-22 17:42:58,700] INFO task_management.sync_utils /app/task_management/sync_utils.py:410 - Total modified tasks found in 'Tasks': 1
+[2025-04-22 17:42:58,701] INFO task_management.sync_utils /app/task_management/sync_utils.py:482 - Creating new Microsoft task 'MS Task 1' with completed=False
+[2025-04-22 17:42:58,701] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Microsoft task update: MS Task 1
+[2025-04-22 17:42:58,845] INFO task_management.sync_utils /app/task_management/sync_utils.py:904 - Processing MS task update for task: MS Task 1 (ID: 1)
+[2025-04-22 17:42:58,845] INFO task_management.sync_utils /app/task_management/sync_utils.py:786 - Updating Microsoft task: MS Task 1 (ID: task1)
+[2025-04-22 17:42:58,846] ERROR task_management.sync_utils /app/task_management/sync_utils.py:879 - Error updating Microsoft task: MS Task 1, Error: 
+Traceback (most recent call last):
+  File "/app/task_management/sync_utils.py", line 795, in update_ms_task
+    external_task = response.json()
+  File "/usr/local/lib/python3.10/unittest/mock.py", line 1114, in __call__
+    return self._mock_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/unittest/mock.py", line 1118, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/unittest/mock.py", line 1175, in _execute_mock_call
+    result = next(effect)
+StopIteration
+[2025-04-22 17:42:58,847] INFO task_management.sync_utils /app/task_management/sync_utils.py:917 - Successfully processed task update for: MS Task 1
+[2025-04-22 17:42:58,847] INFO task_management.sync_utils /app/task_management/sync_utils.py:496 - Successfully created Microsoft task: MS Task 1 with ID: task1
+[2025-04-22 17:42:58,848] INFO task_management.sync_utils /app/task_management/sync_utils.py:512 - Updated last_synced_at from None to 2025-04-22 17:42:58.847961+00:00
+[2025-04-22 17:42:58,848] INFO task_management.sync_utils /app/task_management/sync_utils.py:514 - Microsoft sync completed successfully with 1 updates
+[2025-04-22 17:42:58,968] INFO task_management.sync_utils /app/task_management/sync_utils.py:786 - Updating Microsoft task: Test Task (ID: ms-task-id-123)
+[2025-04-22 17:42:58,968] INFO task_management.sync_utils /app/task_management/sync_utils.py:856 - Sending PATCH request to Microsoft for task: Test Task
+[2025-04-22 17:42:58,969] INFO task_management.sync_utils /app/task_management/sync_utils.py:869 - Successfully updated Microsoft task: Test Task
+[2025-04-22 17:45:58,882] INFO task_management.sync_utils /app/task_management/sync_utils.py:529 - Starting sync for user: testuser with provider: google
+[2025-04-22 17:45:58,884] ERROR task_management.sync_utils /app/task_management/sync_utils.py:577 - Error syncing google tasks for user testuser: Aggregate functions are not allowed in this query (access_token=<MagicMock name='Credentials().token.resolve_expression().resolve_expression()' id='281473301081936'>).
+[2025-04-23 01:59:17,580] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 01:59:17,580] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 01:59:47,919] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 01:59:47,919] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 01:59:49,396] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 01:59:49,396] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:00:19,704] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:00:19,704] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:28:23,584] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:28:23,584] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:28:53,911] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:28:53,911] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:29:24,099] INFO root /app/core/views.py:17 - CoreView : Calling Login
+[2025-04-23 02:29:24,100] INFO root /app/core/views.py:28 - CoreView : Calling Login - GET
+[2025-04-23 02:29:24,680] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:29:24,680] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:29:24,760] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /auth/login/
+[2025-04-23 02:29:24,760] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /auth/login/
+[2025-04-23 02:29:24,826] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-23 02:29:24,986] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /user/login/
+[2025-04-23 02:29:24,986] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /user/login/
+[2025-04-23 02:36:55,262] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:36:55,262] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:37:25,582] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:37:25,582] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:37:55,772] INFO root /app/core/views.py:17 - CoreView : Calling Login
+[2025-04-23 02:37:55,772] INFO root /app/core/views.py:28 - CoreView : Calling Login - GET
+[2025-04-23 02:37:56,279] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:37:56,279] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /accounts/login/
+[2025-04-23 02:37:56,349] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /auth/login/
+[2025-04-23 02:37:56,349] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /auth/login/
+[2025-04-23 02:37:56,413] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-23 02:37:56,584] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /user/login/
+[2025-04-23 02:37:56,584] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /user/login/
+[2025-04-23 04:02:12,473] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-23 04:02:15,469] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 132, in render
+    compiled_parent = self.get_parent(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 129, in get_parent
+    return self.find_template(parent, context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 107, in find_template
+    template, origin = context.template.engine.find_template(
+  File "/usr/local/lib/python3.10/site-packages/django/template/engine.py", line 161, in find_template
+    raise TemplateDoesNotExist(name, tried=tried)
+django.template.exceptions.TemplateDoesNotExist: base.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 101, in track_calories
+    return render(request, 'calorie_tracker/track_calories.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 63, in render
+    reraise(exc, self.backend)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 84, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: base.html
+[2025-04-23 04:02:15,469] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 132, in render
+    compiled_parent = self.get_parent(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 129, in get_parent
+    return self.find_template(parent, context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 107, in find_template
+    template, origin = context.template.engine.find_template(
+  File "/usr/local/lib/python3.10/site-packages/django/template/engine.py", line 161, in find_template
+    raise TemplateDoesNotExist(name, tried=tried)
+django.template.exceptions.TemplateDoesNotExist: base.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 101, in track_calories
+    return render(request, 'calorie_tracker/track_calories.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 63, in render
+    reraise(exc, self.backend)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 84, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: base.html
+[2025-04-23 04:02:15,569] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /favicon.ico
+[2025-04-23 04:02:15,569] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /favicon.ico
+[2025-04-23 04:06:13,416] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 132, in render
+    compiled_parent = self.get_parent(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 129, in get_parent
+    return self.find_template(parent, context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 107, in find_template
+    template, origin = context.template.engine.find_template(
+  File "/usr/local/lib/python3.10/site-packages/django/template/engine.py", line 161, in find_template
+    raise TemplateDoesNotExist(name, tried=tried)
+django.template.exceptions.TemplateDoesNotExist: base.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 101, in track_calories
+    return render(request, 'calorie_tracker/track_calories.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 63, in render
+    reraise(exc, self.backend)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 84, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: base.html
+[2025-04-23 04:06:13,416] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 132, in render
+    compiled_parent = self.get_parent(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 129, in get_parent
+    return self.find_template(parent, context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 107, in find_template
+    template, origin = context.template.engine.find_template(
+  File "/usr/local/lib/python3.10/site-packages/django/template/engine.py", line 161, in find_template
+    raise TemplateDoesNotExist(name, tried=tried)
+django.template.exceptions.TemplateDoesNotExist: base.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 101, in track_calories
+    return render(request, 'calorie_tracker/track_calories.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 63, in render
+    reraise(exc, self.backend)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 84, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: base.html
+[2025-04-23 04:07:08,829] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 132, in render
+    compiled_parent = self.get_parent(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 129, in get_parent
+    return self.find_template(parent, context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 107, in find_template
+    template, origin = context.template.engine.find_template(
+  File "/usr/local/lib/python3.10/site-packages/django/template/engine.py", line 161, in find_template
+    raise TemplateDoesNotExist(name, tried=tried)
+django.template.exceptions.TemplateDoesNotExist: base.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 101, in track_calories
+    return render(request, 'calorie_tracker/track_calories.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 63, in render
+    reraise(exc, self.backend)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 84, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: base.html
+[2025-04-23 04:07:08,829] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 132, in render
+    compiled_parent = self.get_parent(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 129, in get_parent
+    return self.find_template(parent, context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 107, in find_template
+    template, origin = context.template.engine.find_template(
+  File "/usr/local/lib/python3.10/site-packages/django/template/engine.py", line 161, in find_template
+    raise TemplateDoesNotExist(name, tried=tried)
+django.template.exceptions.TemplateDoesNotExist: base.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 101, in track_calories
+    return render(request, 'calorie_tracker/track_calories.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 63, in render
+    reraise(exc, self.backend)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 84, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: base.html
+[2025-04-23 04:12:02,650] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-23 04:14:04,273] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/monthly/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 321, in monthly_report
+    return render(request, 'calorie_tracker/monthly_report.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 742, in resolve
+    new_obj = func(obj, *arg_vals)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaultfilters.py", line 840, in divisibleby
+    return int(value) % int(arg) == 0
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'list'
+[2025-04-23 04:14:04,273] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/monthly/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 321, in monthly_report
+    return render(request, 'calorie_tracker/monthly_report.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 742, in resolve
+    new_obj = func(obj, *arg_vals)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaultfilters.py", line 840, in divisibleby
+    return int(value) % int(arg) == 0
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'list'
+[2025-04-23 04:53:10,713] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-23 05:01:30,756] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-23 05:04:54,372] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-23 05:18:11,888] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-23 05:18:29,629] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/profile/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 449, in user_profile
+    profile = request.user.profile
+  File "/usr/local/lib/python3.10/site-packages/django/utils/functional.py", line 268, in inner
+    return func(_wrapped, *args)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/fields/related_descriptors.py", line 492, in __get__
+    raise self.RelatedObjectDoesNotExist(
+django.contrib.auth.models.User.profile.RelatedObjectDoesNotExist: User has no profile.
+[2025-04-23 05:18:29,629] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/profile/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 449, in user_profile
+    profile = request.user.profile
+  File "/usr/local/lib/python3.10/site-packages/django/utils/functional.py", line 268, in inner
+    return func(_wrapped, *args)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/fields/related_descriptors.py", line 492, in __get__
+    raise self.RelatedObjectDoesNotExist(
+django.contrib.auth.models.User.profile.RelatedObjectDoesNotExist: User has no profile.
+[2025-04-23 05:23:41,094] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-24 22:11:05,410] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-24 22:11:09,949] INFO root /app/core/views.py:17 - CoreView : Calling Login
+[2025-04-24 22:11:09,949] INFO root /app/core/views.py:28 - CoreView : Calling Login - GET
+[2025-04-24 22:11:19,878] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-24 22:11:55,626] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /favicon.ico
+[2025-04-24 22:11:55,626] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /favicon.ico
+[2025-04-25 03:11:51,338] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 03:11:51,417] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/core/views.py", line 14, in dashboard
+    return render(request, 'core/dashboard.html', {'user': request.user})
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'simplified_entry' not found. 'simplified_entry' is not a valid view function or pattern name.
+[2025-04-25 03:11:51,417] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/core/views.py", line 14, in dashboard
+    return render(request, 'core/dashboard.html', {'user': request.user})
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'simplified_entry' not found. 'simplified_entry' is not a valid view function or pattern name.
+[2025-04-25 03:15:27,500] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 03:23:06,545] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 03:23:06,620] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/core/views.py", line 14, in dashboard
+    return render(request, 'core/dashboard.html', {'user': request.user})
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'simplified_entry' not found. 'simplified_entry' is not a valid view function or pattern name.
+[2025-04-25 03:23:06,620] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/core/views.py", line 14, in dashboard
+    return render(request, 'core/dashboard.html', {'user': request.user})
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'simplified_entry' not found. 'simplified_entry' is not a valid view function or pattern name.
+[2025-04-25 03:26:19,138] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 03:26:22,267] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 107, in simplified_entry
+    return render(request, 'calorie_tracker/simplified_entry.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'track_calories' not found. 'track_calories' is not a valid view function or pattern name.
+[2025-04-25 03:26:22,267] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 107, in simplified_entry
+    return render(request, 'calorie_tracker/simplified_entry.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'track_calories' not found. 'track_calories' is not a valid view function or pattern name.
+[2025-04-25 03:29:49,394] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 03:29:56,951] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/daily/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 151, in daily_report
+    return render(request, 'calorie_tracker/daily_report.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'track_calories' not found. 'track_calories' is not a valid view function or pattern name.
+[2025-04-25 03:29:56,951] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/daily/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 151, in daily_report
+    return render(request, 'calorie_tracker/daily_report.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 321, in render
+    return nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'track_calories' not found. 'track_calories' is not a valid view function or pattern name.
+[2025-04-25 03:32:11,267] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 03:32:30,545] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /dashboard/www.google.com
+[2025-04-25 03:32:30,545] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /dashboard/www.google.com
+[2025-04-25 04:25:40,031] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 04:27:52,885] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/profile/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 491, in user_profile
+    calculated_bmr = profile_instance.calculate_bmr()
+AttributeError: 'UserProfile' object has no attribute 'calculate_bmr'
+[2025-04-25 04:27:52,885] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/profile/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 491, in user_profile
+    calculated_bmr = profile_instance.calculate_bmr()
+AttributeError: 'UserProfile' object has no attribute 'calculate_bmr'
+[2025-04-25 04:37:35,662] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 05:27:51,788] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 05:28:15,501] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 05:28:17,405] INFO task_management.views /app/task_management/views.py:42 - Inside ensure_predefined_lists
+[2025-04-25 05:28:17,406] INFO task_management.views /app/task_management/views.py:43 - [{'name': 'Samaan Tasks', 'listcode': 'SAMAAN_TASKS'}, {'name': 'Past Due', 'listcode': 'PAST_DUE'}, {'name': 'Important', 'listcode': 'IMPORTANT'}, {'name': 'All Tasks', 'listcode': 'ALL_TASKS'}]
+[2025-04-25 05:28:17,406] INFO task_management.views /app/task_management/views.py:52 - ['task', 'taskhistory', 'id', 'user', 'list_name', 'list_code', 'list_type', 'list_source']
+[2025-04-25 05:28:17,409] INFO task_management.views /app/task_management/views.py:57 - Creating Predefined List : Samaan Tasks
+[2025-04-25 05:28:17,411] INFO task_management.views /app/task_management/views.py:57 - Creating Predefined List : Past Due
+[2025-04-25 05:28:17,412] INFO task_management.views /app/task_management/views.py:57 - Creating Predefined List : Important
+[2025-04-25 05:28:17,413] INFO task_management.views /app/task_management/views.py:57 - Creating Predefined List : All Tasks
+[2025-04-25 05:28:17,421] INFO task_management.views /app/task_management/views.py:209 - [get_lists] Special: ['All Tasks', 'Important', 'Past Due', 'Samaan Tasks']
+[2025-04-25 05:28:17,421] INFO task_management.views /app/task_management/views.py:210 - [get_lists] Semi-Special: []
+[2025-04-25 05:28:17,422] INFO task_management.views /app/task_management/views.py:211 - [get_lists] Normal: [] (Count: 0)
+[2025-04-25 05:28:17,458] INFO task_management.views /app/task_management/views.py:69 - Getting All Tasks called as main function
+[2025-04-25 05:28:18,470] INFO task_management.views /app/task_management/views.py:721 - Triggering user sync for user: kittureddy2000
+[2025-04-25 05:28:18,474] INFO task_management.views /app/task_management/views.py:728 - Enqueuing sync for user kittureddy2000 and provider google
+[2025-04-25 05:28:18,553] INFO task_management.sync_utils /app/task_management/sync_utils.py:635 - Processing sync task
+[2025-04-25 05:28:18,554] INFO task_management.sync_utils /app/task_management/sync_utils.py:529 - Starting sync for user: kittureddy2000 with provider: google
+[2025-04-25 05:28:18,555] INFO task_management.sync_utils /app/task_management/sync_utils.py:32 - Starting Google Tasks sync for user: kittureddy2000
+[2025-04-25 05:28:18,556] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:18,557] INFO task_management.sync_utils /app/task_management/sync_utils.py:38 - Last sync time: None
+[2025-04-25 05:28:18,557] INFO task_management.sync_utils /app/task_management/sync_utils.py:41 - Fetching Google Tasks lists
+[2025-04-25 05:28:18,700] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:19,033] INFO task_management.sync_utils /app/task_management/sync_utils.py:45 - Found 1 Google task lists
+[2025-04-25 05:28:19,033] INFO task_management.sync_utils /app/task_management/sync_utils.py:57 - Processing Google list: 'My Tasks' (ID: MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow)
+[2025-04-25 05:28:19,041] INFO task_management.sync_utils /app/task_management/sync_utils.py:72 - Created primary Google list 'G My Tasks' for list 'My Tasks'
+[2025-04-25 05:28:19,238] INFO task_management.sync_utils /app/task_management/sync_utils.py:122 - Retrieved page 1 with 98 tasks from 'My Tasks'
+[2025-04-25 05:28:19,239] INFO task_management.sync_utils /app/task_management/sync_utils.py:136 - Total updated tasks found in 'My Tasks': 98
+[2025-04-25 05:28:19,243] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Welcome to Gold membership.' with completed=False
+[2025-04-25 05:28:19,247] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Welcome to Gold membership.
+[2025-04-25 05:28:19,251] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Welcome to Gold membership. (ID: 1)
+[2025-04-25 05:28:19,251] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Welcome to Gold membership. (ID: VEgzSl9RbnJuY3FfeGQ3bg)
+[2025-04-25 05:28:19,253] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:19,388] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:19,681] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Welcome to Gold membership.
+[2025-04-25 05:28:20,077] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Welcome to Gold membership.
+[2025-04-25 05:28:20,078] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Welcome to Gold membership.
+[2025-04-25 05:28:20,081] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)' with completed=False
+[2025-04-25 05:28:20,083] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:20,087] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured) (ID: 2)
+[2025-04-25 05:28:20,087] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured) (ID: cVltUV95WkI3b3dUTWxtbA)
+[2025-04-25 05:28:20,090] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:20,214] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:20,500] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:20,930] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:20,930] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:20,934] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Exchange shoe' with completed=True
+[2025-04-25 05:28:20,937] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Exchange shoe
+[2025-04-25 05:28:20,941] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Exchange shoe (ID: 3)
+[2025-04-25 05:28:20,942] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Exchange shoe (ID: WUUtNkI3SXNnVFBJc0dEZw)
+[2025-04-25 05:28:20,944] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:21,075] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:21,349] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Exchange shoe
+[2025-04-25 05:28:21,761] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Exchange shoe
+[2025-04-25 05:28:21,762] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Exchange shoe
+[2025-04-25 05:28:21,766] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Add Revenue in 99 Acres' with completed=True
+[2025-04-25 05:28:21,769] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Add Revenue in 99 Acres
+[2025-04-25 05:28:21,773] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Add Revenue in 99 Acres (ID: 4)
+[2025-04-25 05:28:21,774] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Add Revenue in 99 Acres (ID: cXViMHNGZjZwcEplNW1WOQ)
+[2025-04-25 05:28:21,785] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:22,052] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:22,329] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Add Revenue in 99 Acres
+[2025-04-25 05:28:22,750] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Add Revenue in 99 Acres
+[2025-04-25 05:28:22,750] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Add Revenue in 99 Acres
+[2025-04-25 05:28:22,754] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Car cleaning' with completed=True
+[2025-04-25 05:28:22,756] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Car cleaning
+[2025-04-25 05:28:22,759] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Car cleaning (ID: 5)
+[2025-04-25 05:28:22,759] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Car cleaning (ID: UVdHYlRGT1I2SzRqTXdTaw)
+[2025-04-25 05:28:22,761] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:22,887] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:23,182] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Car cleaning
+[2025-04-25 05:28:23,594] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Car cleaning
+[2025-04-25 05:28:23,595] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Car cleaning
+[2025-04-25 05:28:23,599] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Special Tax Notice - Roth In-Plan Payments' with completed=False
+[2025-04-25 05:28:23,601] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Special Tax Notice - Roth In-Plan Payments
+[2025-04-25 05:28:23,606] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Special Tax Notice - Roth In-Plan Payments (ID: 6)
+[2025-04-25 05:28:23,606] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Special Tax Notice - Roth In-Plan Payments (ID: dnRINTRDQlp0MWFaYU1qSQ)
+[2025-04-25 05:28:23,608] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:23,739] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:24,026] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Special Tax Notice - Roth In-Plan Payments
+[2025-04-25 05:28:24,435] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Special Tax Notice - Roth In-Plan Payments
+[2025-04-25 05:28:24,435] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Special Tax Notice - Roth In-Plan Payments
+[2025-04-25 05:28:24,440] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Completed: Policy Documents for BSNH3-2024-083528-01' with completed=False
+[2025-04-25 05:28:24,443] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Completed: Policy Documents for BSNH3-2024-083528-01
+[2025-04-25 05:28:24,447] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Completed: Policy Documents for BSNH3-2024-083528-01 (ID: 7)
+[2025-04-25 05:28:24,447] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Completed: Policy Documents for BSNH3-2024-083528-01 (ID: NHJnMS11UDRCLTBEd0ZBQQ)
+[2025-04-25 05:28:24,449] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:24,727] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:25,031] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Completed: Policy Documents for BSNH3-2024-083528-01
+[2025-04-25 05:28:25,451] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Completed: Policy Documents for BSNH3-2024-083528-01
+[2025-04-25 05:28:25,452] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Completed: Policy Documents for BSNH3-2024-083528-01
+[2025-04-25 05:28:25,456] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)' with completed=False
+[2025-04-25 05:28:25,458] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:25,461] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured) (ID: 8)
+[2025-04-25 05:28:25,461] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured) (ID: WlQ5Zk9YdzZXclB4MWdhNQ)
+[2025-04-25 05:28:25,464] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:25,590] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:25,865] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:26,265] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:26,265] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:26,269] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)' with completed=False
+[2025-04-25 05:28:26,271] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:26,275] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured) (ID: 9)
+[2025-04-25 05:28:26,275] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured) (ID: LTdkeDdmMkVBSHR6b25WTQ)
+[2025-04-25 05:28:26,281] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:26,403] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:26,687] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:27,093] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:27,094] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Policy #BSNH3-2024-083528-01: Venkata Krishna Reddy Yadamakanti (Primary Named Insured)
+[2025-04-25 05:28:27,098] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification' with completed=True
+[2025-04-25 05:28:27,102] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification
+[2025-04-25 05:28:27,106] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification (ID: 10)
+[2025-04-25 05:28:27,106] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification (ID: MGpvT3hieDJMc3JNbmV5Mg)
+[2025-04-25 05:28:27,109] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:27,237] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:27,514] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification
+[2025-04-25 05:28:27,910] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification
+[2025-04-25 05:28:27,911] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification
+[2025-04-25 05:28:27,916] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your health & nutrition: A personalized approach' with completed=True
+[2025-04-25 05:28:27,919] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your health & nutrition: A personalized approach
+[2025-04-25 05:28:27,923] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your health & nutrition: A personalized approach (ID: 11)
+[2025-04-25 05:28:27,923] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your health & nutrition: A personalized approach (ID: QWpPVkNieEFLU2p2MWdtUg)
+[2025-04-25 05:28:27,936] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:28,255] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:28,565] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your health & nutrition: A personalized approach
+[2025-04-25 05:28:28,963] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your health & nutrition: A personalized approach
+[2025-04-25 05:28:28,963] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your health & nutrition: A personalized approach
+[2025-04-25 05:28:28,968] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Reservation #9218' with completed=True
+[2025-04-25 05:28:28,971] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Reservation #9218
+[2025-04-25 05:28:28,975] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Reservation #9218 (ID: 12)
+[2025-04-25 05:28:28,975] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Reservation #9218 (ID: RUZvTzNxYVg0TmhUZnNzMg)
+[2025-04-25 05:28:28,978] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:29,247] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:29,547] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Reservation #9218
+[2025-04-25 05:28:29,942] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Reservation #9218
+[2025-04-25 05:28:29,943] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Reservation #9218
+[2025-04-25 05:28:29,947] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Re: New Request from Support site of TaxBandits' with completed=True
+[2025-04-25 05:28:29,950] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Re: New Request from Support site of TaxBandits
+[2025-04-25 05:28:29,955] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Re: New Request from Support site of TaxBandits (ID: 13)
+[2025-04-25 05:28:29,955] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Re: New Request from Support site of TaxBandits (ID: RnBqR2RlRnpWTXB3eGlOcA)
+[2025-04-25 05:28:29,959] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:30,107] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:30,384] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Re: New Request from Support site of TaxBandits
+[2025-04-25 05:28:30,769] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Re: New Request from Support site of TaxBandits
+[2025-04-25 05:28:30,769] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Re: New Request from Support site of TaxBandits
+[2025-04-25 05:28:30,773] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'GRAND ISLES PARKING REGISTRATION' with completed=True
+[2025-04-25 05:28:30,776] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: GRAND ISLES PARKING REGISTRATION
+[2025-04-25 05:28:30,805] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: GRAND ISLES PARKING REGISTRATION (ID: 14)
+[2025-04-25 05:28:30,805] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: GRAND ISLES PARKING REGISTRATION (ID: T1FacjYtUC0zNXpITHhsag)
+[2025-04-25 05:28:30,807] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:30,936] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:31,224] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: GRAND ISLES PARKING REGISTRATION
+[2025-04-25 05:28:31,626] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: GRAND ISLES PARKING REGISTRATION
+[2025-04-25 05:28:31,627] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: GRAND ISLES PARKING REGISTRATION
+[2025-04-25 05:28:31,631] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Make the payment Confirmation + Online Access' with completed=True
+[2025-04-25 05:28:31,633] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Make the payment Confirmation + Online Access
+[2025-04-25 05:28:31,636] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Make the payment Confirmation + Online Access (ID: 15)
+[2025-04-25 05:28:31,636] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Make the payment Confirmation + Online Access (ID: QWNMT09vQWw3UzlSV1dESQ)
+[2025-04-25 05:28:31,638] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:31,777] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:32,059] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Make the payment Confirmation + Online Access
+[2025-04-25 05:28:32,453] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Make the payment Confirmation + Online Access
+[2025-04-25 05:28:32,454] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Make the payment Confirmation + Online Access
+[2025-04-25 05:28:32,458] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'We’re listening! Submit your product review to Costco.com!' with completed=True
+[2025-04-25 05:28:32,461] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: We’re listening! Submit your product review to Costco.com!
+[2025-04-25 05:28:32,465] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: We’re listening! Submit your product review to Costco.com! (ID: 16)
+[2025-04-25 05:28:32,465] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: We’re listening! Submit your product review to Costco.com! (ID: MlRqdjBuTmRhd1F3UDlxaQ)
+[2025-04-25 05:28:32,468] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:32,587] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:32,897] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: We’re listening! Submit your product review to Costco.com!
+[2025-04-25 05:28:33,304] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: We’re listening! Submit your product review to Costco.com!
+[2025-04-25 05:28:33,305] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: We’re listening! Submit your product review to Costco.com!
+[2025-04-25 05:28:33,310] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Re: Your eGift Card order confirmation: RK1P6RDDN-00QJH35' with completed=True
+[2025-04-25 05:28:33,312] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Re: Your eGift Card order confirmation: RK1P6RDDN-00QJH35
+[2025-04-25 05:28:33,316] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Re: Your eGift Card order confirmation: RK1P6RDDN-00QJH35 (ID: 17)
+[2025-04-25 05:28:33,317] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Re: Your eGift Card order confirmation: RK1P6RDDN-00QJH35 (ID: ZnJxV3ExS0o1YnFta2sxMQ)
+[2025-04-25 05:28:33,319] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:33,438] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:33,729] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Re: Your eGift Card order confirmation: RK1P6RDDN-00QJH35
+[2025-04-25 05:28:34,132] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Re: Your eGift Card order confirmation: RK1P6RDDN-00QJH35
+[2025-04-25 05:28:34,132] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Re: Your eGift Card order confirmation: RK1P6RDDN-00QJH35
+[2025-04-25 05:28:34,136] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Calm Ventures Q1 2024 LP Update' with completed=True
+[2025-04-25 05:28:34,139] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Calm Ventures Q1 2024 LP Update
+[2025-04-25 05:28:34,143] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Calm Ventures Q1 2024 LP Update (ID: 18)
+[2025-04-25 05:28:34,144] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Calm Ventures Q1 2024 LP Update (ID: eXVXMnN0QW40V0Q2NFZXVg)
+[2025-04-25 05:28:34,146] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:34,274] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:34,575] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Calm Ventures Q1 2024 LP Update
+[2025-04-25 05:28:34,976] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Calm Ventures Q1 2024 LP Update
+[2025-04-25 05:28:34,976] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Calm Ventures Q1 2024 LP Update
+[2025-04-25 05:28:34,978] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Umbrella Renewal' with completed=True
+[2025-04-25 05:28:34,980] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Umbrella Renewal
+[2025-04-25 05:28:34,983] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Umbrella Renewal (ID: 19)
+[2025-04-25 05:28:34,983] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Umbrella Renewal (ID: VjRDbEVESTFacmI2SVFKTA)
+[2025-04-25 05:28:34,987] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:35,255] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:35,551] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Umbrella Renewal
+[2025-04-25 05:28:35,962] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Umbrella Renewal
+[2025-04-25 05:28:35,963] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Umbrella Renewal
+[2025-04-25 05:28:35,967] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your Google Fi monthly statement' with completed=True
+[2025-04-25 05:28:35,969] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your Google Fi monthly statement
+[2025-04-25 05:28:35,973] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your Google Fi monthly statement (ID: 20)
+[2025-04-25 05:28:35,973] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your Google Fi monthly statement (ID: WWMxbzVTUldCUEdDS2RkZw)
+[2025-04-25 05:28:35,975] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:36,240] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:36,540] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your Google Fi monthly statement
+[2025-04-25 05:28:36,952] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your Google Fi monthly statement
+[2025-04-25 05:28:36,953] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your Google Fi monthly statement
+[2025-04-25 05:28:36,957] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'TreasuryDirect 1099 Statement Information' with completed=True
+[2025-04-25 05:28:36,960] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: TreasuryDirect 1099 Statement Information
+[2025-04-25 05:28:36,964] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: TreasuryDirect 1099 Statement Information (ID: 21)
+[2025-04-25 05:28:36,964] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: TreasuryDirect 1099 Statement Information (ID: LUMxY05BTEhJQmFiMzNITA)
+[2025-04-25 05:28:36,967] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:37,234] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:37,549] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: TreasuryDirect 1099 Statement Information
+[2025-04-25 05:28:37,952] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: TreasuryDirect 1099 Statement Information
+[2025-04-25 05:28:37,952] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: TreasuryDirect 1099 Statement Information
+[2025-04-25 05:28:37,957] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Umbrella Renewal' with completed=True
+[2025-04-25 05:28:37,959] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Umbrella Renewal
+[2025-04-25 05:28:37,962] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Umbrella Renewal (ID: 22)
+[2025-04-25 05:28:37,962] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Umbrella Renewal (ID: VV9tOVlGTDhsZUpQZ1gwNQ)
+[2025-04-25 05:28:37,964] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:38,093] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:38,382] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Umbrella Renewal
+[2025-04-25 05:28:38,774] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Umbrella Renewal
+[2025-04-25 05:28:38,775] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Umbrella Renewal
+[2025-04-25 05:28:38,779] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'TSA Pre✔® Travel With Ease' with completed=True
+[2025-04-25 05:28:38,782] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: TSA Pre✔® Travel With Ease
+[2025-04-25 05:28:38,786] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: TSA Pre✔® Travel With Ease (ID: 23)
+[2025-04-25 05:28:38,786] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: TSA Pre✔® Travel With Ease (ID: VnpBWVJMOTF5R3kxX2R6cQ)
+[2025-04-25 05:28:38,789] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:39,060] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:39,358] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: TSA Pre✔® Travel With Ease
+[2025-04-25 05:28:39,744] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: TSA Pre✔® Travel With Ease
+[2025-04-25 05:28:39,744] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: TSA Pre✔® Travel With Ease
+[2025-04-25 05:28:39,749] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Rob Ness invited you to invest in Frontier Bio' with completed=True
+[2025-04-25 05:28:39,751] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Rob Ness invited you to invest in Frontier Bio
+[2025-04-25 05:28:39,755] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Rob Ness invited you to invest in Frontier Bio (ID: 24)
+[2025-04-25 05:28:39,755] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Rob Ness invited you to invest in Frontier Bio (ID: NjdFVTNJbnVENmNtWDg0cA)
+[2025-04-25 05:28:39,782] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:39,913] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:40,205] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Rob Ness invited you to invest in Frontier Bio
+[2025-04-25 05:28:40,613] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Rob Ness invited you to invest in Frontier Bio
+[2025-04-25 05:28:40,614] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Rob Ness invited you to invest in Frontier Bio
+[2025-04-25 05:28:40,617] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task ' Venkatakrishnar, this is for you: It’s your Verizon Visa® Card.' with completed=True
+[2025-04-25 05:28:40,620] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update:  Venkatakrishnar, this is for you: It’s your Verizon Visa® Card.
+[2025-04-25 05:28:40,624] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task:  Venkatakrishnar, this is for you: It’s your Verizon Visa® Card. (ID: 25)
+[2025-04-25 05:28:40,625] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task:  Venkatakrishnar, this is for you: It’s your Verizon Visa® Card. (ID: R3Jjc0NoYTlGY3BqWFZKNA)
+[2025-04-25 05:28:40,627] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:40,754] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:41,037] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task:  Venkatakrishnar, this is for you: It’s your Verizon Visa® Card.
+[2025-04-25 05:28:41,446] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task:  Venkatakrishnar, this is for you: It’s your Verizon Visa® Card.
+[2025-04-25 05:28:41,447] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for:  Venkatakrishnar, this is for you: It’s your Verizon Visa® Card.
+[2025-04-25 05:28:41,452] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Grade 6 Math Placement Information' with completed=True
+[2025-04-25 05:28:41,455] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Grade 6 Math Placement Information
+[2025-04-25 05:28:41,458] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Grade 6 Math Placement Information (ID: 26)
+[2025-04-25 05:28:41,459] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Grade 6 Math Placement Information (ID: WVNEMnRGOFlsNFVBRWZ6TQ)
+[2025-04-25 05:28:41,462] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:41,596] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:41,881] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Grade 6 Math Placement Information
+[2025-04-25 05:28:42,287] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Grade 6 Math Placement Information
+[2025-04-25 05:28:42,288] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Grade 6 Math Placement Information
+[2025-04-25 05:28:42,293] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Presentation from EHS Parent and Student Information Nights' with completed=True
+[2025-04-25 05:28:42,295] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Presentation from EHS Parent and Student Information Nights
+[2025-04-25 05:28:42,299] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Presentation from EHS Parent and Student Information Nights (ID: 27)
+[2025-04-25 05:28:42,300] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Presentation from EHS Parent and Student Information Nights (ID: ZmNGVlpKTGRaaXdFSjBQNw)
+[2025-04-25 05:28:42,302] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:42,576] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:42,864] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Presentation from EHS Parent and Student Information Nights
+[2025-04-25 05:28:43,271] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Presentation from EHS Parent and Student Information Nights
+[2025-04-25 05:28:43,271] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Presentation from EHS Parent and Student Information Nights
+[2025-04-25 05:28:43,276] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'We were unable to process your payment.' with completed=True
+[2025-04-25 05:28:43,279] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: We were unable to process your payment.
+[2025-04-25 05:28:43,282] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: We were unable to process your payment. (ID: 28)
+[2025-04-25 05:28:43,283] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: We were unable to process your payment. (ID: Ti05VlZaUGNxVmJtUmRfcA)
+[2025-04-25 05:28:43,286] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:43,422] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:43,699] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: We were unable to process your payment.
+[2025-04-25 05:28:44,102] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: We were unable to process your payment.
+[2025-04-25 05:28:44,102] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: We were unable to process your payment.
+[2025-04-25 05:28:44,106] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Strawberry Creek Ventures' with completed=True
+[2025-04-25 05:28:44,109] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Strawberry Creek Ventures
+[2025-04-25 05:28:44,114] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Strawberry Creek Ventures (ID: 29)
+[2025-04-25 05:28:44,114] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Strawberry Creek Ventures (ID: ZkFTRFJJd0FHWU0zc2lvQg)
+[2025-04-25 05:28:44,120] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:44,385] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:44,664] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Strawberry Creek Ventures
+[2025-04-25 05:28:45,115] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Strawberry Creek Ventures
+[2025-04-25 05:28:45,116] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Strawberry Creek Ventures
+[2025-04-25 05:28:45,120] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Welcome to Verizon Mobile Protect' with completed=True
+[2025-04-25 05:28:45,123] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Welcome to Verizon Mobile Protect
+[2025-04-25 05:28:45,127] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Welcome to Verizon Mobile Protect (ID: 30)
+[2025-04-25 05:28:45,127] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Welcome to Verizon Mobile Protect (ID: MVhFcmRYY19JN0s4UDFEOA)
+[2025-04-25 05:28:45,130] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:45,255] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:45,542] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Welcome to Verizon Mobile Protect
+[2025-04-25 05:28:45,960] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Welcome to Verizon Mobile Protect
+[2025-04-25 05:28:45,961] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Welcome to Verizon Mobile Protect
+[2025-04-25 05:28:45,965] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Re: Monique is requesting information about 5049 Pinaleno Way, Roseville, CA, 95747' with completed=True
+[2025-04-25 05:28:45,967] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Re: Monique is requesting information about 5049 Pinaleno Way, Roseville, CA, 95747
+[2025-04-25 05:28:45,971] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Re: Monique is requesting information about 5049 Pinaleno Way, Roseville, CA, 95747 (ID: 31)
+[2025-04-25 05:28:45,972] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Re: Monique is requesting information about 5049 Pinaleno Way, Roseville, CA, 95747 (ID: M0FxX0ZsYW5qLWo0TVdYMg)
+[2025-04-25 05:28:45,975] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:46,242] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:46,532] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Re: Monique is requesting information about 5049 Pinaleno Way, Roseville, CA, 95747
+[2025-04-25 05:28:46,925] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Re: Monique is requesting information about 5049 Pinaleno Way, Roseville, CA, 95747
+[2025-04-25 05:28:46,926] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Re: Monique is requesting information about 5049 Pinaleno Way, Roseville, CA, 95747
+[2025-04-25 05:28:46,930] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'HSA Information' with completed=True
+[2025-04-25 05:28:46,933] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: HSA Information
+[2025-04-25 05:28:46,937] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: HSA Information (ID: 32)
+[2025-04-25 05:28:46,937] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: HSA Information (ID: YWVwdnQzQUpmZjFvZHdSdw)
+[2025-04-25 05:28:46,940] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:47,214] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:47,526] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: HSA Information
+[2025-04-25 05:28:47,910] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: HSA Information
+[2025-04-25 05:28:47,910] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: HSA Information
+[2025-04-25 05:28:47,915] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Campus Safety and Solar Eclipse' with completed=True
+[2025-04-25 05:28:47,917] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Campus Safety and Solar Eclipse
+[2025-04-25 05:28:47,921] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Campus Safety and Solar Eclipse (ID: 33)
+[2025-04-25 05:28:47,921] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Campus Safety and Solar Eclipse (ID: VlpUOHh2QzBoRkFLLTR6Tw)
+[2025-04-25 05:28:47,924] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-25 05:28:48,049] INFO google_auth_httplib2 /usr/local/lib/python3.10/site-packages/google_auth_httplib2.py:238 - Refreshing credentials due to a 401 response. Attempt 1/2.
+[2025-04-25 05:28:48,342] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Campus Safety and Solar Eclipse
+[2025-04-25 05:28:48,743] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Campus Safety and Solar Eclipse
+[2025-04-25 05:28:48,744] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Campus Safety and Solar Eclipse
+[2025-04-25 05:28:48,749] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Venkata Yadamakanti - EpicPay Transaction APPROVED for Brave Training Center' with completed=True
+[2025-04-25 05:28:48,750] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Venkata Yadamakanti - EpicPay Transaction APPROVED for Brave Training Center
+[2025-04-25 05:28:48,753] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Venkata Yadamakanti - EpicPay Transaction APPROVED for Brave Training Center (ID: 34)
+[2025-04-25 05:28:48,753] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Venkata Yadamakanti - EpicPay Transaction APPROVED for Brave Training Center (ID: MmFCdlhDNDFXZjBUODFTNA)
+[2025-04-25 05:29:00,559] INFO task_management.views /app/task_management/views.py:83 - Function: Get Tasks with list id : 2
+[2025-04-25 05:29:00,559] INFO task_management.views /app/task_management/views.py:90 - Sort By : due_date
+[2025-04-25 05:29:00,560] INFO task_management.views /app/task_management/views.py:97 - List Name : Past Due
+[2025-04-25 05:35:05,267] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 15:54:30,750] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 16:12:37,428] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 16:17:43,792] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 18:22:20,840] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 18:26:12,439] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 18:26:19,787] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/profile/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 540, in user_profile
+    return render(request, 'calorie_tracker/user_profile.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'track_calories' not found. 'track_calories' is not a valid view function or pattern name.
+[2025-04-25 18:26:19,787] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/profile/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 540, in user_profile
+    return render(request, 'calorie_tracker/user_profile.html', context)
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'track_calories' not found. 'track_calories' is not a valid view function or pattern name.
+[2025-04-25 18:34:24,881] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 18:34:43,849] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 150, in simplified_entry
+    return redirect(f'?selected_date={entry_date.strftime("%Y-%m-%d")}')
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for '?selected_date=2025-04-25' not found. '?selected_date=2025-04-25' is not a valid view function or pattern name.
+[2025-04-25 18:34:43,849] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /calories/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/contrib/auth/decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "/app/calorie_tracker/views.py", line 150, in simplified_entry
+    return redirect(f'?selected_date={entry_date.strftime("%Y-%m-%d")}')
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/urls/resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for '?selected_date=2025-04-25' not found. '?selected_date=2025-04-25' is not a valid view function or pattern name.
+[2025-04-25 18:37:57,974] INFO root /app/core/views.py:13 - Calling Dashboard

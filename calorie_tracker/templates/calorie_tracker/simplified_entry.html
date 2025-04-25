@@ -1,0 +1,175 @@
+{% extends "calorie_tracker/calorie_base.html" %}
+{% load static %}
+
+{% block title %}Quick Calorie Entry{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-center">Quick Calorie Entry</h1>
+            <p class="text-center">
+                <a href="{% url 'calorie_tracker:track_weight' %}">Track Weight</a> | 
+                <a href="{% url 'calorie_tracker:user_profile' %}">Your Profile</a> | 
+                <a href="{% url 'calorie_tracker:daily_report' %}">Daily Report</a> | 
+                <a href="{% url 'calorie_tracker:weekly_report' %}">Weekly Report</a> | 
+                <a href="{% url 'calorie_tracker:monthly_report' %}">Monthly Report</a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Date Selection -->
+    <div class="row mb-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center date-nav-container">
+                        <a href="{% url 'calorie_tracker:simplified_entry' %}?selected_date={{ prev_day|date:'Y-m-d' }}" class="btn btn-outline-primary">
+                            <i class="fa fa-chevron-left"></i> Previous Day
+                        </a>
+                        
+                        <form method="get" class="form-inline m-0">
+                            <div class="input-group">
+                                {{ date_form.selected_date }}
+                                <div class="input-group-append d-none">
+                                    <button type="submit" class="btn btn-primary">Go</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <a href="{% url 'calorie_tracker:simplified_entry' %}?selected_date={{ next_day|date:'Y-m-d' }}" class="btn btn-outline-primary">
+                            Next Day <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Simplified Entry Form -->
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Quick Entry</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'calorie_tracker:simplified_entry' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="selected_date" value="{{ selected_date|date:'Y-m-d' }}">
+                        
+                        <div class="mb-3 row">
+                            <label for="breakfast" class="col-sm-4 col-form-label">Breakfast</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="breakfast" name="breakfast_calories" placeholder="Calories" value="{{ breakfast_calories }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 row">
+                            <label for="lunch" class="col-sm-4 col-form-label">Lunch</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="lunch" name="lunch_calories" placeholder="Calories" value="{{ lunch_calories }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 row">
+                            <label for="dinner" class="col-sm-4 col-form-label">Dinner</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="dinner" name="dinner_calories" placeholder="Calories" value="{{ dinner_calories }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 row">
+                            <label for="snacks" class="col-sm-4 col-form-label">Snacks</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="snacks" name="snack_calories" placeholder="Calories" value="{{ snack_calories }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 row">
+                            <label for="exercise" class="col-sm-4 col-form-label">Exercise</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="exercise" name="exercise_calories" placeholder="Calories Burned" value="{{ exercise_calories }}">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 row">
+                            <label for="weight" class="col-sm-4 col-form-label">Today's Weight (kg)</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="weight" name="weight" placeholder="Weight in kg" step="0.1" value="{% if weight_entry %}{{ weight_entry.weight }}{% endif %}">
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Save All Entries</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Daily Total -->
+    {% if food_calories or exercise_calories %}
+    <div class="row mt-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">Daily Summary</h5>
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <p class="mb-1">Food</p>
+                            <h4 class="text-primary">{{ food_calories }}</h4>
+                        </div>
+                        <div class="col-4">
+                            <p class="mb-1">Exercise</p>
+                            <h4 class="text-danger">{{ exercise_calories }}</h4>
+                        </div>
+                        <div class="col-4">
+                            <p class="mb-1">Net</p>
+                            <h4 class="text-success">{{ net_calories }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    input[type="date"] {
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        text-align: center;
+        font-size: 1.1rem;
+        width: 170px;
+    }
+    
+    /* Mobile optimizations */
+    @media (max-width: 576px) {
+        .date-nav-container {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .date-nav-container a {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<script>
+    // Auto-submit the form when date changes
+    document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.querySelector('input[name="selected_date"]');
+        if (dateInput) {
+            dateInput.addEventListener('change', function() {
+                this.closest('form').submit();
+            });
+        }
+    });
+</script>
+{% endblock %} 

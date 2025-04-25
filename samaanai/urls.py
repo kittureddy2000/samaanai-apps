@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -11,8 +10,7 @@ urlpatterns = [
     path('task_management/', include('task_management.urls')),
     path('spreturn/', include('spreturn.urls', namespace='spreturn')),
     path('portfolio/', include('portfolio.urls')),
-
-
+    path('calories/', include('calorie_tracker.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

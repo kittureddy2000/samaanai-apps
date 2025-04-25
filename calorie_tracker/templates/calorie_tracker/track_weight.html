@@ -1,0 +1,163 @@
+{% extends "calorie_tracker/calorie_base.html" %}
+{% load static %}
+
+{% block title %}Track Weight{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-center">Track Your Weight</h1>
+            <p class="text-center">
+                <a href="{% url 'calorie_tracker:simplified_entry' %}">Track Calories</a> | 
+                <a href="{% url 'calorie_tracker:user_profile' %}">Your Profile</a> | 
+                <a href="{% url 'calorie_tracker:daily_report' %}">Daily Report</a>
+            </p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Weight Entry Form -->
+        <div class="col-md-6 offset-md-3 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Add Weight Entry</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.date.id_for_label }}" class="form-label">Date</label>
+                            {{ form.date }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.weight.id_for_label }}" class="form-label">Weight (kg)</label>
+                            {{ form.weight }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.notes.id_for_label }}" class="form-label">Notes (optional)</label>
+                            {{ form.notes }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Weight Entry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if weight_entries %}
+    <div class="row mt-4">
+        <!-- Weight History Chart -->
+        <div class="col-md-8 offset-md-2 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Weight History</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="weightChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Weight History Table -->
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Weight Entries</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th class="text-end">Weight (kg)</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entry in weight_entries %}
+                                <tr>
+                                    <td>{{ entry.date|date:"M d, Y" }}</td>
+                                    <td class="text-end">{{ entry.weight }}</td>
+                                    <td>{{ entry.notes|default:"" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    input[type="date"] {
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+    }
+</style>
+
+{% if weight_entries %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('weightChart').getContext('2d');
+        
+        // Prepare data for chart
+        const dates = [
+            {% for entry in weight_entries reversed %}
+                "{{ entry.date|date:"M d" }}"{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ];
+        
+        const weights = [
+            {% for entry in weight_entries reversed %}
+                {{ entry.weight }}{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ];
+        
+        const weightChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Weight (kg)',
+                    data: weights,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.1,
+                    fill: true,
+                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endif %}
+{% endblock %} 

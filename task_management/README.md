@@ -222,3 +222,38 @@ This process pushes changes made within the Samaanai application to the connecte
 *   **API Rate Limits:** Google and Microsoft APIs have rate limits. Excessive syncing might lead to temporary blocks (HTTP 429 errors). Check external service documentation.
 *   **Permissions:** Verify the application has the necessary API permissions granted during the OAuth flow. Ensure the service account (if deployed) has Cloud Tasks permissions.
 *   **Unique Constraints:** Errors mentioning unique constraints (like on `TaskHistory.source_id`) might indicate issues with generating unique IDs during rapid operations. 
+
+# Run all tests
+pytest
+
+# Run specific test file
+pytest tests/test_models.py
+
+# Run with coverage
+pytest --cov=task_management
+
+# Run only browser tests
+pytest -m playwright
+
+# Skip slow tests
+pytest -k "not slow"
+
+# Run model tests
+docker-compose exec web python -m pytest task_management/tests/test_models.py -v
+
+# Run form tests
+docker-compose exec web python -m pytest task_management/tests/test_forms.py -v
+
+# Run view tests
+docker-compose exec web python -m pytest task_management/tests/test_views.py -v
+
+# Run Google sync tests
+docker-compose exec web python -m pytest task_management/tests/test_sync_google.py -v
+
+# Run Microsoft sync tests
+docker-compose exec web python -m pytest task_management/tests/test_sync_ms.py -v
+
+# Run specific test class
+docker-compose exec web python -m pytest task_management/tests/test_ui.py
+
+docker-compose exec web python -m pytest task_management/tests/test_sync_edge_cases.py

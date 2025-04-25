@@ -1,0 +1,266 @@
+{% extends "calorie_tracker/calorie_base.html" %}
+{% load static %}
+{% load calorie_filters %}
+
+{% block title %}Weekly Calorie Report{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-center">Weekly Calorie Report</h1>
+            <p class="text-center">
+                <a href="{% url 'calorie_tracker:simplified_entry' %}">Track Calories</a> | 
+                <a href="{% url 'calorie_tracker:track_weight' %}">Track Weight</a> | 
+                <a href="{% url 'calorie_tracker:user_profile' %}">Your Profile</a> | 
+                <a href="{% url 'calorie_tracker:daily_report' %}">Daily Report</a> | 
+                <a href="{% url 'calorie_tracker:monthly_report' %}">Monthly Report</a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Week Navigation -->
+    <div class="row mb-4">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'calorie_tracker:weekly_report' %}?direction=prev&weeks=1" class="btn btn-outline-primary">
+                            <i class="fa fa-chevron-left"></i> Previous Week
+                        </a>
+                        <h5 class="mb-0">{{ start_date|date:"M d" }} - {{ end_date|date:"M d, Y" }}</h5>
+                        <a href="{% url 'calorie_tracker:weekly_report' %}?direction=next&weeks=1" class="btn btn-outline-primary">
+                            Next Week <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Weekly Summary -->
+    <div class="row mb-4">
+        <div class="col-md-8 offset-md-2">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Weekly Calorie Summary</h3>
+                    <p class="text-center text-muted">Wednesday to Tuesday</p>
+                    <div class="row text-center mt-3">
+                        <div class="col-md-3 col-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Food</h5>
+                                    <h3>{{ weekly_food_calories }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger">Exercise</h5>
+                                    <h3>{{ weekly_exercise_calories }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-info">Target</h5>
+                                    <h3>{{ weekly_target_calories }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success">Net</h5>
+                                    <h3>{{ weekly_net_calories }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Calories Remaining Box -->
+                    <div class="row mt-3">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Calories Remaining</h5>
+                                    <h3>{{ calories_remaining_until_today }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Daily Chart -->
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Daily Calorie Breakdown</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="calorieChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Daily Breakdown -->
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Daily Breakdown</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th class="text-end">Food</th>
+                                    <th class="text-end">Exercise</th>
+                                    <th class="text-end">Target</th>
+                                    <th class="text-end">Net</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for day in daily_totals %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'calorie_tracker:daily_report' %}?selected_date={{ day.date|date:'Y-m-d' }}">
+                                            {{ day.date|date:"D, M d" }}
+                                        </a>
+                                    </td>
+                                    <td class="text-end">{{ day.food_calories }}</td>
+                                    <td class="text-end">{{ day.exercise_calories }}</td>
+                                    <td class="text-end">{{ day.target_calories }}</td>
+                                    <td class="text-end">{{ day.net_calories }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr class="table-primary">
+                                    <th>Week Total</th>
+                                    <th class="text-end">{{ weekly_food_calories }}</th>
+                                    <th class="text-end">{{ weekly_exercise_calories }}</th>
+                                    <th class="text-end">{{ weekly_target_calories }}</th>
+                                    <th class="text-end">{{ weekly_net_calories }}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+        .container {
+            padding: 10px;
+        }
+        
+        .btn {
+            padding: 0.375rem 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('calorieChart').getContext('2d');
+        
+        // Chart data
+        const dates = {{ chart_dates|safe }};
+        const foodCalories = {{ food_calories_data|safe }};
+        const exerciseCalories = {{ exercise_calories_data|safe }};
+        const netCalories = {{ net_calories_data|safe }};
+        const targetCalories = {{ target_calories_data|safe }};
+        
+        const datasets = [
+            {
+                label: 'Food Intake',
+                data: foodCalories,
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Exercise',
+                data: exerciseCalories,
+                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Target Calories',
+                data: targetCalories,
+                type: 'line',
+                fill: false,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderDash: [5, 5],
+                borderWidth: 2,
+                pointRadius: 0
+            },
+            {
+                label: 'Net Calories',
+                data: netCalories,
+                type: 'line',
+                fill: false,
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(153, 102, 255, 1)',
+                tension: 0.1
+            }
+        ];
+        
+        const calorieChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        stacked: false
+                    },
+                    y: {
+                        stacked: false,
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            footer: function(tooltipItems) {
+                                return 'Net = Food - Exercise';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

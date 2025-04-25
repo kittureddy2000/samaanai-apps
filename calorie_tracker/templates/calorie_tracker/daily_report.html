@@ -1,0 +1,163 @@
+{% extends "calorie_tracker/calorie_base.html" %}
+{% load static %}
+
+{% block title %}Daily Calorie Report{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-center">Daily Calorie Report</h1>
+            <p class="text-center">
+                <a href="{% url 'calorie_tracker:simplified_entry' %}">Track Calories</a> | 
+                <a href="{% url 'calorie_tracker:track_weight' %}">Track Weight</a> | 
+                <a href="{% url 'calorie_tracker:user_profile' %}">Your Profile</a> | 
+                <a href="{% url 'calorie_tracker:weekly_report' %}">Weekly Report</a> | 
+                <a href="{% url 'calorie_tracker:monthly_report' %}">Monthly Report</a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Date Navigation -->
+    <div class="row mb-4">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'calorie_tracker:daily_report' %}?selected_date={{ prev_day|date:'Y-m-d' }}" class="btn btn-outline-primary">
+                            <i class="fa fa-chevron-left"></i> Previous Day
+                        </a>
+                        <form method="get" class="form-inline">
+                            <div class="input-group">
+                                {{ date_form.selected_date }}
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-primary">Go</button>
+                                </div>
+                            </div>
+                        </form>
+                        <a href="{% url 'calorie_tracker:daily_report' %}?selected_date={{ next_day|date:'Y-m-d' }}" class="btn btn-outline-primary">
+                            Next Day <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Daily Summary -->
+    <div class="row mb-4">
+        <div class="col-md-8 offset-md-2">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h3 class="card-title text-center">{{ selected_date|date:"l, F d, Y" }}</h3>
+                    <div class="row text-center mt-3">
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Food Calories</h5>
+                                    <h3>{{ food_calories }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger">Exercise Calories</h5>
+                                    <h3>{{ exercise_calories }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success">Net Calories</h5>
+                                    <h3>{{ net_calories }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Detailed Entries -->
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Detailed Entries</h5>
+                </div>
+                <div class="card-body">
+                    {% if entries %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                        <th class="text-end">Calories</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for entry in entries %}
+                                    <tr>
+                                        <td>
+                                            {% if entry.entry_type == 'Breakfast' %}
+                                                <span class="badge bg-primary">Breakfast</span>
+                                            {% elif entry.entry_type == 'Lunch' %}
+                                                <span class="badge bg-success">Lunch</span>
+                                            {% elif entry.entry_type == 'Dinner' %}
+                                                <span class="badge bg-info">Dinner</span>
+                                            {% elif entry.entry_type == 'Snack' %}
+                                                <span class="badge bg-warning">Snack</span>
+                                            {% elif entry.entry_type == 'Exercise' %}
+                                                <span class="badge bg-danger">Exercise</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ entry.description|default:"--" }}</td>
+                                        <td class="text-end">{{ entry.calories }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            No entries recorded for this day. 
+                            <a href="{% url 'calorie_tracker:simplified_entry' %}?selected_date={{ selected_date|date:'Y-m-d' }}">
+                                Add entries
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+        .container {
+            padding: 10px;
+        }
+        
+        input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        
+        .btn {
+            padding: 0.375rem 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+{% endblock %}

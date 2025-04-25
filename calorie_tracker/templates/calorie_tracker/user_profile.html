@@ -1,0 +1,189 @@
+{% extends "calorie_tracker/calorie_base.html" %}
+{% load static %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-center">Your Profile</h1>
+            <p class="text-center">
+                <a href="{% url 'calorie_tracker:simplified_entry' %}">Track Calories</a> | 
+                <a href="{% url 'calorie_tracker:track_weight' %}">Track Weight</a> | 
+                <a href="{% url 'calorie_tracker:daily_report' %}">Daily Report</a> | 
+                <a href="{% url 'calorie_tracker:weekly_report' %}">Weekly Report</a> | 
+                <a href="{% url 'calorie_tracker:monthly_report' %}">Monthly Report</a>
+            </p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Profile Information -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Profile Information</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.date_of_birth.id_for_label }}" class="form-label">Date of Birth</label>
+                            {{ form.date_of_birth }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.height.id_for_label }}" class="form-label">Height (cm)</label>
+                            {{ form.height }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.gender.id_for_label }}" class="form-label">Gender</label>
+                            {{ form.gender }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.activity_level.id_for_label }}" class="form-label">Activity Level</label>
+                            {{ form.activity_level }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.basal_metabolic_rate.id_for_label }}" class="form-label">Basal Metabolic Rate (BMR)</label>
+                            {{ form.basal_metabolic_rate }}
+                            <div class="form-text">{{ form.basal_metabolic_rate.help_text }}</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.weekly_weight_loss_goal.id_for_label }}" class="form-label">Weekly Weight Loss Goal</label>
+                            {{ form.weekly_weight_loss_goal }}
+                            <div class="form-text">{{ form.weekly_weight_loss_goal.help_text }}</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.daily_calorie_goal.id_for_label }}" class="form-label">Daily Calorie Goal</label>
+                            {{ form.daily_calorie_goal }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Metabolic Information -->
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Metabolic Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <h5 class="text-center">BMR</h5>
+                            <h3 class="text-center">{{ profile.basal_metabolic_rate|default:"Not set" }}</h3>
+                            <p class="text-muted text-center small">calories/day</p>
+                        </div>
+                        <div class="col">
+                            <h5 class="text-center">Daily Goal</h5>
+                            <h3 class="text-center">{{ profile.daily_calorie_goal }}</h3>
+                            <p class="text-muted text-center small">calories/day</p>
+                        </div>
+                        <div class="col">
+                            <h5 class="text-center">Weight Loss Goal</h5>
+                            <h3 class="text-center">{{ profile.weekly_weight_loss_goal }}</h3>
+                            <p class="text-muted text-center small">lbs/week</p>
+                        </div>
+                    </div>
+                    
+                    {% if profile.basal_metabolic_rate and profile.weekly_weight_loss_goal %}
+                    <div class="alert alert-info">
+                        <h6>Target Calories</h6>
+                        <p>Based on your BMR and weight loss goal, your target daily calories are:</p>
+                        <h3 class="text-center">{{ profile.calculate_target_calories }}</h3>
+                        <p class="text-muted text-center small">calories/day</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h6 class="mb-0">Recent Weight Entries</h6>
+                        </div>
+                        <div class="card-body p-0">
+                            {% if weight_entries %}
+                            <table class="table table-sm mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th class="text-end">Weight (kg)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for entry in weight_entries %}
+                                    <tr>
+                                        <td>{{ entry.date|date:"M d, Y" }}</td>
+                                        <td class="text-end">{{ entry.weight }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% else %}
+                            <div class="p-3 text-center">
+                                <p class="mb-2">No weight entries yet</p>
+                                <a href="{% url 'calorie_tracker:track_weight' %}" class="btn btn-sm btn-primary">Add Weight Entry</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    input[type="date"] {
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the form elements
+        const bmrInput = document.getElementById('{{ form.basal_metabolic_rate.id_for_label }}');
+        const weightLossGoalInput = document.getElementById('{{ form.weekly_weight_loss_goal.id_for_label }}');
+        const dailyCalorieGoalInput = document.getElementById('{{ form.daily_calorie_goal.id_for_label }}');
+        
+        // Function to calculate the daily calorie goal
+        function calculateDailyCalorieGoal() {
+            if (bmrInput.value && weightLossGoalInput.value) {
+                const bmr = parseFloat(bmrInput.value);
+                const weightLossGoal = parseFloat(weightLossGoalInput.value);
+                
+                // Convert weekly weight loss goal to daily calorie deficit
+                // 1 pound = 3500 calories
+                const dailyDeficit = (weightLossGoal * 3500) / 7;
+                
+                // Calculate daily calorie goal
+                const dailyCalorieGoal = Math.round(bmr - dailyDeficit);
+                
+                // Update the daily calorie goal input
+                dailyCalorieGoalInput.value = dailyCalorieGoal;
+            }
+        }
+        
+        // Add event listeners to recalculate when values change
+        if (bmrInput && weightLossGoalInput && dailyCalorieGoalInput) {
+            bmrInput.addEventListener('input', calculateDailyCalorieGoal);
+            weightLossGoalInput.addEventListener('input', calculateDailyCalorieGoal);
+            
+            // Calculate on page load
+            calculateDailyCalorieGoal();
+        }
+    });
+</script>
+{% endblock %} 

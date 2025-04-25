@@ -367,7 +367,7 @@
                 <div class="task-text-container">
                     <div class="task-title ${taskNameClass}">${task.task_name}${sourceIndicator}</div>
                     ${dueDateText ? `<div class="due-date">${dueDateText}${overdueSpan}</div>` : ''}
-                </div>
+          </div>
             </div>
             <div class="task-fav-icon-container">
                 <i class="${favoriteIconClass} mark-favorite" 
@@ -1401,7 +1401,7 @@
               setTimeout(function() {
                   saveButton.text(originalText).attr('id', 'saveNewList');
                   $("#createListModal .btn-secondary").show();
-              }, 500);
+          }, 500);
             }, 1500);
           } else {
             console.error("Error in list creation response:", response);

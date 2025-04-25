@@ -43,3 +43,7 @@ msal
 google-cloud-tasks==2.16.0  # Latest stable version as of now
 openpyxl==3.1.2  # For Excel file support
 django-redis
+pytest
+pytest-django
+pytest-cov
+pytest-playwright

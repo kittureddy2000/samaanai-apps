@@ -294,6 +294,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5', 
     'portfolio',
+    'calorie_tracker.apps.CalorieTrackerConfig',
 ]
 
 MIDDLEWARE = [

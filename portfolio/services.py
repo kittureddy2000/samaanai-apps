@@ -112,6 +112,10 @@ class StockDataService:
             'current_price': 0.0,
             'day_change': 0.0,
             'day_change_percentage': 0.0,
+            'fifty_two_week_high': None,
+            'fifty_two_week_low': None,
+            'pe_ratio': None,
+            'dividend_yield': None,
             'last_updated': str(int(datetime.datetime.now().timestamp()))
         }
     
@@ -127,9 +131,31 @@ class StockDataService:
             price, company_name, additional_data = fetch_stock_data(symbol)
             
             # Update or create the basic stock record in database
-            stock, created = Stock.objects.get_or_create(symbol=symbol)
-            if not stock.name and company_name:
-                stock.name = company_name
+            stock, created = Stock.objects.get_or_create(
+                symbol=symbol,
+                defaults={
+                    'name': company_name or symbol,
+                    'current_price': price,
+                    'day_change': additional_data.get('day_change', 0),
+                    'day_change_percentage': additional_data.get('day_change_percentage', 0),
+                    'fifty_two_week_high': additional_data.get('fifty_two_week_high'),
+                    'fifty_two_week_low': additional_data.get('fifty_two_week_low'),
+                    'pe_ratio': additional_data.get('pe_ratio'),
+                    'dividend_yield': additional_data.get('dividend_yield')
+                }
+            )
+            
+            # Update existing stock if needed
+            if not created:
+                if not stock.name and company_name:
+                    stock.name = company_name
+                stock.current_price = price
+                stock.day_change = additional_data.get('day_change', 0)
+                stock.day_change_percentage = additional_data.get('day_change_percentage', 0)
+                stock.fifty_two_week_high = additional_data.get('fifty_two_week_high')
+                stock.fifty_two_week_low = additional_data.get('fifty_two_week_low')
+                stock.pe_ratio = additional_data.get('pe_ratio')
+                stock.dividend_yield = additional_data.get('dividend_yield')
                 stock.save()
             
             # Prepare the full data

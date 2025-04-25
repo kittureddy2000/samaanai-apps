@@ -1,0 +1,206 @@
+{% extends "calorie_tracker/calorie_base.html" %}
+{% load static %}
+
+{% block title %}Monthly Calorie Report{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-center">Monthly Calorie Report</h1>
+            <p class="text-center">
+                <a href="{% url 'calorie_tracker:simplified_entry' %}">Track Calories</a> | 
+                <a href="{% url 'calorie_tracker:track_weight' %}">Track Weight</a> | 
+                <a href="{% url 'calorie_tracker:user_profile' %}">Your Profile</a> | 
+                <a href="{% url 'calorie_tracker:daily_report' %}">Daily Report</a> | 
+                <a href="{% url 'calorie_tracker:weekly_report' %}">Weekly Report</a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Month Navigation -->
+    <div class="row mb-4">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'calorie_tracker:monthly_report' %}?month={{ prev_month }}&year={{ prev_year }}" class="btn btn-outline-primary">
+                            <i class="fa fa-chevron-left"></i> Previous Month
+                        </a>
+                        <h5 class="mb-0">{{ month_name }} {{ year }}</h5>
+                        <a href="{% url 'calorie_tracker:monthly_report' %}?month={{ next_month }}&year={{ next_year }}" class="btn btn-outline-primary">
+                            Next Month <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Monthly Summary -->
+    <div class="row mb-4">
+        <div class="col-md-8 offset-md-2">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h3 class="card-title text-center">Monthly Summary</h3>
+                    <div class="row text-center mt-3">
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-primary">Food Calories</h5>
+                                    <h3>{{ monthly_food_calories }}</h3>
+                                    <p class="text-muted small">Daily Average: {% if daily_totals %}{% widthratio monthly_food_calories 1 daily_totals|length %}{% else %}0{% endif %}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-danger">Exercise Calories</h5>
+                                    <h3>{{ monthly_exercise_calories }}</h3>
+                                    <p class="text-muted small">Daily Average: {% if daily_totals %}{% widthratio monthly_exercise_calories 1 daily_totals|length %}{% else %}0{% endif %}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success">Net Calories</h5>
+                                    <h3>{{ monthly_net_calories }}</h3>
+                                    <p class="text-muted small">Daily Average: {% if daily_totals %}{% widthratio monthly_net_calories 1 daily_totals|length %}{% else %}0{% endif %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Calendar View -->
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Calendar View</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sun</th>
+                                    <th>Mon</th>
+                                    <th>Tue</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Sat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for week in calendar_weeks %}
+                                <tr>
+                                    {% for day in week %}
+                                    <td class="{% if day.date.month != month %}text-muted{% endif %}">
+                                        {% if day.date %}
+                                        <div class="d-flex justify-content-between">
+                                            <span>{{ day.date.day }}</span>
+                                            {% if day.date.month == month %}
+                                            <a href="{% url 'calorie_tracker:daily_report' %}?selected_date={{ day.date|date:'Y-m-d' }}" class="small">
+                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                        {% if day.net_calories != 0 %}
+                                        <small class="d-block text-center {% if day.net_calories > 0 %}text-success{% else %}text-danger{% endif %}">
+                                            {{ day.net_calories }}
+                                        </small>
+                                        {% endif %}
+                                        {% endif %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Daily Breakdown -->
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Daily Breakdown</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th class="text-end">Food</th>
+                                    <th class="text-end">Exercise</th>
+                                    <th class="text-end">Net</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for day in daily_totals %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'calorie_tracker:daily_report' %}?selected_date={{ day.date|date:'Y-m-d' }}">
+                                            {{ day.date|date:"D, M d" }}
+                                        </a>
+                                    </td>
+                                    <td class="text-end">{{ day.food_calories }}</td>
+                                    <td class="text-end">{{ day.exercise_calories }}</td>
+                                    <td class="text-end">{{ day.net_calories }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr class="table-primary">
+                                    <th>Month Total</th>
+                                    <th class="text-end">{{ monthly_food_calories }}</th>
+                                    <th class="text-end">{{ monthly_exercise_calories }}</th>
+                                    <th class="text-end">{{ monthly_net_calories }}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+        .container {
+            padding: 10px;
+        }
+        
+        .btn {
+            padding: 0.375rem 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+        }
+        
+        table {
+            font-size: 0.9rem;
+        }
+        
+        th, td {
+            padding: 0.5rem;
+        }
+    }
+</style>
+{% endblock %}
