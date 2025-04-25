@@ -58,7 +58,10 @@
                     <h5 class="mb-0">Weight History</h5>
                 </div>
                 <div class="card-body">
-                    <canvas id="weightChart" height="300"></canvas>
+                    <canvas id="weightChart" height="300" 
+                        data-dates="{% for entry in weight_entries reversed %}{{ entry.date|date:"M d" }}{% if not forloop.last %}|{% endif %}{% endfor %}"
+                        data-weights="{% for entry in weight_entries reversed %}{{ entry.weight }}{% if not forloop.last %}|{% endif %}{% endfor %}">
+                    </canvas>
                 </div>
             </div>
         </div>
@@ -110,22 +113,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const ctx = document.getElementById('weightChart').getContext('2d');
+        // Get the canvas element
+        const chartCanvas = document.getElementById('weightChart');
         
-        // Prepare data for chart
-        const dates = [
-            {% for entry in weight_entries reversed %}
-                "{{ entry.date|date:"M d" }}"{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ];
+        // Get data from data attributes and split by |
+        const dates = chartCanvas.dataset.dates.split('|');
+        const weights = chartCanvas.dataset.weights.split('|').map(Number);
         
-        const weights = [
-            {% for entry in weight_entries reversed %}
-                {{ entry.weight }}{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ];
-        
-        const weightChart = new Chart(ctx, {
+        // Create the chart
+        new Chart(chartCanvas.getContext('2d'), {
             type: 'line',
             data: {
                 labels: dates,
