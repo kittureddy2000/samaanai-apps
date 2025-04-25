@@ -145,4 +145,10 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     """Save the user profile when the user is saved"""
-    instance.profile.save()
+    # Check if profile exists first to avoid RelatedObjectDoesNotExist error
+    try:
+        if hasattr(instance, 'profile'):
+            instance.profile.save()
+    except Exception:
+        # If there's any error, create the profile
+        UserProfile.objects.get_or_create(user=instance)
