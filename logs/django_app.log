@@ -104708,3 +104708,4 @@ Traceback (most recent call last):
 django.urls.exceptions.NoReverseMatch: Reverse for '?selected_date=2025-04-25' not found. '?selected_date=2025-04-25' is not a valid view function or pattern name.
 [2025-04-25 18:37:57,974] INFO root /app/core/views.py:13 - Calling Dashboard
 [2025-04-25 18:48:33,045] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 19:58:36,771] INFO root /app/core/views.py:13 - Calling Dashboard

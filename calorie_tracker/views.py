@@ -11,6 +11,13 @@ from .forms import (
     UserProfileForm, WeightEntryForm
 )
 
+def get_or_create_user_profile(user):
+    """Helper function to safely get or create a user profile"""
+    try:
+        return user.profile
+    except UserProfile.DoesNotExist:
+        return UserProfile.objects.create(user=user)
+
 @login_required
 def simplified_entry(request):
     # Handle date selection
@@ -198,7 +205,13 @@ def simplified_entry(request):
     net_calories = food_calories - exercise_calories
     
     # Get user's target calories
-    user_profile = request.user.profile
+    # Check if profile exists and create one if it doesn't
+    try:
+        user_profile = request.user.profile
+    except UserProfile.DoesNotExist:
+        # Create a profile if it doesn't exist
+        user_profile = UserProfile.objects.create(user=request.user)
+    
     target_calories = user_profile.calculate_target_calories() or 0
     
     # Get weight entry for this date
@@ -264,6 +277,10 @@ def daily_report(request):
     exercise_calories = exercise_entries.aggregate(Sum('calories'))['calories__sum'] or 0
     net_calories = food_calories - exercise_calories
     
+    # Get user's target calories if available
+    user_profile = get_or_create_user_profile(request.user)
+    target_calories = user_profile.calculate_target_calories() or 0
+    
     context = {
         'date_form': date_form,
         'selected_date': selected_date,
@@ -275,6 +292,7 @@ def daily_report(request):
         'food_calories': food_calories,
         'exercise_calories': exercise_calories,
         'net_calories': net_calories,
+        'target_calories': target_calories,
     }
     
     return render(request, 'calorie_tracker/daily_report.html', context)
@@ -329,7 +347,7 @@ def weekly_report(request):
     ).order_by('date', 'entry_type')
     
     # Get user's profile data
-    user_profile = request.user.profile
+    user_profile = get_or_create_user_profile(request.user)
     bmr = user_profile.basal_metabolic_rate or 0
     target_calories = user_profile.calculate_target_calories() or 0
     
@@ -409,55 +427,61 @@ def weekly_report(request):
 
 @login_required
 def monthly_report(request):
+    # Initialize the current month and year
     today = timezone.now().date()
+    current_year = today.year
+    current_month = today.month
     
-    # Default to current month
-    year = today.year
-    month = today.month
-    
-    # Handle month selection
+    # Handle month/year selection
     if 'month' in request.GET and 'year' in request.GET:
         try:
-            year = int(request.GET.get('year'))
-            month = int(request.GET.get('month'))
+            selected_month = int(request.GET.get('month'))
+            selected_year = int(request.GET.get('year'))
+            if 1 <= selected_month <= 12 and 2000 <= selected_year <= 2100:
+                current_month = selected_month
+                current_year = selected_year
         except ValueError:
             pass
     
-    # Calculate first and last day of the month
-    first_day = date(year, month, 1)
-    if month == 12:
-        last_day = date(year+1, 1, 1) - timedelta(days=1)
+    # Calculate the first and last day of the month
+    start_date = date(current_year, current_month, 1)
+    if current_month == 12:
+        end_date = date(current_year + 1, 1, 1) - timedelta(days=1)
     else:
-        last_day = date(year, month+1, 1) - timedelta(days=1)
+        end_date = date(current_year, current_month + 1, 1) - timedelta(days=1)
     
-    # Get previous and next month
-    if month == 1:
+    # Calculate previous and next month
+    if current_month == 1:
         prev_month = 12
-        prev_year = year - 1
+        prev_year = current_year - 1
     else:
-        prev_month = month - 1
-        prev_year = year
+        prev_month = current_month - 1
+        prev_year = current_year
     
-    if month == 12:
+    if current_month == 12:
         next_month = 1
-        next_year = year + 1
+        next_year = current_year + 1
     else:
-        next_month = month + 1
-        next_year = year
+        next_month = current_month + 1
+        next_year = current_year
     
-    # Get entries for the selected month
+    # Get all entries for the month
     entries = CalorieEntry.objects.filter(
         user=request.user,
-        date__gte=first_day,
-        date__lte=last_day
+        date__gte=start_date,
+        date__lte=end_date
     ).order_by('date', 'entry_type')
     
+    # Get user's profile data
+    user_profile = get_or_create_user_profile(request.user)
+    target_calories = user_profile.calculate_target_calories() or 0
+    
     # Calculate daily totals
-    days_in_month = (last_day - first_day).days + 1
+    days_in_month = (end_date - start_date).days + 1
     daily_totals = []
     
     for day in range(1, days_in_month + 1):
-        current_date = date(year, month, day)
+        current_date = date(current_year, current_month, day)
         day_entries = entries.filter(date=current_date)
         
         food_cals = day_entries.exclude(entry_type='Exercise').aggregate(Sum('calories'))['calories__sum'] or 0
@@ -477,14 +501,14 @@ def monthly_report(request):
     monthly_net_calories = monthly_food_calories - monthly_exercise_calories
     
     # Get month name
-    month_name = first_day.strftime('%B')
+    month_name = start_date.strftime('%B')
     
     context = {
-        'year': year,
-        'month': month,
+        'year': current_year,
+        'month': current_month,
         'month_name': month_name,
-        'first_day': first_day,
-        'last_day': last_day,
+        'first_day': start_date,
+        'last_day': end_date,
         'prev_month': prev_month,
         'prev_year': prev_year,
         'next_month': next_month,
@@ -494,6 +518,7 @@ def monthly_report(request):
         'monthly_food_calories': monthly_food_calories,
         'monthly_exercise_calories': monthly_exercise_calories,
         'monthly_net_calories': monthly_net_calories,
+        'target_calories': target_calories,
     }
     
     return render(request, 'calorie_tracker/monthly_report.html', context)
@@ -502,72 +527,145 @@ def monthly_report(request):
 def user_profile(request):
     """View and edit user profile information"""
     # Get or create user profile
-    try:
-        profile = request.user.profile
-    except:
-        # Create a profile for existing users if they don't have one
-        profile = UserProfile.objects.create(user=request.user)
+    profile = get_or_create_user_profile(request.user)
     
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=profile)
         if form.is_valid():
-            profile_instance = form.save(commit=False)
+            user_profile = form.save(commit=False)
             
-            # Only auto-calculate BMR if the field is empty and we have all required data
-            if not profile_instance.basal_metabolic_rate:
-                calculated_bmr = profile_instance.calculate_bmr()
-                if calculated_bmr:
-                    profile_instance.basal_metabolic_rate = calculated_bmr
+            # Recalculate BMR if the data is available
+            bmr = user_profile.calculate_bmr()
+            if bmr:
+                user_profile.basal_metabolic_rate = bmr
             
-            # Always update daily calorie goal based on BMR and weight loss goal
-            if profile_instance.basal_metabolic_rate and profile_instance.weekly_weight_loss_goal:
-                profile_instance.daily_calorie_goal = profile_instance.calculate_target_calories()
-                    
-            profile_instance.save()
+            user_profile.save()
             return redirect('calorie_tracker:user_profile')
     else:
         form = UserProfileForm(instance=profile)
     
-    # Get weight entries
-    weight_entries = WeightEntry.objects.filter(user=request.user).order_by('-date')[:10]
+    # Get all weight entries
+    weight_entries = WeightEntry.objects.filter(user=request.user).order_by('-date')
+    
+    # Get the latest weight if available
+    latest_weight = weight_entries.first()
+    
+    # If there are more than 1 entries, show a weight change graph
+    show_weight_graph = weight_entries.count() > 1
+    
+    # Prepare weight chart data (last 10 entries in chronological order)
+    weight_dates = []
+    weights = []
+    if show_weight_graph:
+        for entry in weight_entries.order_by('date')[:10]:
+            weight_dates.append(entry.date.strftime('%b %d'))
+            weights.append(float(entry.weight))
     
     context = {
         'form': form,
-        'profile': profile,
         'weight_entries': weight_entries,
+        'latest_weight': latest_weight,
+        'show_weight_graph': show_weight_graph,
+        'weight_dates': weight_dates,
+        'weights': weights
     }
     
     return render(request, 'calorie_tracker/user_profile.html', context)
 
 @login_required
 def track_weight(request):
-    """Add or edit weight entries"""
-    today = timezone.now().date()
+    """Track weight over time"""
+    # Initialize with today's date
+    selected_date = timezone.now().date()
     
-    # Check if there's an entry for today
-    today_entry = WeightEntry.objects.filter(user=request.user, date=today).first()
+    # Handle date selection from form
+    if request.method == 'GET' and 'selected_date' in request.GET:
+        date_form = DateSelectForm(request.GET)
+        if date_form.is_valid():
+            selected_date = date_form.cleaned_data['selected_date']
+    else:
+        date_form = DateSelectForm(initial={'selected_date': selected_date})
     
+    # Get user profile for BMI calculation
+    user_profile = get_or_create_user_profile(request.user)
+    
+    # Process weight entry form
     if request.method == 'POST':
-        form = WeightEntryForm(request.POST, instance=today_entry)
-        if form.is_valid():
-            entry = form.save(commit=False)
-            entry.user = request.user
-            entry.save()
+        weight_form = WeightEntryForm(request.POST)
+        if weight_form.is_valid():
+            # Check if entry for this date already exists
+            entry_date = weight_form.cleaned_data['date']
+            weight_value = weight_form.cleaned_data['weight']
             
-            # Update BMR if profile has sufficient data
-            request.user.profile.save()
+            weight_entry, created = WeightEntry.objects.get_or_create(
+                user=request.user,
+                date=entry_date,
+                defaults={
+                    'weight': weight_value,
+                    'notes': weight_form.cleaned_data['notes']
+                }
+            )
+            
+            if not created:
+                # Update existing entry
+                weight_entry.weight = weight_value
+                weight_entry.notes = weight_form.cleaned_data['notes']
+                weight_entry.save()
+            
+            # Update selected date to the entry date
+            selected_date = entry_date
             
             # Redirect to avoid form resubmission
             return redirect('calorie_tracker:track_weight')
     else:
-        form = WeightEntryForm(instance=today_entry)
+        # Get existing entry for selected date
+        existing_entry = WeightEntry.objects.filter(user=request.user, date=selected_date).first()
+        if existing_entry:
+            weight_form = WeightEntryForm(instance=existing_entry)
+        else:
+            weight_form = WeightEntryForm(initial={'date': selected_date})
     
-    # Get weight history for chart
-    weight_entries = WeightEntry.objects.filter(user=request.user).order_by('-date')[:30]
+    # Get all weight entries
+    weight_entries = WeightEntry.objects.filter(user=request.user).order_by('-date')
+    
+    # Calculate BMI if height is available
+    bmi = None
+    bmi_category = None
+    latest_weight = weight_entries.first()
+    
+    if latest_weight and user_profile.height:
+        # BMI = weight(kg) / (height(m))^2
+        height_m = float(user_profile.height) / 100  # Convert cm to m
+        weight_kg = float(latest_weight.weight)  # Already in kg
+        bmi = weight_kg / (height_m * height_m)
+        
+        # BMI Categories
+        if bmi < 18.5:
+            bmi_category = 'Underweight'
+        elif bmi < 25:
+            bmi_category = 'Normal weight'
+        elif bmi < 30:
+            bmi_category = 'Overweight'
+        else:
+            bmi_category = 'Obese'
+    
+    # Prepare chart data (last 10 entries in chronological order)
+    weights = []
+    dates = []
+    
+    for entry in weight_entries.order_by('date')[:10]:
+        weights.append(float(entry.weight))
+        dates.append(entry.date.strftime('%b %d'))
     
     context = {
-        'form': form,
+        'date_form': date_form,
+        'weight_form': weight_form,
         'weight_entries': weight_entries,
+        'selected_date': selected_date,
+        'weights': weights,
+        'dates': dates,
+        'bmi': bmi,
+        'bmi_category': bmi_category
     }
     
     return render(request, 'calorie_tracker/track_weight.html', context)
