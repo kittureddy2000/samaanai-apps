@@ -1,5 +1,6 @@
 {% extends "calorie_tracker/calorie_base.html" %}
 {% load static %}
+{% load calorie_filters %}
 
 {% block title %}Quick Calorie Entry{% endblock %}
 
@@ -94,9 +95,9 @@
                         </div>
                         
                         <div class="mb-3 row">
-                            <label for="weight" class="col-sm-4 col-form-label">Today's Weight (kg)</label>
+                            <label for="weight" class="col-sm-4 col-form-label">Today's Weight (lbs)</label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control" id="weight" name="weight" placeholder="Weight in kg" step="0.1" value="{% if weight_entry %}{{ weight_entry.weight }}{% endif %}">
+                                <input type="number" class="form-control" id="weight" name="weight" placeholder="Weight in lbs" step="0.1" value="{% if weight_entry %}{{ weight_entry.weight|floatformat:2|stringformat:'s'|multiply_by_num:2.20462 }}{% endif %}">
                             </div>
                         </div>
                         

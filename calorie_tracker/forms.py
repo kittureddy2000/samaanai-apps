@@ -86,14 +86,48 @@ class WeightEntryForm(forms.ModelForm):
         initial=timezone.now
     )
     
+    # This is the field displayed to the user (in pounds)
+    weight_lbs = forms.DecimalField(
+        max_digits=6, 
+        decimal_places=1,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1'}),
+        label='Weight (lbs)',
+        required=True
+    )
+    
     class Meta:
         model = WeightEntry
-        fields = ['date', 'weight', 'notes']
+        fields = ['date', 'notes']
         widgets = {
-            'weight': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.1'}),
             'notes': forms.Textarea(attrs={'rows': 2, 'class': 'form-control'}),
         }
         labels = {
-            'weight': 'Weight (kg)',
             'notes': 'Notes (optional)',
         }
+    
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance', None)
+        if instance:
+            # Convert kg to lbs for display
+            if instance.weight:
+                # Create initial data if not provided or update it
+                if 'initial' not in kwargs:
+                    kwargs['initial'] = {}
+                # Convert kg to lbs (1 kg = 2.20462 lbs)
+                kwargs['initial']['weight_lbs'] = float(instance.weight) * 2.20462
+        
+        super().__init__(*args, **kwargs)
+        
+        # Remove the original weight field from the form
+        if 'weight' in self.fields:
+            del self.fields['weight']
+    
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        # Convert lbs to kg for storage (1 lb = 0.453592 kg)
+        if self.cleaned_data.get('weight_lbs'):
+            instance.weight = float(self.cleaned_data['weight_lbs']) * 0.453592
+        
+        if commit:
+            instance.save()
+        return instance

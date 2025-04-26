@@ -5,62 +5,66 @@
 {% load crispy_forms_tags %}
  {%block content %}
 
- <div class="container-fluid mt-4">
+<div class="container-fluid mt-4">
+    <!-- Calculator and Graph Row -->
     <div class="row justify-content-center">
-        <div class="col-6">
-            <!-- Form -->
-            {% include 'spreturn/spreturn_form.html' %}
+        <!-- Form Column - Full width on mobile, half on larger screens -->
+        <div class="col-12 {% if not error %}col-md-6{% endif %} mb-3">
+            <div class="card shadow-sm p-3">
+                <h3 class="card-title mb-3">S&P Return Calculator</h3>
+                
+                <!-- Alert for any errors -->
+                {% if error %}
+                <div class="alert alert-danger mb-3" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+                </div>
+                {% endif %}
+                
+                {% include 'spreturn/spreturn_form.html' %}
+                
+                {% if error %}
+                <div class="mt-3">
+                    <a href="{% url 'spreturn:add-sp-info' %}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-plus-circle me-2"></i>Add S&P Return Data
+                    </a>
+                </div>
+                {% endif %}
+            </div>
         </div>
-        <div class="col-6">
-            <div class="row ms-4">
-                <!-- Metric 1 -->
-                <div class="col-4 mb-3">
-                    <div class="card text-white bg-primary text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">S&P Min</h5>
-                            <p class="card-text">{{ sp_min }}</p>
-                        </div>
-                    </div>
-                </div>
         
-                <!-- Metric 2 -->
-                <div class="col-4 mb-3">
-                    <div class="card text-white bg-primary text-center">                        
-                        <div class="card-body">
-                            <h5 class="card-title">S&P Mean</h5>
-                            <p class="card-text">{{ sp_mean }}</p>
-                        </div>
-                    </div>
-                </div>
-        
-                <!-- Metric 3 -->
-                <div class="col-4">
-                    <div class="card text-white bg-primary text-center">
-                        <div class="card-body">
-                            <h5 class="card-title">S&P Max</h5>
-                            <p class="card-text">{{ sp_max }}</p>
-                        </div>
-                    </div>
+        {% if not error and Returndict %}
+        <!-- Chart Column - Same size as Calculator -->
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card shadow-sm p-2">
+                <h3 class="card-title mb-2">S&P Growth Chart</h3>
+                <div class="chart-container" style="position: relative; height: 300px; width: 100%;">
+                    <canvas id="spGrowthChart"></canvas>
                 </div>
             </div>
         </div>
-         
+        {% endif %}
     </div>
 
-    <div class="row mt-2 justify-content-center">
-        <!-- Table -->
-        <div class="col-lg-6 mb-4">
-            <div class="bg-white rounded shadow-sm p-3">
-                <h3 class="mb-3">SP Return Details</h3>
-                    <table class="table table-bordered table-hover">
-                        <thead>
+    {% if not error %}
+    <!-- S&P Statistics Row -->
+    <div class="row justify-content-center">
+
+        
+        {% if Returndict %}
+        <!-- Table Column -->
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card shadow-sm p-3">
+                <h3 class="card-title mb-3">S&P Return Details</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-sm">
+                        <thead class="table-light">
                             <tr>
-                                <th>Start Year</th>
-                                <th>End Year</th>
-                                <th>SP Return</th>
-                                <th>SP Return with Dividend</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Return</th>
+                                <th>With Div</th>
                                 <th>CGAR</th>
-                                <th>CGAR with Dividend</th>
+                                <th>CGAR+Div</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,24 +74,58 @@
                                     <td>{{ data.0 }}</td>
                                     <td>{{ data.1 }}</td>
                                     <td>{{ data.2 }}</td>
-                                    <td>{{ data.3 }}</td>
-                                    <td>{{ data.4 }}</td>
+                                    <td>{{ data.3 }}%</td>
+                                    <td>{{ data.4 }}%</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
-            </div>
-        </div>        
-            <!-- Chart -->
-        <div class="col-lg-6 mb-4">
-            <div class="bg-white rounded shadow-sm p-3">
-                <h3 class="mb-3">SP Growth Chart</h3>
-                <canvas id="spGrowthChart"></canvas>
+                </div>
             </div>
         </div>
-
+        {% endif %}
+        <div class="col-12 col-md-6 mb-3">
+            <div class="card shadow-sm p-3">
+                <h3 class="card-title mb-3">S&P Statistics</h3>
+                <div class="row g-2">
+                    <!-- Metric 1 -->
+                    <div class="col-sm-4 mb-2">
+                        <div class="card text-white bg-primary text-center h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Min</h5>
+                                <p class="card-text fw-bold">{{ sp_min }}</p>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Metric 2 -->
+                    <div class="col-sm-4 mb-2">
+                        <div class="card text-white bg-primary text-center h-100">                        
+                            <div class="card-body">
+                                <h5 class="card-title">Mean</h5>
+                                <p class="card-text fw-bold">{{ sp_mean }}</p>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Metric 3 -->
+                    <div class="col-sm-4 mb-2">
+                        <div class="card text-white bg-primary text-center h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Max</h5>
+                                <p class="card-text fw-bold">{{ sp_max }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    {% endif %}
 </div>
+
+{% block script_block %}
+{% if not error and Returndict %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -96,33 +134,79 @@
     const dataSP = {{ SP | safe }};
     const dataSPDD = {{ SP_DD | safe }};
 
-    console.log("In Preparing Chart");
-
+    // Create chart with responsive options
     const ctx = document.getElementById('spGrowthChart').getContext('2d');
     const spGrowthChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
-                label: 'SP',
+                label: 'S&P Returns',
                 data: dataSP,
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                tension: 0.1
             }, {
-                label: 'SP with Dividend',
+                label: 'S&P with Dividend',
                 data: dataSPDD,
                 borderColor: 'rgb(54, 162, 235)',
                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                tension: 0.1
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        boxWidth: 10,
+                        font: {
+                            size: 12
+                        }
+                    }
+                },
+                tooltip: {
+                    bodyFont: {
+                        size: 12
+                    }
+                }
+            },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 10
+                        }
+                    }
+                },
+                x: {
+                    ticks: {
+                        maxRotation: 90,
+                        minRotation: 45,
+                        autoSkip: true,
+                        maxTicksLimit: 15,
+                        font: {
+                            size: 10
+                        }
+                    }
                 }
             }
         }
     });
+    
+    // Adjust chart on window resize
+    window.addEventListener('resize', function() {
+        spGrowthChart.resize();
+    });
 </script>
+{% endif %}
+{% endblock %}
 
 {% endblock %}

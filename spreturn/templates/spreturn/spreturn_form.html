@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,27 +9,95 @@
 </head>
 <body>
     <div class="container my-4">
-        <form method="post" class="row g-3 align-items-end">
+        <form method="post" action="" class="mb-3">
             {% csrf_token %}
-            <div class="col-lg-3 col-md-6">
-                <label for="{{ form.numYears.id_for_label }}" class="form-label">{{ form.numYears.label }}</label>
-                {{ form.numYears }}
+            {% if form %}
+            <div class="row g-3">
+                <!-- Number of Years -->
+                <div class="col-12 col-sm-6 mb-2">
+                    <label for="{{ form.numYears.id_for_label|default:'id_numYears' }}" class="form-label">{% if form.numYears %}{{ form.numYears.label }}{% else %}Number of Years{% endif %}</label>
+                    <input type="number" name="numYears" id="{{ form.numYears.id_for_label|default:'id_numYears' }}" 
+                           value="{{ form.numYears.value|default:30 }}" 
+                           class="form-control" min="1" max="90">
+                </div>
+                
+                <!-- Starting Investment -->
+                <div class="col-12 col-sm-6 mb-2">
+                    <label for="{{ form.startingInvest.id_for_label|default:'id_startingInvest' }}" class="form-label">{% if form.startingInvest %}{{ form.startingInvest.label }}{% else %}Starting Investment{% endif %}</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" name="startingInvest" id="{{ form.startingInvest.id_for_label|default:'id_startingInvest' }}"
+                               value="{{ form.startingInvest.value|default:1.0 }}" 
+                               class="form-control" min="0.01" step="0.01">
+                    </div>
+                </div>
+                
+                <!-- Recurring Deposit -->
+                <div class="col-12 col-sm-6 mb-2">
+                    <label for="{{ form.reccuringDeposit.id_for_label|default:'id_reccuringDeposit' }}" class="form-label">{% if form.reccuringDeposit %}{{ form.reccuringDeposit.label }}{% else %}Recurring Deposit{% endif %}</label>
+                    <select name="reccuringDeposit" id="{{ form.reccuringDeposit.id_for_label|default:'id_reccuringDeposit' }}" class="form-select">
+                        <option value="No" {% if form.reccuringDeposit.value == 'Yes' %}{% else %}selected{% endif %}>No</option>
+                        <option value="Yes" {% if form.reccuringDeposit.value == 'Yes' %}selected{% endif %}>Yes</option>
+                    </select>
+                </div>
+                
+                <!-- Recurring Amount -->
+                <div class="col-12 col-sm-6 mb-2">
+                    <label for="{{ form.reccuringDepositAmount.id_for_label|default:'id_reccuringDepositAmount' }}" class="form-label">{% if form.reccuringDepositAmount %}{{ form.reccuringDepositAmount.label }}{% else %}Recurring Amount{% endif %}</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" name="reccuringDepositAmount" id="{{ form.reccuringDepositAmount.id_for_label|default:'id_reccuringDepositAmount' }}"
+                               value="{{ form.reccuringDepositAmount.value|default:1.0 }}"
+                               class="form-control" min="0.01" step="0.01">
+                    </div>
+                </div>
+                
+                <!-- Calculate Button -->
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-calculator me-2"></i>Calculate Returns
+                    </button>
+                </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <label for="{{ form.reccuringDeposit.id_for_label }}" class="form-label">{{ form.reccuringDeposit.label }}</label>
-                {{ form.reccuringDeposit }}
+            {% else %}
+            <!-- Fallback form if 'form' variable is not available -->
+            <div class="row g-3">
+                <div class="col-12 col-sm-6 mb-2">
+                    <label for="id_numYears" class="form-label">Number of Years</label>
+                    <input type="number" name="numYears" id="id_numYears" value="30" class="form-control" min="1" max="90">
+                </div>
+                
+                <div class="col-12 col-sm-6 mb-2">
+                    <label for="id_startingInvest" class="form-label">Starting Investment</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" name="startingInvest" id="id_startingInvest" value="1.0" class="form-control" min="0.01" step="0.01">
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 mb-2">
+                    <label for="id_reccuringDeposit" class="form-label">Recurring Deposit</label>
+                    <select name="reccuringDeposit" id="id_reccuringDeposit" class="form-select">
+                        <option value="No" selected>No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </div>
+                
+                <div class="col-12 col-sm-6 mb-2">
+                    <label for="id_reccuringDepositAmount" class="form-label">Recurring Amount</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" name="reccuringDepositAmount" id="id_reccuringDepositAmount" value="1.0" class="form-control" min="0.01" step="0.01">
+                    </div>
+                </div>
+                
+                <div class="col-12 mt-3">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-calculator me-2"></i>Calculate Returns
+                    </button>
+                </div>
             </div>
-            <div class="col-lg-3 col-md-6">
-                <label for="{{ form.startingInvest.id_for_label }}" class="form-label">{{ form.startingInvest.label }}</label>
-                {{ form.startingInvest }}
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <label for="{{ form.reccuringDepositAmount.id_for_label }}" class="form-label">{{ form.reccuringDepositAmount.label }}</label>
-                {{ form.reccuringDepositAmount }}
-            </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary">Calculate</button>
-            </div>
+            {% endif %}
         </form>
     </div>
 

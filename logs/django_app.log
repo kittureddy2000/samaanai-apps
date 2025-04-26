@@ -104709,3 +104709,1265 @@ django.urls.exceptions.NoReverseMatch: Reverse for '?selected_date=2025-04-25' n
 [2025-04-25 18:37:57,974] INFO root /app/core/views.py:13 - Calling Dashboard
 [2025-04-25 18:48:33,045] INFO root /app/core/views.py:13 - Calling Dashboard
 [2025-04-25 19:58:36,771] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 22:04:17,456] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-25 22:04:19,249] INFO spreturn.views /app/spreturn/views.py:24 - Accessing S&P Return calculator
+[2025-04-25 22:04:19,258] ERROR spreturn.views /app/spreturn/views.py:64 - No S&P return data found in database
+[2025-04-25 22:04:19,268] ERROR spreturn.views /app/spreturn/views.py:161 - Error in S&P Return calculation: Failed lookup for key [form] in [{'True': True, 'False': False, 'None': None}, {}, {}, {'error': 'No S&P return data available.'}]
+[2025-04-25 22:04:19,307] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /spreturn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 880, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.10/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 886, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+AttributeError: type object 'RequestContext' has no attribute 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/spreturn/views.py", line 65, in spreturn
+    return render(request, 'spreturn/spreturn.html', {'error': 'No S&P return data available.'})
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 736, in resolve
+    arg_vals.append(arg.resolve(context))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form] in [{'True': True, 'False': False, 'None': None}, {}, {}, {'error': 'No S&P return data available.'}]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 880, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.10/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 886, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+AttributeError: type object 'RequestContext' has no attribute 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/spreturn/views.py", line 162, in spreturn
+    return render(request, 'spreturn/spreturn.html', {'error': f'An error occurred: {str(e)}'})
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 736, in resolve
+    arg_vals.append(arg.resolve(context))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form] in [{'True': True, 'False': False, 'None': None}, {}, {}, {'error': "An error occurred: Failed lookup for key [form] in [{'True': True, 'False': False, 'None': None}, {}, {}, {'error': 'No S&P return data available.'}]"}]
+[2025-04-25 22:04:19,307] ERROR django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Internal Server Error: /spreturn/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 880, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.10/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 886, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+AttributeError: type object 'RequestContext' has no attribute 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/spreturn/views.py", line 65, in spreturn
+    return render(request, 'spreturn/spreturn.html', {'error': 'No S&P return data available.'})
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 736, in resolve
+    arg_vals.append(arg.resolve(context))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form] in [{'True': True, 'False': False, 'None': None}, {}, {}, {'error': 'No S&P return data available.'}]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 880, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.10/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 886, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+AttributeError: type object 'RequestContext' has no attribute 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 896, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'form'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/app/spreturn/views.py", line 162, in spreturn
+    return render(request, 'spreturn/spreturn.html', {'error': f'An error occurred: {str(e)}'})
+  File "/usr/local/lib/python3.10/site-packages/django/shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.10/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/loader_tags.py", line 208, in render
+    return template.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 177, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 736, in resolve
+    arg_vals.append(arg.resolve(context))
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 847, in resolve
+    value = self._resolve_lookup(context)
+  File "/usr/local/lib/python3.10/site-packages/django/template/base.py", line 903, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form] in [{'True': True, 'False': False, 'None': None}, {}, {}, {'error': "An error occurred: Failed lookup for key [form] in [{'True': True, 'False': False, 'None': None}, {}, {}, {'error': 'No S&P return data available.'}]"}]
+[2025-04-26 03:59:36,973] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 03:59:39,339] INFO spreturn.views /app/spreturn/views.py:23 - Accessing S&P Return calculator
+[2025-04-26 03:59:39,348] ERROR spreturn.views /app/spreturn/views.py:63 - No S&P return data found in database
+[2025-04-26 03:59:39,592] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /static/core/images/favicon.ico
+[2025-04-26 03:59:39,592] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /static/core/images/favicon.ico
+[2025-04-26 03:59:44,307] INFO spreturn.views /app/spreturn/views.py:23 - Accessing S&P Return calculator
+[2025-04-26 03:59:44,314] ERROR spreturn.views /app/spreturn/views.py:63 - No S&P return data found in database
+[2025-04-26 03:59:48,376] INFO spreturn.views /app/spreturn/views.py:23 - Accessing S&P Return calculator
+[2025-04-26 03:59:48,384] ERROR spreturn.views /app/spreturn/views.py:63 - No S&P return data found in database
+[2025-04-26 04:20:27,581] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 04:20:29,531] INFO spreturn.views /app/spreturn/views.py:23 - Accessing S&P Return calculator
+[2025-04-26 04:20:29,539] INFO spreturn.views /app/spreturn/views.py:69 - Retrieved 96 S&P return records
+[2025-04-26 05:00:28,627] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:00:36,350] INFO spreturn.views /app/spreturn/views.py:23 - Accessing S&P Return calculator
+[2025-04-26 05:00:36,359] INFO spreturn.views /app/spreturn/views.py:69 - Retrieved 97 S&P return records
+[2025-04-26 05:00:56,095] INFO spreturn.views /app/spreturn/views.py:23 - Accessing S&P Return calculator
+[2025-04-26 05:00:56,102] INFO spreturn.views /app/spreturn/views.py:69 - Retrieved 97 S&P return records
+[2025-04-26 05:01:21,906] INFO spreturn.views /app/spreturn/views.py:23 - Accessing S&P Return calculator
+[2025-04-26 05:01:21,912] INFO spreturn.views /app/spreturn/views.py:69 - Retrieved 97 S&P return records
+[2025-04-26 05:01:39,649] INFO spreturn.views /app/spreturn/views.py:23 - Accessing S&P Return calculator
+[2025-04-26 05:01:39,655] INFO spreturn.views /app/spreturn/views.py:69 - Retrieved 97 S&P return records
+[2025-04-26 05:02:45,138] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:02:46,230] INFO task_management.views /app/task_management/views.py:42 - Inside ensure_predefined_lists
+[2025-04-26 05:02:46,230] INFO task_management.views /app/task_management/views.py:43 - [{'name': 'Samaan Tasks', 'listcode': 'SAMAAN_TASKS'}, {'name': 'Past Due', 'listcode': 'PAST_DUE'}, {'name': 'Important', 'listcode': 'IMPORTANT'}, {'name': 'All Tasks', 'listcode': 'ALL_TASKS'}]
+[2025-04-26 05:02:46,232] INFO task_management.views /app/task_management/views.py:52 - ['task', 'taskhistory', 'id', 'user', 'list_name', 'list_code', 'list_type', 'list_source']
+[2025-04-26 05:02:46,235] INFO task_management.views /app/task_management/views.py:57 - Creating Predefined List : Samaan Tasks
+[2025-04-26 05:02:46,239] INFO task_management.views /app/task_management/views.py:57 - Creating Predefined List : Past Due
+[2025-04-26 05:02:46,240] INFO task_management.views /app/task_management/views.py:57 - Creating Predefined List : Important
+[2025-04-26 05:02:46,241] INFO task_management.views /app/task_management/views.py:57 - Creating Predefined List : All Tasks
+[2025-04-26 05:02:46,251] INFO task_management.views /app/task_management/views.py:209 - [get_lists] Special: ['All Tasks', 'Important', 'Past Due', 'Samaan Tasks']
+[2025-04-26 05:02:46,251] INFO task_management.views /app/task_management/views.py:210 - [get_lists] Semi-Special: []
+[2025-04-26 05:02:46,252] INFO task_management.views /app/task_management/views.py:211 - [get_lists] Normal: [] (Count: 0)
+[2025-04-26 05:02:46,313] INFO task_management.views /app/task_management/views.py:69 - Getting All Tasks called as main function
+[2025-04-26 05:02:47,329] INFO task_management.views /app/task_management/views.py:721 - Triggering user sync for user: admin
+[2025-04-26 05:02:51,548] INFO task_management.views /app/task_management/views.py:721 - Triggering user sync for user: admin
+[2025-04-26 05:02:53,065] INFO task_management.views /app/task_management/views.py:83 - Function: Get Tasks with list id : 7
+[2025-04-26 05:02:53,065] INFO task_management.views /app/task_management/views.py:90 - Sort By : due_date
+[2025-04-26 05:02:53,066] INFO task_management.views /app/task_management/views.py:97 - List Name : Past Due
+[2025-04-26 05:03:05,482] INFO root /app/core/views.py:33 - CoreView : Calling Logout
+[2025-04-26 05:03:05,493] INFO root /app/core/views.py:17 - CoreView : Calling Login
+[2025-04-26 05:03:05,493] INFO root /app/core/views.py:28 - CoreView : Calling Login - GET
+[2025-04-26 05:03:15,310] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:03:16,594] INFO task_management.views /app/task_management/views.py:42 - Inside ensure_predefined_lists
+[2025-04-26 05:03:16,595] INFO task_management.views /app/task_management/views.py:43 - [{'name': 'Samaan Tasks', 'listcode': 'SAMAAN_TASKS'}, {'name': 'Past Due', 'listcode': 'PAST_DUE'}, {'name': 'Important', 'listcode': 'IMPORTANT'}, {'name': 'All Tasks', 'listcode': 'ALL_TASKS'}]
+[2025-04-26 05:03:16,595] INFO task_management.views /app/task_management/views.py:52 - ['task', 'taskhistory', 'id', 'user', 'list_name', 'list_code', 'list_type', 'list_source']
+[2025-04-26 05:03:16,602] INFO task_management.views /app/task_management/views.py:209 - [get_lists] Special: ['All Tasks', 'Important', 'Past Due', 'Samaan Tasks']
+[2025-04-26 05:03:16,603] INFO task_management.views /app/task_management/views.py:210 - [get_lists] Semi-Special: ['G My Tasks']
+[2025-04-26 05:03:16,604] INFO task_management.views /app/task_management/views.py:211 - [get_lists] Normal: [] (Count: 0)
+[2025-04-26 05:03:16,662] INFO task_management.views /app/task_management/views.py:69 - Getting All Tasks called as main function
+[2025-04-26 05:03:17,668] INFO task_management.views /app/task_management/views.py:721 - Triggering user sync for user: kittureddy2000
+[2025-04-26 05:03:17,669] INFO task_management.views /app/task_management/views.py:728 - Enqueuing sync for user kittureddy2000 and provider google
+[2025-04-26 05:03:17,776] INFO task_management.sync_utils /app/task_management/sync_utils.py:635 - Processing sync task
+[2025-04-26 05:03:17,779] INFO task_management.sync_utils /app/task_management/sync_utils.py:529 - Starting sync for user: kittureddy2000 with provider: google
+[2025-04-26 05:03:17,780] INFO task_management.sync_utils /app/task_management/sync_utils.py:32 - Starting Google Tasks sync for user: kittureddy2000
+[2025-04-26 05:03:17,784] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:17,787] INFO task_management.sync_utils /app/task_management/sync_utils.py:38 - Last sync time: None
+[2025-04-26 05:03:17,787] INFO task_management.sync_utils /app/task_management/sync_utils.py:41 - Fetching Google Tasks lists
+[2025-04-26 05:03:18,034] INFO task_management.sync_utils /app/task_management/sync_utils.py:45 - Found 1 Google task lists
+[2025-04-26 05:03:18,034] INFO task_management.sync_utils /app/task_management/sync_utils.py:57 - Processing Google list: 'My Tasks' (ID: MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow)
+[2025-04-26 05:03:18,036] INFO task_management.sync_utils /app/task_management/sync_utils.py:74 - Using existing primary Google list 'G My Tasks'
+[2025-04-26 05:03:18,249] INFO task_management.sync_utils /app/task_management/sync_utils.py:122 - Retrieved page 1 with 98 tasks from 'My Tasks'
+[2025-04-26 05:03:18,250] INFO task_management.sync_utils /app/task_management/sync_utils.py:136 - Total updated tasks found in 'My Tasks': 98
+[2025-04-26 05:03:18,279] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Attention 8th Grade Students: 24-25 Course Registration Info' with completed=True
+[2025-04-26 05:03:18,282] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Attention 8th Grade Students: 24-25 Course Registration Info
+[2025-04-26 05:03:18,284] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Attention 8th Grade Students: 24-25 Course Registration Info (ID: 35)
+[2025-04-26 05:03:18,284] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Attention 8th Grade Students: 24-25 Course Registration Info (ID: cGNXeUhReDZLZEE1X2swbw)
+[2025-04-26 05:03:18,285] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:18,479] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Attention 8th Grade Students: 24-25 Course Registration Info
+[2025-04-26 05:03:18,887] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Attention 8th Grade Students: 24-25 Course Registration Info
+[2025-04-26 05:03:18,888] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Attention 8th Grade Students: 24-25 Course Registration Info
+[2025-04-26 05:03:18,892] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Re: Tax Returns for your records' with completed=True
+[2025-04-26 05:03:18,893] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Re: Tax Returns for your records
+[2025-04-26 05:03:18,895] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Re: Tax Returns for your records (ID: 36)
+[2025-04-26 05:03:18,896] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Re: Tax Returns for your records (ID: aThjaDNmV2NBNENEeXl0Xw)
+[2025-04-26 05:03:18,897] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:19,089] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Re: Tax Returns for your records
+[2025-04-26 05:03:19,603] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Re: Tax Returns for your records
+[2025-04-26 05:03:19,604] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Re: Tax Returns for your records
+[2025-04-26 05:03:19,607] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Onboarding Email 3 - New Employee Orientation' with completed=True
+[2025-04-26 05:03:19,609] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Onboarding Email 3 - New Employee Orientation
+[2025-04-26 05:03:19,611] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Onboarding Email 3 - New Employee Orientation (ID: 37)
+[2025-04-26 05:03:19,611] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Onboarding Email 3 - New Employee Orientation (ID: R1VHbzdINE9KaGd6Nkt4bA)
+[2025-04-26 05:03:19,613] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:19,802] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Onboarding Email 3 - New Employee Orientation
+[2025-04-26 05:03:20,324] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Onboarding Email 3 - New Employee Orientation
+[2025-04-26 05:03:20,325] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Onboarding Email 3 - New Employee Orientation
+[2025-04-26 05:03:20,327] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'THE INTEREST FORM FOR SUMMER GEOMETRY IS NOW OPEN!' with completed=True
+[2025-04-26 05:03:20,329] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: THE INTEREST FORM FOR SUMMER GEOMETRY IS NOW OPEN!
+[2025-04-26 05:03:20,332] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: THE INTEREST FORM FOR SUMMER GEOMETRY IS NOW OPEN! (ID: 38)
+[2025-04-26 05:03:20,332] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: THE INTEREST FORM FOR SUMMER GEOMETRY IS NOW OPEN! (ID: LUFyZUVxSW9iTm93ZzQ1aA)
+[2025-04-26 05:03:20,333] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:20,531] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: THE INTEREST FORM FOR SUMMER GEOMETRY IS NOW OPEN!
+[2025-04-26 05:03:21,044] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: THE INTEREST FORM FOR SUMMER GEOMETRY IS NOW OPEN!
+[2025-04-26 05:03:21,045] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: THE INTEREST FORM FOR SUMMER GEOMETRY IS NOW OPEN!
+[2025-04-26 05:03:21,050] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Follow up with insurance' with completed=False
+[2025-04-26 05:03:21,051] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Follow up with insurance
+[2025-04-26 05:03:21,053] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Follow up with insurance (ID: 39)
+[2025-04-26 05:03:21,053] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Follow up with insurance (ID: UExzbE44TjlkNzJBcktCTw)
+[2025-04-26 05:03:21,054] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:21,241] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Follow up with insurance
+[2025-04-26 05:03:21,624] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Follow up with insurance
+[2025-04-26 05:03:21,625] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Follow up with insurance
+[2025-04-26 05:03:21,627] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Welcome to Navia Benefits' with completed=True
+[2025-04-26 05:03:21,629] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Welcome to Navia Benefits
+[2025-04-26 05:03:21,633] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Welcome to Navia Benefits (ID: 40)
+[2025-04-26 05:03:21,633] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Welcome to Navia Benefits (ID: N2JncUxacWJHdzNrVzJSUw)
+[2025-04-26 05:03:21,637] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:21,816] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Welcome to Navia Benefits
+[2025-04-26 05:03:22,220] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Welcome to Navia Benefits
+[2025-04-26 05:03:22,220] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Welcome to Navia Benefits
+[2025-04-26 05:03:22,224] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Tax Due notice from NY(Sandesi)' with completed=False
+[2025-04-26 05:03:22,226] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Tax Due notice from NY(Sandesi)
+[2025-04-26 05:03:22,230] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Tax Due notice from NY(Sandesi) (ID: 41)
+[2025-04-26 05:03:22,230] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Tax Due notice from NY(Sandesi) (ID: SnR4cExqcWtjT3Uwa0ZkeQ)
+[2025-04-26 05:03:22,231] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:22,432] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Tax Due notice from NY(Sandesi)
+[2025-04-26 05:03:22,886] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Tax Due notice from NY(Sandesi)
+[2025-04-26 05:03:22,887] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Tax Due notice from NY(Sandesi)
+[2025-04-26 05:03:22,890] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Official Department of State 2024 Annual Report Filing Notice for L21000504337' with completed=True
+[2025-04-26 05:03:22,892] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Official Department of State 2024 Annual Report Filing Notice for L21000504337
+[2025-04-26 05:03:22,895] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Official Department of State 2024 Annual Report Filing Notice for L21000504337 (ID: 42)
+[2025-04-26 05:03:22,895] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Official Department of State 2024 Annual Report Filing Notice for L21000504337 (ID: NXA3STFIWExZNm5sZ09zcA)
+[2025-04-26 05:03:22,896] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:23,072] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Official Department of State 2024 Annual Report Filing Notice for L21000504337
+[2025-04-26 05:03:23,500] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Official Department of State 2024 Annual Report Filing Notice for L21000504337
+[2025-04-26 05:03:23,500] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Official Department of State 2024 Annual Report Filing Notice for L21000504337
+[2025-04-26 05:03:23,503] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your Verizon Gift Card has arrived!' with completed=True
+[2025-04-26 05:03:23,505] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your Verizon Gift Card has arrived!
+[2025-04-26 05:03:23,507] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your Verizon Gift Card has arrived! (ID: 43)
+[2025-04-26 05:03:23,507] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your Verizon Gift Card has arrived! (ID: X1VxdUFBSnB4WUpEOU1LSg)
+[2025-04-26 05:03:23,508] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:23,694] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your Verizon Gift Card has arrived!
+[2025-04-26 05:03:24,084] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your Verizon Gift Card has arrived!
+[2025-04-26 05:03:24,085] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your Verizon Gift Card has arrived!
+[2025-04-26 05:03:24,088] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'DI Tournament Data Forms' with completed=True
+[2025-04-26 05:03:24,090] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: DI Tournament Data Forms
+[2025-04-26 05:03:24,092] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: DI Tournament Data Forms (ID: 44)
+[2025-04-26 05:03:24,092] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: DI Tournament Data Forms (ID: UTMwR0JtNi1NVlZWSTFXMg)
+[2025-04-26 05:03:24,093] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:24,274] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: DI Tournament Data Forms
+[2025-04-26 05:03:24,657] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: DI Tournament Data Forms
+[2025-04-26 05:03:24,658] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: DI Tournament Data Forms
+[2025-04-26 05:03:24,661] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your bill is now available' with completed=True
+[2025-04-26 05:03:24,663] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your bill is now available
+[2025-04-26 05:03:24,665] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your bill is now available (ID: 45)
+[2025-04-26 05:03:24,665] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your bill is now available (ID: R015allPMEFUNmtpbTFuNQ)
+[2025-04-26 05:03:24,667] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:24,858] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your bill is now available
+[2025-04-26 05:03:25,279] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your bill is now available
+[2025-04-26 05:03:25,280] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your bill is now available
+[2025-04-26 05:03:25,282] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your 2023 Tax Forms are  Available' with completed=True
+[2025-04-26 05:03:25,284] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your 2023 Tax Forms are  Available
+[2025-04-26 05:03:25,287] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your 2023 Tax Forms are  Available (ID: 46)
+[2025-04-26 05:03:25,287] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your 2023 Tax Forms are  Available (ID: d2cxaG9kRkFQNXhsRXlodA)
+[2025-04-26 05:03:25,288] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:25,470] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your 2023 Tax Forms are  Available
+[2025-04-26 05:03:25,883] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your 2023 Tax Forms are  Available
+[2025-04-26 05:03:25,883] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your 2023 Tax Forms are  Available
+[2025-04-26 05:03:25,886] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Required: Complete your property inspection for your Mercury insurance policy - due January 28, 2025' with completed=True
+[2025-04-26 05:03:25,888] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Required: Complete your property inspection for your Mercury insurance policy - due January 28, 2025
+[2025-04-26 05:03:25,890] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Required: Complete your property inspection for your Mercury insurance policy - due January 28, 2025 (ID: 47)
+[2025-04-26 05:03:25,890] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Required: Complete your property inspection for your Mercury insurance policy - due January 28, 2025 (ID: cWJUTW9Nb2xXUHRVQVFuUw)
+[2025-04-26 05:03:25,891] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:26,080] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Required: Complete your property inspection for your Mercury insurance policy - due January 28, 2025
+[2025-04-26 05:03:26,480] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Required: Complete your property inspection for your Mercury insurance policy - due January 28, 2025
+[2025-04-26 05:03:26,481] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Required: Complete your property inspection for your Mercury insurance policy - due January 28, 2025
+[2025-04-26 05:03:26,484] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your HBO Max Free Trial Has Started' with completed=True
+[2025-04-26 05:03:26,486] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your HBO Max Free Trial Has Started
+[2025-04-26 05:03:26,488] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your HBO Max Free Trial Has Started (ID: 48)
+[2025-04-26 05:03:26,488] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your HBO Max Free Trial Has Started (ID: WnJfMkgwVlA2M3ZoT3pSbQ)
+[2025-04-26 05:03:26,490] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:26,679] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your HBO Max Free Trial Has Started
+[2025-04-26 05:03:27,184] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your HBO Max Free Trial Has Started
+[2025-04-26 05:03:27,185] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your HBO Max Free Trial Has Started
+[2025-04-26 05:03:27,186] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Thank you for your gift certificate purchase!' with completed=True
+[2025-04-26 05:03:27,187] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Thank you for your gift certificate purchase!
+[2025-04-26 05:03:27,189] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Thank you for your gift certificate purchase! (ID: 49)
+[2025-04-26 05:03:27,190] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Thank you for your gift certificate purchase! (ID: NUc5QVhxQnUxdHM5ZGVpQQ)
+[2025-04-26 05:03:27,191] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:27,386] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Thank you for your gift certificate purchase!
+[2025-04-26 05:03:27,798] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Thank you for your gift certificate purchase!
+[2025-04-26 05:03:27,798] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Thank you for your gift certificate purchase!
+[2025-04-26 05:03:27,801] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Venkata, your Sheraton exclusive expires October 14' with completed=True
+[2025-04-26 05:03:27,803] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Venkata, your Sheraton exclusive expires October 14
+[2025-04-26 05:03:27,807] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Venkata, your Sheraton exclusive expires October 14 (ID: 50)
+[2025-04-26 05:03:27,807] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Venkata, your Sheraton exclusive expires October 14 (ID: ZU9FYkp1VHVSWUxSbTNEMw)
+[2025-04-26 05:03:27,808] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:27,994] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Venkata, your Sheraton exclusive expires October 14
+[2025-04-26 05:03:28,414] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Venkata, your Sheraton exclusive expires October 14
+[2025-04-26 05:03:28,415] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Venkata, your Sheraton exclusive expires October 14
+[2025-04-26 05:03:28,418] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification' with completed=True
+[2025-04-26 05:03:28,420] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification
+[2025-04-26 05:03:28,421] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification (ID: 51)
+[2025-04-26 05:03:28,422] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification (ID: Ymx1WHpyME1xQ1h1U2lvbw)
+[2025-04-26 05:03:28,423] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:28,617] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification
+[2025-04-26 05:03:29,007] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification
+[2025-04-26 05:03:29,008] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Grand Isles at Beachwalk Townhome Assoc, Inc message: Delinquency Letter Email Notification
+[2025-04-26 05:03:29,010] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Re: Participant Contributions / Donations 2024-2025' with completed=True
+[2025-04-26 05:03:29,012] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Re: Participant Contributions / Donations 2024-2025
+[2025-04-26 05:03:29,015] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Re: Participant Contributions / Donations 2024-2025 (ID: 52)
+[2025-04-26 05:03:29,015] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Re: Participant Contributions / Donations 2024-2025 (ID: cG5ZTkRwVEYydEREUFh3Qw)
+[2025-04-26 05:03:29,017] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:29,203] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Re: Participant Contributions / Donations 2024-2025
+[2025-04-26 05:03:29,607] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Re: Participant Contributions / Donations 2024-2025
+[2025-04-26 05:03:29,607] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Re: Participant Contributions / Donations 2024-2025
+[2025-04-26 05:03:29,610] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Home Insurance for 4040 Knightstown St, Dublin' with completed=True
+[2025-04-26 05:03:29,612] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Home Insurance for 4040 Knightstown St, Dublin
+[2025-04-26 05:03:29,614] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Home Insurance for 4040 Knightstown St, Dublin (ID: 53)
+[2025-04-26 05:03:29,614] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Home Insurance for 4040 Knightstown St, Dublin (ID: UkRCeVJTUFE4dkVMTnczQw)
+[2025-04-26 05:03:29,616] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:29,799] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Home Insurance for 4040 Knightstown St, Dublin
+[2025-04-26 05:03:30,203] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Home Insurance for 4040 Knightstown St, Dublin
+[2025-04-26 05:03:30,204] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Home Insurance for 4040 Knightstown St, Dublin
+[2025-04-26 05:03:30,207] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Deed Transfer' with completed=True
+[2025-04-26 05:03:30,208] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Deed Transfer
+[2025-04-26 05:03:30,210] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Deed Transfer (ID: 54)
+[2025-04-26 05:03:30,210] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Deed Transfer (ID: SE9KTl91ZUxNVEJCTUdwLQ)
+[2025-04-26 05:03:30,212] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:30,412] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Deed Transfer
+[2025-04-26 05:03:30,811] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Deed Transfer
+[2025-04-26 05:03:30,811] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Deed Transfer
+[2025-04-26 05:03:30,814] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Get your Zillow Payments 2024 tax forms faster by enabling e-delivery' with completed=False
+[2025-04-26 05:03:30,815] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Get your Zillow Payments 2024 tax forms faster by enabling e-delivery
+[2025-04-26 05:03:30,817] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Get your Zillow Payments 2024 tax forms faster by enabling e-delivery (ID: 55)
+[2025-04-26 05:03:30,818] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Get your Zillow Payments 2024 tax forms faster by enabling e-delivery (ID: ZjdibHFpODdMMmZHRjY5Vw)
+[2025-04-26 05:03:30,819] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:31,005] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Get your Zillow Payments 2024 tax forms faster by enabling e-delivery
+[2025-04-26 05:03:31,397] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Get your Zillow Payments 2024 tax forms faster by enabling e-delivery
+[2025-04-26 05:03:31,398] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Get your Zillow Payments 2024 tax forms faster by enabling e-delivery
+[2025-04-26 05:03:31,401] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Homeowners Insurance' with completed=True
+[2025-04-26 05:03:31,403] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Homeowners Insurance
+[2025-04-26 05:03:31,405] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Homeowners Insurance (ID: 56)
+[2025-04-26 05:03:31,405] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Homeowners Insurance (ID: WW44Rk1BMWp0N1lFS0lzVw)
+[2025-04-26 05:03:31,407] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:31,586] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Homeowners Insurance
+[2025-04-26 05:03:32,101] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Homeowners Insurance
+[2025-04-26 05:03:32,101] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Homeowners Insurance
+[2025-04-26 05:03:32,103] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Venkata, your Chase CD will mature on March 23, 2025' with completed=False
+[2025-04-26 05:03:32,105] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Venkata, your Chase CD will mature on March 23, 2025
+[2025-04-26 05:03:32,107] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Venkata, your Chase CD will mature on March 23, 2025 (ID: 57)
+[2025-04-26 05:03:32,108] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Venkata, your Chase CD will mature on March 23, 2025 (ID: ajZ1cXdpZU0yNEZpN1E4Yg)
+[2025-04-26 05:03:32,109] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:32,290] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Venkata, your Chase CD will mature on March 23, 2025
+[2025-04-26 05:03:32,683] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Venkata, your Chase CD will mature on March 23, 2025
+[2025-04-26 05:03:32,683] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Venkata, your Chase CD will mature on March 23, 2025
+[2025-04-26 05:03:32,686] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your automatic payment will process soon' with completed=True
+[2025-04-26 05:03:32,689] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your automatic payment will process soon
+[2025-04-26 05:03:32,691] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your automatic payment will process soon (ID: 58)
+[2025-04-26 05:03:32,691] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your automatic payment will process soon (ID: dHFwT0pEVHZ0UXNkTXB2LQ)
+[2025-04-26 05:03:32,693] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:32,887] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your automatic payment will process soon
+[2025-04-26 05:03:33,293] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your automatic payment will process soon
+[2025-04-26 05:03:33,293] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your automatic payment will process soon
+[2025-04-26 05:03:33,296] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Sync contacts and both emails' with completed=False
+[2025-04-26 05:03:33,298] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Sync contacts and both emails
+[2025-04-26 05:03:33,301] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Sync contacts and both emails (ID: 59)
+[2025-04-26 05:03:33,301] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Sync contacts and both emails (ID: VDdUOG9TY25PZ2tWMm9TOQ)
+[2025-04-26 05:03:33,303] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:33,494] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Sync contacts and both emails
+[2025-04-26 05:03:33,867] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Sync contacts and both emails
+[2025-04-26 05:03:33,867] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Sync contacts and both emails
+[2025-04-26 05:03:33,870] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task '(MATURITY-PAYMENT)Claim on LIC policy number( 604235180)' with completed=False
+[2025-04-26 05:03:33,872] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: (MATURITY-PAYMENT)Claim on LIC policy number( 604235180)
+[2025-04-26 05:03:33,874] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: (MATURITY-PAYMENT)Claim on LIC policy number( 604235180) (ID: 60)
+[2025-04-26 05:03:33,874] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: (MATURITY-PAYMENT)Claim on LIC policy number( 604235180) (ID: ckpMVDVDOTZKS291MWRzQw)
+[2025-04-26 05:03:33,876] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:34,055] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: (MATURITY-PAYMENT)Claim on LIC policy number( 604235180)
+[2025-04-26 05:03:34,451] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: (MATURITY-PAYMENT)Claim on LIC policy number( 604235180)
+[2025-04-26 05:03:34,452] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: (MATURITY-PAYMENT)Claim on LIC policy number( 604235180)
+[2025-04-26 05:03:34,455] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Fwd: Shockwave Medical, Inc. 401(k) Plan Blackout Notice Term' with completed=False
+[2025-04-26 05:03:34,457] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Fwd: Shockwave Medical, Inc. 401(k) Plan Blackout Notice Term
+[2025-04-26 05:03:34,459] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Fwd: Shockwave Medical, Inc. 401(k) Plan Blackout Notice Term (ID: 61)
+[2025-04-26 05:03:34,459] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Fwd: Shockwave Medical, Inc. 401(k) Plan Blackout Notice Term (ID: aXh0SFFNdFNzVVFDRlpkVg)
+[2025-04-26 05:03:34,461] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:34,646] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Fwd: Shockwave Medical, Inc. 401(k) Plan Blackout Notice Term
+[2025-04-26 05:03:35,070] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Fwd: Shockwave Medical, Inc. 401(k) Plan Blackout Notice Term
+[2025-04-26 05:03:35,071] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Fwd: Shockwave Medical, Inc. 401(k) Plan Blackout Notice Term
+[2025-04-26 05:03:35,074] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Trumark Homes Francis Ranch Pre-Approval Application' with completed=True
+[2025-04-26 05:03:35,077] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Trumark Homes Francis Ranch Pre-Approval Application
+[2025-04-26 05:03:35,085] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Trumark Homes Francis Ranch Pre-Approval Application (ID: 62)
+[2025-04-26 05:03:35,085] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Trumark Homes Francis Ranch Pre-Approval Application (ID: WWFaMzV2SmRENDZBUUk2LQ)
+[2025-04-26 05:03:35,087] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:35,267] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Trumark Homes Francis Ranch Pre-Approval Application
+[2025-04-26 05:03:35,672] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Trumark Homes Francis Ranch Pre-Approval Application
+[2025-04-26 05:03:35,672] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Trumark Homes Francis Ranch Pre-Approval Application
+[2025-04-26 05:03:35,675] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Acknowledgement of Receipt of Documents' with completed=True
+[2025-04-26 05:03:35,677] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Acknowledgement of Receipt of Documents
+[2025-04-26 05:03:35,679] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Acknowledgement of Receipt of Documents (ID: 63)
+[2025-04-26 05:03:35,679] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Acknowledgement of Receipt of Documents (ID: a0o1WHJWRXpQa3hoSzlrSA)
+[2025-04-26 05:03:35,680] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:35,859] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Acknowledgement of Receipt of Documents
+[2025-04-26 05:03:36,286] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Acknowledgement of Receipt of Documents
+[2025-04-26 05:03:36,286] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Acknowledgement of Receipt of Documents
+[2025-04-26 05:03:36,289] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your payment is due soon' with completed=True
+[2025-04-26 05:03:36,291] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your payment is due soon
+[2025-04-26 05:03:36,294] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your payment is due soon (ID: 64)
+[2025-04-26 05:03:36,294] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your payment is due soon (ID: UmJNTjlzdGNERDVEQzRMRw)
+[2025-04-26 05:03:36,296] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:36,482] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your payment is due soon
+[2025-04-26 05:03:36,869] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your payment is due soon
+[2025-04-26 05:03:36,869] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your payment is due soon
+[2025-04-26 05:03:36,872] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Large transaction notice 🚨🚨' with completed=True
+[2025-04-26 05:03:36,874] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Large transaction notice 🚨🚨
+[2025-04-26 05:03:36,876] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Large transaction notice 🚨🚨 (ID: 65)
+[2025-04-26 05:03:36,876] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Large transaction notice 🚨🚨 (ID: Y29nNTJYSkU2bE1mNm5TTQ)
+[2025-04-26 05:03:36,878] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:37,145] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Large transaction notice 🚨🚨
+[2025-04-26 05:03:37,530] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Large transaction notice 🚨🚨
+[2025-04-26 05:03:37,531] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Large transaction notice 🚨🚨
+[2025-04-26 05:03:37,534] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Quest Appointment Cancellation Notification' with completed=True
+[2025-04-26 05:03:37,536] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Quest Appointment Cancellation Notification
+[2025-04-26 05:03:37,538] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Quest Appointment Cancellation Notification (ID: 66)
+[2025-04-26 05:03:37,539] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Quest Appointment Cancellation Notification (ID: QWNkYlNoVUFUUXZKSW1rTA)
+[2025-04-26 05:03:37,540] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:37,728] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Quest Appointment Cancellation Notification
+[2025-04-26 05:03:38,117] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Quest Appointment Cancellation Notification
+[2025-04-26 05:03:38,117] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Quest Appointment Cancellation Notification
+[2025-04-26 05:03:38,120] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'UPDATE Regarding Non-District Courses' with completed=True
+[2025-04-26 05:03:38,122] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: UPDATE Regarding Non-District Courses
+[2025-04-26 05:03:38,124] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: UPDATE Regarding Non-District Courses (ID: 67)
+[2025-04-26 05:03:38,124] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: UPDATE Regarding Non-District Courses (ID: UDltdVlFZnQzblh5Y2hKcA)
+[2025-04-26 05:03:38,125] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:38,319] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: UPDATE Regarding Non-District Courses
+[2025-04-26 05:03:38,755] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: UPDATE Regarding Non-District Courses
+[2025-04-26 05:03:38,755] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: UPDATE Regarding Non-District Courses
+[2025-04-26 05:03:38,758] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Fwd: Policy Renewal Offer Sent!' with completed=True
+[2025-04-26 05:03:38,760] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Fwd: Policy Renewal Offer Sent!
+[2025-04-26 05:03:38,762] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Fwd: Policy Renewal Offer Sent! (ID: 68)
+[2025-04-26 05:03:38,762] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Fwd: Policy Renewal Offer Sent! (ID: bGRER041SzFNT010STlDdA)
+[2025-04-26 05:03:38,764] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:38,958] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Fwd: Policy Renewal Offer Sent!
+[2025-04-26 05:03:39,353] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Fwd: Policy Renewal Offer Sent!
+[2025-04-26 05:03:39,354] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Fwd: Policy Renewal Offer Sent!
+[2025-04-26 05:03:39,357] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your bill is now available' with completed=True
+[2025-04-26 05:03:39,359] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your bill is now available
+[2025-04-26 05:03:39,361] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your bill is now available (ID: 69)
+[2025-04-26 05:03:39,361] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your bill is now available (ID: emhia2RIN0EtYlY3aHVfNg)
+[2025-04-26 05:03:39,363] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:39,542] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your bill is now available
+[2025-04-26 05:03:39,929] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your bill is now available
+[2025-04-26 05:03:39,929] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your bill is now available
+[2025-04-26 05:03:39,932] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your reward has mailed!' with completed=True
+[2025-04-26 05:03:39,934] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your reward has mailed!
+[2025-04-26 05:03:39,937] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your reward has mailed! (ID: 70)
+[2025-04-26 05:03:39,937] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your reward has mailed! (ID: cHAwMVIzVlF4RGplRWVfcw)
+[2025-04-26 05:03:39,938] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:40,115] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your reward has mailed!
+[2025-04-26 05:03:40,514] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your reward has mailed!
+[2025-04-26 05:03:40,515] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your reward has mailed!
+[2025-04-26 05:03:40,518] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'IMPORTANT TAX RETURN DOCUMENT  AVAILABLE - FORM 1095-C' with completed=True
+[2025-04-26 05:03:40,519] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: IMPORTANT TAX RETURN DOCUMENT  AVAILABLE - FORM 1095-C
+[2025-04-26 05:03:40,521] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: IMPORTANT TAX RETURN DOCUMENT  AVAILABLE - FORM 1095-C (ID: 71)
+[2025-04-26 05:03:40,521] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: IMPORTANT TAX RETURN DOCUMENT  AVAILABLE - FORM 1095-C (ID: WXRNd3RaeUhlWHhPWV82Qw)
+[2025-04-26 05:03:40,523] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:40,717] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: IMPORTANT TAX RETURN DOCUMENT  AVAILABLE - FORM 1095-C
+[2025-04-26 05:03:41,213] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: IMPORTANT TAX RETURN DOCUMENT  AVAILABLE - FORM 1095-C
+[2025-04-26 05:03:41,213] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: IMPORTANT TAX RETURN DOCUMENT  AVAILABLE - FORM 1095-C
+[2025-04-26 05:03:41,216] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Your reward has mailed!' with completed=True
+[2025-04-26 05:03:41,218] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Your reward has mailed!
+[2025-04-26 05:03:41,220] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Your reward has mailed! (ID: 72)
+[2025-04-26 05:03:41,220] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Your reward has mailed! (ID: M3otV3dSRUUwcW0xOEV4eQ)
+[2025-04-26 05:03:41,222] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:41,423] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Your reward has mailed!
+[2025-04-26 05:03:41,829] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Your reward has mailed!
+[2025-04-26 05:03:41,829] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Your reward has mailed!
+[2025-04-26 05:03:41,833] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Intimation No: CIR/2025/131126/1314231 - Reminder to submit the NEFT Details' with completed=True
+[2025-04-26 05:03:41,835] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Intimation No: CIR/2025/131126/1314231 - Reminder to submit the NEFT Details
+[2025-04-26 05:03:41,837] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Intimation No: CIR/2025/131126/1314231 - Reminder to submit the NEFT Details (ID: 73)
+[2025-04-26 05:03:41,838] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Intimation No: CIR/2025/131126/1314231 - Reminder to submit the NEFT Details (ID: RF9DZEtzTzEzSHVybVhBaw)
+[2025-04-26 05:03:41,839] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:42,015] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Intimation No: CIR/2025/131126/1314231 - Reminder to submit the NEFT Details
+[2025-04-26 05:03:42,401] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Intimation No: CIR/2025/131126/1314231 - Reminder to submit the NEFT Details
+[2025-04-26 05:03:42,401] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Intimation No: CIR/2025/131126/1314231 - Reminder to submit the NEFT Details
+[2025-04-26 05:03:42,404] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'REMINDER!  krishna yadamakanti activate your service & qualify for a reward!' with completed=True
+[2025-04-26 05:03:42,406] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: REMINDER!  krishna yadamakanti activate your service & qualify for a reward!
+[2025-04-26 05:03:42,408] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: REMINDER!  krishna yadamakanti activate your service & qualify for a reward! (ID: 74)
+[2025-04-26 05:03:42,408] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: REMINDER!  krishna yadamakanti activate your service & qualify for a reward! (ID: UDFKSGdZLWRPdUJGdVVmSQ)
+[2025-04-26 05:03:42,410] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:42,625] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: REMINDER!  krishna yadamakanti activate your service & qualify for a reward!
+[2025-04-26 05:03:43,009] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: REMINDER!  krishna yadamakanti activate your service & qualify for a reward!
+[2025-04-26 05:03:43,009] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: REMINDER!  krishna yadamakanti activate your service & qualify for a reward!
+[2025-04-26 05:03:43,014] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task ' It’s ALL for you! 🫵' with completed=True
+[2025-04-26 05:03:43,016] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update:  It’s ALL for you! 🫵
+[2025-04-26 05:03:43,018] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task:  It’s ALL for you! 🫵 (ID: 75)
+[2025-04-26 05:03:43,018] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task:  It’s ALL for you! 🫵 (ID: NUVTbmpfcFRyVnZBLVluWg)
+[2025-04-26 05:03:43,019] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:43,195] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task:  It’s ALL for you! 🫵
+[2025-04-26 05:03:43,596] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task:  It’s ALL for you! 🫵
+[2025-04-26 05:03:43,596] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for:  It’s ALL for you! 🫵
+[2025-04-26 05:03:43,600] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'monitoring access' with completed=True
+[2025-04-26 05:03:43,602] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: monitoring access
+[2025-04-26 05:03:43,603] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: monitoring access (ID: 76)
+[2025-04-26 05:03:43,603] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: monitoring access (ID: bkNNRVpHZVlLMXJoLTFIUg)
+[2025-04-26 05:03:43,604] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:43,799] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: monitoring access
+[2025-04-26 05:03:44,285] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: monitoring access
+[2025-04-26 05:03:44,285] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: monitoring access
+[2025-04-26 05:03:44,288] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Test task' with completed=True
+[2025-04-26 05:03:44,290] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Test task
+[2025-04-26 05:03:44,293] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Test task (ID: 77)
+[2025-04-26 05:03:44,293] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Test task (ID: R1htUmRLZThZZWZ4b292dA)
+[2025-04-26 05:03:44,294] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:44,477] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Test task
+[2025-04-26 05:03:44,855] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Test task
+[2025-04-26 05:03:44,855] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Test task
+[2025-04-26 05:03:44,860] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'TTP Application Status Change' with completed=False
+[2025-04-26 05:03:44,862] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: TTP Application Status Change
+[2025-04-26 05:03:44,864] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: TTP Application Status Change (ID: 78)
+[2025-04-26 05:03:44,864] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: TTP Application Status Change (ID: MHhRSmZCandKN1h4T0VadA)
+[2025-04-26 05:03:44,866] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:45,054] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: TTP Application Status Change
+[2025-04-26 05:03:45,441] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: TTP Application Status Change
+[2025-04-26 05:03:45,441] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: TTP Application Status Change
+[2025-04-26 05:03:45,445] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Hooray! You can now sign up for Rebecca Teames’s student trip.' with completed=False
+[2025-04-26 05:03:45,447] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Hooray! You can now sign up for Rebecca Teames’s student trip.
+[2025-04-26 05:03:45,450] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Hooray! You can now sign up for Rebecca Teames’s student trip. (ID: 79)
+[2025-04-26 05:03:45,450] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Hooray! You can now sign up for Rebecca Teames’s student trip. (ID: dTZvVDZIcVE0TmdPZjl4eA)
+[2025-04-26 05:03:45,451] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:45,635] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Hooray! You can now sign up for Rebecca Teames’s student trip.
+[2025-04-26 05:03:46,013] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Hooray! You can now sign up for Rebecca Teames’s student trip.
+[2025-04-26 05:03:46,014] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Hooray! You can now sign up for Rebecca Teames’s student trip.
+[2025-04-26 05:03:46,018] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Cypress Lake: Loan refinance update' with completed=False
+[2025-04-26 05:03:46,019] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Cypress Lake: Loan refinance update
+[2025-04-26 05:03:46,021] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Cypress Lake: Loan refinance update (ID: 80)
+[2025-04-26 05:03:46,021] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Cypress Lake: Loan refinance update (ID: bGJxek1RbE1YSklManNCNA)
+[2025-04-26 05:03:46,023] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:46,209] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Cypress Lake: Loan refinance update
+[2025-04-26 05:03:46,606] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Cypress Lake: Loan refinance update
+[2025-04-26 05:03:46,606] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Cypress Lake: Loan refinance update
+[2025-04-26 05:03:46,609] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Schedule an appointment for MRI on food for food' with completed=True
+[2025-04-26 05:03:46,610] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Schedule an appointment for MRI on food for food
+[2025-04-26 05:03:46,613] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Schedule an appointment for MRI on food for food (ID: 81)
+[2025-04-26 05:03:46,613] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Schedule an appointment for MRI on food for food (ID: WDd4c1BlWi1reENGcXVNYw)
+[2025-04-26 05:03:46,616] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:46,797] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Schedule an appointment for MRI on food for food
+[2025-04-26 05:03:47,253] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Schedule an appointment for MRI on food for food
+[2025-04-26 05:03:47,254] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Schedule an appointment for MRI on food for food
+[2025-04-26 05:03:47,255] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Set up Smart Hub' with completed=True
+[2025-04-26 05:03:47,257] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Set up Smart Hub
+[2025-04-26 05:03:47,259] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Set up Smart Hub (ID: 82)
+[2025-04-26 05:03:47,259] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Set up Smart Hub (ID: WEFPZC0zTE5aVEdkNUJtcQ)
+[2025-04-26 05:03:47,260] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:03:47,457] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Set up Smart Hub
+[2025-04-26 05:05:14,634] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:05:15,802] INFO task_management.views /app/task_management/views.py:42 - Inside ensure_predefined_lists
+[2025-04-26 05:05:15,803] INFO task_management.views /app/task_management/views.py:43 - [{'name': 'Samaan Tasks', 'listcode': 'SAMAAN_TASKS'}, {'name': 'Past Due', 'listcode': 'PAST_DUE'}, {'name': 'Important', 'listcode': 'IMPORTANT'}, {'name': 'All Tasks', 'listcode': 'ALL_TASKS'}]
+[2025-04-26 05:05:15,803] INFO task_management.views /app/task_management/views.py:52 - ['task', 'taskhistory', 'id', 'user', 'list_name', 'list_code', 'list_type', 'list_source']
+[2025-04-26 05:05:15,812] INFO task_management.views /app/task_management/views.py:209 - [get_lists] Special: ['All Tasks', 'Important', 'Past Due', 'Samaan Tasks']
+[2025-04-26 05:05:15,812] INFO task_management.views /app/task_management/views.py:210 - [get_lists] Semi-Special: ['G My Tasks']
+[2025-04-26 05:05:15,813] INFO task_management.views /app/task_management/views.py:211 - [get_lists] Normal: [] (Count: 0)
+[2025-04-26 05:05:15,869] INFO task_management.views /app/task_management/views.py:69 - Getting All Tasks called as main function
+[2025-04-26 05:05:16,870] INFO task_management.views /app/task_management/views.py:721 - Triggering user sync for user: kittureddy2000
+[2025-04-26 05:05:16,871] INFO task_management.views /app/task_management/views.py:728 - Enqueuing sync for user kittureddy2000 and provider google
+[2025-04-26 05:05:16,927] INFO task_management.sync_utils /app/task_management/sync_utils.py:635 - Processing sync task
+[2025-04-26 05:05:16,928] INFO task_management.sync_utils /app/task_management/sync_utils.py:529 - Starting sync for user: kittureddy2000 with provider: google
+[2025-04-26 05:05:16,929] INFO task_management.sync_utils /app/task_management/sync_utils.py:32 - Starting Google Tasks sync for user: kittureddy2000
+[2025-04-26 05:05:16,930] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:16,931] INFO task_management.sync_utils /app/task_management/sync_utils.py:38 - Last sync time: None
+[2025-04-26 05:05:16,931] INFO task_management.sync_utils /app/task_management/sync_utils.py:41 - Fetching Google Tasks lists
+[2025-04-26 05:05:17,127] INFO task_management.sync_utils /app/task_management/sync_utils.py:45 - Found 1 Google task lists
+[2025-04-26 05:05:17,127] INFO task_management.sync_utils /app/task_management/sync_utils.py:57 - Processing Google list: 'My Tasks' (ID: MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow)
+[2025-04-26 05:05:17,128] INFO task_management.sync_utils /app/task_management/sync_utils.py:74 - Using existing primary Google list 'G My Tasks'
+[2025-04-26 05:05:17,326] INFO task_management.sync_utils /app/task_management/sync_utils.py:122 - Retrieved page 1 with 98 tasks from 'My Tasks'
+[2025-04-26 05:05:17,327] INFO task_management.sync_utils /app/task_management/sync_utils.py:136 - Total updated tasks found in 'My Tasks': 98
+[2025-04-26 05:05:17,403] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Research on 401k to Self directed IRa' with completed=False
+[2025-04-26 05:05:17,407] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Research on 401k to Self directed IRa
+[2025-04-26 05:05:17,409] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Research on 401k to Self directed IRa (ID: 83)
+[2025-04-26 05:05:17,409] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Research on 401k to Self directed IRa (ID: UU9XZEQ0Z3g1aGtsR3lnQg)
+[2025-04-26 05:05:17,410] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:17,609] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Research on 401k to Self directed IRa
+[2025-04-26 05:05:18,017] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Research on 401k to Self directed IRa
+[2025-04-26 05:05:18,017] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Research on 401k to Self directed IRa
+[2025-04-26 05:05:18,020] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Anaheim Trip Preparation Packet' with completed=False
+[2025-04-26 05:05:18,022] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Anaheim Trip Preparation Packet
+[2025-04-26 05:05:18,024] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Anaheim Trip Preparation Packet (ID: 84)
+[2025-04-26 05:05:18,024] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Anaheim Trip Preparation Packet (ID: bUYzMURFZWNKa0VZTWVTSQ)
+[2025-04-26 05:05:18,025] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:18,254] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Anaheim Trip Preparation Packet
+[2025-04-26 05:05:18,672] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Anaheim Trip Preparation Packet
+[2025-04-26 05:05:18,672] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Anaheim Trip Preparation Packet
+[2025-04-26 05:05:18,675] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Test task 15' with completed=True
+[2025-04-26 05:05:18,678] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Test task 15
+[2025-04-26 05:05:18,680] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Test task 15 (ID: 85)
+[2025-04-26 05:05:18,680] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Test task 15 (ID: ZklxRTJRRHRZcWkxVGhpbw)
+[2025-04-26 05:05:18,681] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:18,860] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Test task 15
+[2025-04-26 05:05:19,270] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Test task 15
+[2025-04-26 05:05:19,270] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Test task 15
+[2025-04-26 05:05:19,274] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Test task 20' with completed=True
+[2025-04-26 05:05:19,275] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Test task 20
+[2025-04-26 05:05:19,277] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Test task 20 (ID: 86)
+[2025-04-26 05:05:19,277] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Test task 20 (ID: ZWJQN3lzVXlUSXVLd3ltZw)
+[2025-04-26 05:05:19,278] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:19,463] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Test task 20
+[2025-04-26 05:05:19,861] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Test task 20
+[2025-04-26 05:05:19,861] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Test task 20
+[2025-04-26 05:05:19,864] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Chris Mastaj | VP of IT, G&A ~ Penumbra (Hybrid) - Alameda Office' with completed=True
+[2025-04-26 05:05:19,866] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Chris Mastaj | VP of IT, G&A ~ Penumbra (Hybrid) - Alameda Office
+[2025-04-26 05:05:19,868] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Chris Mastaj | VP of IT, G&A ~ Penumbra (Hybrid) - Alameda Office (ID: 87)
+[2025-04-26 05:05:19,868] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Chris Mastaj | VP of IT, G&A ~ Penumbra (Hybrid) - Alameda Office (ID: Y05NQlJSc3p5ZURtV2RZaA)
+[2025-04-26 05:05:19,869] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:20,074] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Chris Mastaj | VP of IT, G&A ~ Penumbra (Hybrid) - Alameda Office
+[2025-04-26 05:05:20,459] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Chris Mastaj | VP of IT, G&A ~ Penumbra (Hybrid) - Alameda Office
+[2025-04-26 05:05:20,460] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Chris Mastaj | VP of IT, G&A ~ Penumbra (Hybrid) - Alameda Office
+[2025-04-26 05:05:20,462] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Notice from FTB' with completed=False
+[2025-04-26 05:05:20,464] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Notice from FTB
+[2025-04-26 05:05:20,467] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Notice from FTB (ID: 88)
+[2025-04-26 05:05:20,467] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Notice from FTB (ID: aWV1elI0RE5aVjdKbWhIZQ)
+[2025-04-26 05:05:20,468] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:20,682] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Notice from FTB
+[2025-04-26 05:05:21,079] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Notice from FTB
+[2025-04-26 05:05:21,080] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Notice from FTB
+[2025-04-26 05:05:21,084] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task '5049 PINALENO WAY- VIOLATION NOTICE' with completed=False
+[2025-04-26 05:05:21,086] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: 5049 PINALENO WAY- VIOLATION NOTICE
+[2025-04-26 05:05:21,089] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: 5049 PINALENO WAY- VIOLATION NOTICE (ID: 89)
+[2025-04-26 05:05:21,089] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: 5049 PINALENO WAY- VIOLATION NOTICE (ID: cV9KTVJYRWdzODA3Y2ZnaQ)
+[2025-04-26 05:05:21,090] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:21,273] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: 5049 PINALENO WAY- VIOLATION NOTICE
+[2025-04-26 05:05:21,675] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: 5049 PINALENO WAY- VIOLATION NOTICE
+[2025-04-26 05:05:21,675] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: 5049 PINALENO WAY- VIOLATION NOTICE
+[2025-04-26 05:05:21,679] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task '3 Steps to Make an Avatar' with completed=False
+[2025-04-26 05:05:21,680] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: 3 Steps to Make an Avatar
+[2025-04-26 05:05:21,682] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: 3 Steps to Make an Avatar (ID: 90)
+[2025-04-26 05:05:21,683] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: 3 Steps to Make an Avatar (ID: YV9kX05OeUlieU9QYV81Zg)
+[2025-04-26 05:05:21,684] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:21,873] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: 3 Steps to Make an Avatar
+[2025-04-26 05:05:22,336] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: 3 Steps to Make an Avatar
+[2025-04-26 05:05:22,336] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: 3 Steps to Make an Avatar
+[2025-04-26 05:05:22,340] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Fwd: April 4th WWHC 5049 PINALENO WY.pdf' with completed=False
+[2025-04-26 05:05:22,342] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Fwd: April 4th WWHC 5049 PINALENO WY.pdf
+[2025-04-26 05:05:22,343] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Fwd: April 4th WWHC 5049 PINALENO WY.pdf (ID: 91)
+[2025-04-26 05:05:22,344] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Fwd: April 4th WWHC 5049 PINALENO WY.pdf (ID: bmgxSXl6REp1TmhFV2ZkRQ)
+[2025-04-26 05:05:22,345] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:22,520] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Fwd: April 4th WWHC 5049 PINALENO WY.pdf
+[2025-04-26 05:05:22,997] INFO task_management.sync_utils /app/task_management/sync_utils.py:722 - Successfully updated Google task: Fwd: April 4th WWHC 5049 PINALENO WY.pdf
+[2025-04-26 05:05:22,997] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Fwd: April 4th WWHC 5049 PINALENO WY.pdf
+[2025-04-26 05:05:23,000] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Buy Hoka shoes' with completed=False
+[2025-04-26 05:05:23,002] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Buy Hoka shoes
+[2025-04-26 05:05:23,004] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Buy Hoka shoes (ID: 92)
+[2025-04-26 05:05:23,004] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Buy Hoka shoes (ID: bVVuLXhBYmFhNk80RUhjWQ)
+[2025-04-26 05:05:23,005] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:23,193] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Buy Hoka shoes
+[2025-04-26 05:05:23,249] ERROR task_management.sync_utils /app/task_management/sync_utils.py:726 - Error updating Google task: Buy Hoka shoes, Error: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/bVVuLXhBYmFhNk80RUhjWQ?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+Traceback (most recent call last):
+  File "/app/task_management/sync_utils.py", line 717, in update_google_task
+    result = service.tasks().update(tasklist=tasklist_id, task=task.source_id, body=google_task).execute()
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/bVVuLXhBYmFhNk80RUhjWQ?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+[2025-04-26 05:05:23,261] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Buy Hoka shoes
+[2025-04-26 05:05:23,266] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Call sowmya 408 581 9030' with completed=True
+[2025-04-26 05:05:23,267] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Call sowmya 408 581 9030
+[2025-04-26 05:05:23,269] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Call sowmya 408 581 9030 (ID: 93)
+[2025-04-26 05:05:23,270] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Call sowmya 408 581 9030 (ID: VEZfUVRuR0ZGQU1UclYxMg)
+[2025-04-26 05:05:23,271] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:23,467] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Call sowmya 408 581 9030
+[2025-04-26 05:05:23,526] ERROR task_management.sync_utils /app/task_management/sync_utils.py:726 - Error updating Google task: Call sowmya 408 581 9030, Error: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/VEZfUVRuR0ZGQU1UclYxMg?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+Traceback (most recent call last):
+  File "/app/task_management/sync_utils.py", line 717, in update_google_task
+    result = service.tasks().update(tasklist=tasklist_id, task=task.source_id, body=google_task).execute()
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/VEZfUVRuR0ZGQU1UclYxMg?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+[2025-04-26 05:05:23,527] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Call sowmya 408 581 9030
+[2025-04-26 05:05:23,531] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Welcome to Empowerly College Counseling! ' with completed=True
+[2025-04-26 05:05:23,534] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Welcome to Empowerly College Counseling! 
+[2025-04-26 05:05:23,536] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Welcome to Empowerly College Counseling!  (ID: 94)
+[2025-04-26 05:05:23,536] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Welcome to Empowerly College Counseling!  (ID: MkYzX2NTOXlpbVJkV3I3NQ)
+[2025-04-26 05:05:23,537] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:23,715] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Welcome to Empowerly College Counseling! 
+[2025-04-26 05:05:23,778] ERROR task_management.sync_utils /app/task_management/sync_utils.py:726 - Error updating Google task: Welcome to Empowerly College Counseling! , Error: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/MkYzX2NTOXlpbVJkV3I3NQ?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+Traceback (most recent call last):
+  File "/app/task_management/sync_utils.py", line 717, in update_google_task
+    result = service.tasks().update(tasklist=tasklist_id, task=task.source_id, body=google_task).execute()
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/MkYzX2NTOXlpbVJkV3I3NQ?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+[2025-04-26 05:05:23,778] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Welcome to Empowerly College Counseling! 
+[2025-04-26 05:05:23,783] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Call post office' with completed=True
+[2025-04-26 05:05:23,786] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Call post office
+[2025-04-26 05:05:23,788] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Call post office (ID: 95)
+[2025-04-26 05:05:23,788] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Call post office (ID: M3RwYUl6QTBwNDVSUGt5SA)
+[2025-04-26 05:05:23,789] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:23,971] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Call post office
+[2025-04-26 05:05:24,027] ERROR task_management.sync_utils /app/task_management/sync_utils.py:726 - Error updating Google task: Call post office, Error: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/M3RwYUl6QTBwNDVSUGt5SA?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+Traceback (most recent call last):
+  File "/app/task_management/sync_utils.py", line 717, in update_google_task
+    result = service.tasks().update(tasklist=tasklist_id, task=task.source_id, body=google_task).execute()
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/M3RwYUl6QTBwNDVSUGt5SA?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+[2025-04-26 05:05:24,028] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Call post office
+[2025-04-26 05:05:24,033] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Schedule mammogram appointment for Navya' with completed=True
+[2025-04-26 05:05:24,035] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Schedule mammogram appointment for Navya
+[2025-04-26 05:05:24,037] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Schedule mammogram appointment for Navya (ID: 96)
+[2025-04-26 05:05:24,038] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Schedule mammogram appointment for Navya (ID: TmwtdzNncHBjR1ZfTThhNg)
+[2025-04-26 05:05:24,039] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:24,227] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Schedule mammogram appointment for Navya
+[2025-04-26 05:05:24,284] ERROR task_management.sync_utils /app/task_management/sync_utils.py:726 - Error updating Google task: Schedule mammogram appointment for Navya, Error: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/TmwtdzNncHBjR1ZfTThhNg?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+Traceback (most recent call last):
+  File "/app/task_management/sync_utils.py", line 717, in update_google_task
+    result = service.tasks().update(tasklist=tasklist_id, task=task.source_id, body=google_task).execute()
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/TmwtdzNncHBjR1ZfTThhNg?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+[2025-04-26 05:05:24,285] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Schedule mammogram appointment for Navya
+[2025-04-26 05:05:24,289] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'T-Mobile bill' with completed=True
+[2025-04-26 05:05:24,292] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: T-Mobile bill
+[2025-04-26 05:05:24,294] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: T-Mobile bill (ID: 97)
+[2025-04-26 05:05:24,294] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: T-Mobile bill (ID: cmNaeVkwamxaYU9sNEg1Vg)
+[2025-04-26 05:05:24,296] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:24,480] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: T-Mobile bill
+[2025-04-26 05:05:24,536] ERROR task_management.sync_utils /app/task_management/sync_utils.py:726 - Error updating Google task: T-Mobile bill, Error: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/cmNaeVkwamxaYU9sNEg1Vg?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+Traceback (most recent call last):
+  File "/app/task_management/sync_utils.py", line 717, in update_google_task
+    result = service.tasks().update(tasklist=tasklist_id, task=task.source_id, body=google_task).execute()
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/cmNaeVkwamxaYU9sNEg1Vg?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+[2025-04-26 05:05:24,537] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: T-Mobile bill
+[2025-04-26 05:05:24,542] INFO task_management.sync_utils /app/task_management/sync_utils.py:207 - Creating new Google task 'Give tittu $200' with completed=True
+[2025-04-26 05:05:24,544] INFO task_management.signals /app/task_management/signals.py:54 - Scheduling Cloud Task for Google task update: Give tittu $200
+[2025-04-26 05:05:24,546] INFO task_management.sync_utils /app/task_management/sync_utils.py:751 - Processing Google task update for task: Give tittu $200 (ID: 98)
+[2025-04-26 05:05:24,546] INFO task_management.sync_utils /app/task_management/sync_utils.py:670 - Updating Google task: Give tittu $200 (ID: ZzRkbHNlWE9xVjB1a1FqdA)
+[2025-04-26 05:05:24,547] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:05:24,740] INFO task_management.sync_utils /app/task_management/sync_utils.py:716 - Sending update to Google for task: Give tittu $200
+[2025-04-26 05:05:24,804] ERROR task_management.sync_utils /app/task_management/sync_utils.py:726 - Error updating Google task: Give tittu $200, Error: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/ZzRkbHNlWE9xVjB1a1FqdA?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+Traceback (most recent call last):
+  File "/app/task_management/sync_utils.py", line 717, in update_google_task
+    result = service.tasks().update(tasklist=tasklist_id, task=task.source_id, body=google_task).execute()
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/_helpers.py", line 130, in positional_wrapper
+    return wrapped(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/googleapiclient/http.py", line 938, in execute
+    raise HttpError(resp, content, uri=self.uri)
+googleapiclient.errors.HttpError: <HttpError 400 when requesting https://tasks.googleapis.com/tasks/v1/lists/MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow/tasks/ZzRkbHNlWE9xVjB1a1FqdA?alt=json returned "Request contains an invalid argument.". Details: "[{'message': 'Request contains an invalid argument.', 'domain': 'global', 'reason': 'badRequest'}]">
+[2025-04-26 05:05:24,805] INFO task_management.sync_utils /app/task_management/sync_utils.py:764 - Successfully processed Google task update for: Give tittu $200
+[2025-04-26 05:05:24,806] INFO task_management.sync_utils /app/task_management/sync_utils.py:231 - First sync detected - getting all task IDs to establish baseline
+[2025-04-26 05:05:24,978] INFO task_management.sync_utils /app/task_management/sync_utils.py:264 - Total task IDs found in list 'My Tasks': 98
+[2025-04-26 05:05:24,983] INFO task_management.sync_utils /app/task_management/sync_utils.py:274 - Found 0 tasks to mark as deleted (completed)
+[2025-04-26 05:05:24,989] INFO task_management.sync_utils /app/task_management/sync_utils.py:294 - Google sync completed successfully with 16 updates
+[2025-04-26 05:05:26,663] INFO task_management.sync_utils /app/task_management/sync_utils.py:570 - Sync report email sent to kittureddy2000 for google
+[2025-04-26 05:05:26,668] INFO task_management.sync_utils /app/task_management/sync_utils.py:655 - Google sync completed for user ID: 2
+[2025-04-26 05:05:26,677] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:05:26,684] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:05:26,689] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:05:26,699] INFO task_management.views /app/task_management/views.py:83 - Function: Get Tasks with list id : 5
+[2025-04-26 05:05:26,700] INFO task_management.views /app/task_management/views.py:90 - Sort By : due_date
+[2025-04-26 05:05:26,701] INFO task_management.views /app/task_management/views.py:97 - List Name : G My Tasks
+[2025-04-26 05:05:29,413] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /dashboard/www.google.com
+[2025-04-26 05:05:29,413] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /dashboard/www.google.com
+[2025-04-26 05:05:48,052] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:05:48,054] WARNING portfolio.tasks /app/portfolio/tasks.py:74 - No symbols provided to refresh_stock_data
+[2025-04-26 05:05:48,061] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:05:48,068] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:05:48,074] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:05:48,080] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:05:48,095] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:06:00,803] INFO portfolio.api /app/portfolio/api.py:238 - Updating stock info for GOOG
+[2025-04-26 05:06:00,804] INFO portfolio.api /app/portfolio/api.py:45 - Fetching stock data for symbol: GOOG
+[2025-04-26 05:06:00,804] INFO portfolio.api /app/portfolio/api.py:35 - Using Alpha Vantage API key: DFC7...6LO9
+[2025-04-26 05:06:00,804] INFO portfolio.api /app/portfolio/api.py:49 - Using API key: DFC7...6LO9
+[2025-04-26 05:06:00,804] INFO portfolio.api /app/portfolio/api.py:64 - Making request to Alpha Vantage for GOOG quote data
+[2025-04-26 05:06:01,037] INFO portfolio.api /app/portfolio/api.py:73 - Response status code: 200
+[2025-04-26 05:06:01,037] INFO portfolio.api /app/portfolio/api.py:130 - Retrieved price for GOOG: 163.8500
+[2025-04-26 05:06:02,040] INFO portfolio.api /app/portfolio/api.py:160 - Making request to Alpha Vantage for GOOG company overview
+[2025-04-26 05:06:02,362] INFO portfolio.api /app/portfolio/api.py:164 - Overview response status code: 200
+[2025-04-26 05:06:02,363] INFO portfolio.api /app/portfolio/api.py:189 - Retrieved company name for GOOG: Alphabet Inc Class C
+[2025-04-26 05:06:02,364] INFO portfolio.api /app/portfolio/api.py:210 - Retrieved additional data for GOOG: {'day_change': Decimal('2.3800'), 'day_change_percentage': Decimal('1.473958011'), 'fifty_two_week_high': Decimal('208.46'), 'fifty_two_week_low': Decimal('142.66'), 'pe_ratio': Decimal('20.08'), 'dividend_yield': Decimal('0.5100')}
+[2025-04-26 05:06:02,365] ERROR portfolio.api /app/portfolio/api.py:271 - Error updating stock GOOG: 'Stock' object has no attribute 'update_price'
+[2025-04-26 05:06:02,381] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:06:02,382] INFO portfolio.services /app/portfolio/services.py:93 - Getting data for GOOG directly from API
+[2025-04-26 05:06:02,382] INFO portfolio.api /app/portfolio/api.py:45 - Fetching stock data for symbol: GOOG
+[2025-04-26 05:06:02,383] INFO portfolio.api /app/portfolio/api.py:35 - Using Alpha Vantage API key: DFC7...6LO9
+[2025-04-26 05:06:02,383] INFO portfolio.api /app/portfolio/api.py:49 - Using API key: DFC7...6LO9
+[2025-04-26 05:06:02,383] INFO portfolio.api /app/portfolio/api.py:64 - Making request to Alpha Vantage for GOOG quote data
+[2025-04-26 05:06:02,554] INFO portfolio.api /app/portfolio/api.py:73 - Response status code: 200
+[2025-04-26 05:06:02,555] INFO portfolio.api /app/portfolio/api.py:130 - Retrieved price for GOOG: 163.8500
+[2025-04-26 05:06:03,557] INFO portfolio.api /app/portfolio/api.py:160 - Making request to Alpha Vantage for GOOG company overview
+[2025-04-26 05:06:03,758] INFO portfolio.api /app/portfolio/api.py:164 - Overview response status code: 200
+[2025-04-26 05:06:03,759] INFO portfolio.api /app/portfolio/api.py:189 - Retrieved company name for GOOG: Alphabet Inc Class C
+[2025-04-26 05:06:03,759] INFO portfolio.api /app/portfolio/api.py:210 - Retrieved additional data for GOOG: {'day_change': Decimal('2.3800'), 'day_change_percentage': Decimal('1.473958011'), 'fifty_two_week_high': Decimal('208.46'), 'fifty_two_week_low': Decimal('142.66'), 'pe_ratio': Decimal('20.08'), 'dividend_yield': Decimal('0.5100')}
+[2025-04-26 05:06:03,765] INFO portfolio.tasks /app/portfolio/tasks.py:77 - Scheduling refresh for 1 stocks: GOOG
+[2025-04-26 05:06:04,176] ERROR portfolio.tasks /app/portfolio/tasks.py:65 - Error creating Cloud Task: 401 Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[2025-04-26 05:06:04,187] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:06:04,197] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:06:04,205] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:06:04,213] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:06:04,220] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:06:04,227] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:06:04,233] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:14:08,038] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:14:11,078] INFO task_management.views /app/task_management/views.py:42 - Inside ensure_predefined_lists
+[2025-04-26 05:14:11,078] INFO task_management.views /app/task_management/views.py:43 - [{'name': 'Samaan Tasks', 'listcode': 'SAMAAN_TASKS'}, {'name': 'Past Due', 'listcode': 'PAST_DUE'}, {'name': 'Important', 'listcode': 'IMPORTANT'}, {'name': 'All Tasks', 'listcode': 'ALL_TASKS'}]
+[2025-04-26 05:14:11,079] INFO task_management.views /app/task_management/views.py:52 - ['task', 'taskhistory', 'id', 'user', 'list_name', 'list_code', 'list_type', 'list_source']
+[2025-04-26 05:14:11,091] INFO task_management.views /app/task_management/views.py:209 - [get_lists] Special: ['All Tasks', 'Important', 'Past Due', 'Samaan Tasks']
+[2025-04-26 05:14:11,091] INFO task_management.views /app/task_management/views.py:210 - [get_lists] Semi-Special: ['G My Tasks']
+[2025-04-26 05:14:11,092] INFO task_management.views /app/task_management/views.py:211 - [get_lists] Normal: [] (Count: 0)
+[2025-04-26 05:14:11,151] INFO task_management.views /app/task_management/views.py:69 - Getting All Tasks called as main function
+[2025-04-26 05:14:12,154] INFO task_management.views /app/task_management/views.py:721 - Triggering user sync for user: kittureddy2000
+[2025-04-26 05:14:12,157] INFO task_management.views /app/task_management/views.py:728 - Enqueuing sync for user kittureddy2000 and provider google
+[2025-04-26 05:14:12,219] INFO task_management.sync_utils /app/task_management/sync_utils.py:635 - Processing sync task
+[2025-04-26 05:14:12,220] INFO task_management.sync_utils /app/task_management/sync_utils.py:529 - Starting sync for user: kittureddy2000 with provider: google
+[2025-04-26 05:14:12,221] INFO task_management.sync_utils /app/task_management/sync_utils.py:32 - Starting Google Tasks sync for user: kittureddy2000
+[2025-04-26 05:14:12,222] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:14:12,223] INFO task_management.sync_utils /app/task_management/sync_utils.py:38 - Last sync time: 2025-04-26 05:05:24.985629+00:00
+[2025-04-26 05:14:12,223] INFO task_management.sync_utils /app/task_management/sync_utils.py:41 - Fetching Google Tasks lists
+[2025-04-26 05:14:12,463] INFO task_management.sync_utils /app/task_management/sync_utils.py:45 - Found 1 Google task lists
+[2025-04-26 05:14:12,464] INFO task_management.sync_utils /app/task_management/sync_utils.py:57 - Processing Google list: 'My Tasks' (ID: MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow)
+[2025-04-26 05:14:12,466] INFO task_management.sync_utils /app/task_management/sync_utils.py:74 - Using existing primary Google list 'G My Tasks'
+[2025-04-26 05:14:12,466] INFO task_management.sync_utils /app/task_management/sync_utils.py:103 - Fetching tasks updated since: 2025-04-26T05:05:24.985629+00:00
+[2025-04-26 05:14:12,589] INFO task_management.sync_utils /app/task_management/sync_utils.py:122 - Retrieved page 1 with 0 tasks from 'My Tasks'
+[2025-04-26 05:14:12,590] INFO task_management.sync_utils /app/task_management/sync_utils.py:136 - Total updated tasks found in 'My Tasks': 0
+[2025-04-26 05:14:12,598] INFO task_management.sync_utils /app/task_management/sync_utils.py:294 - Google sync completed successfully with 0 updates
+[2025-04-26 05:14:12,599] INFO task_management.sync_utils /app/task_management/sync_utils.py:572 - No updates to report for kittureddy2000 and google
+[2025-04-26 05:14:12,601] INFO task_management.sync_utils /app/task_management/sync_utils.py:655 - Google sync completed for user ID: 2
+[2025-04-26 05:14:54,303] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:14:55,555] INFO task_management.views /app/task_management/views.py:42 - Inside ensure_predefined_lists
+[2025-04-26 05:14:55,555] INFO task_management.views /app/task_management/views.py:43 - [{'name': 'Samaan Tasks', 'listcode': 'SAMAAN_TASKS'}, {'name': 'Past Due', 'listcode': 'PAST_DUE'}, {'name': 'Important', 'listcode': 'IMPORTANT'}, {'name': 'All Tasks', 'listcode': 'ALL_TASKS'}]
+[2025-04-26 05:14:55,555] INFO task_management.views /app/task_management/views.py:52 - ['task', 'taskhistory', 'id', 'user', 'list_name', 'list_code', 'list_type', 'list_source']
+[2025-04-26 05:14:55,563] INFO task_management.views /app/task_management/views.py:209 - [get_lists] Special: ['All Tasks', 'Important', 'Past Due', 'Samaan Tasks']
+[2025-04-26 05:14:55,564] INFO task_management.views /app/task_management/views.py:210 - [get_lists] Semi-Special: ['G My Tasks']
+[2025-04-26 05:14:55,564] INFO task_management.views /app/task_management/views.py:211 - [get_lists] Normal: [] (Count: 0)
+[2025-04-26 05:14:55,631] INFO task_management.views /app/task_management/views.py:69 - Getting All Tasks called as main function
+[2025-04-26 05:14:56,651] INFO task_management.views /app/task_management/views.py:721 - Triggering user sync for user: kittureddy2000
+[2025-04-26 05:14:56,655] INFO task_management.views /app/task_management/views.py:728 - Enqueuing sync for user kittureddy2000 and provider google
+[2025-04-26 05:14:56,855] INFO task_management.sync_utils /app/task_management/sync_utils.py:635 - Processing sync task
+[2025-04-26 05:14:56,856] INFO task_management.sync_utils /app/task_management/sync_utils.py:529 - Starting sync for user: kittureddy2000 with provider: google
+[2025-04-26 05:14:56,857] INFO task_management.sync_utils /app/task_management/sync_utils.py:32 - Starting Google Tasks sync for user: kittureddy2000
+[2025-04-26 05:14:56,859] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:14:56,860] INFO task_management.sync_utils /app/task_management/sync_utils.py:38 - Last sync time: 2025-04-26 05:14:12.590392+00:00
+[2025-04-26 05:14:56,861] INFO task_management.sync_utils /app/task_management/sync_utils.py:41 - Fetching Google Tasks lists
+[2025-04-26 05:14:57,052] INFO task_management.sync_utils /app/task_management/sync_utils.py:45 - Found 1 Google task lists
+[2025-04-26 05:14:57,052] INFO task_management.sync_utils /app/task_management/sync_utils.py:57 - Processing Google list: 'My Tasks' (ID: MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow)
+[2025-04-26 05:14:57,054] INFO task_management.sync_utils /app/task_management/sync_utils.py:74 - Using existing primary Google list 'G My Tasks'
+[2025-04-26 05:14:57,054] INFO task_management.sync_utils /app/task_management/sync_utils.py:103 - Fetching tasks updated since: 2025-04-26T05:14:12.590392+00:00
+[2025-04-26 05:14:57,182] INFO task_management.sync_utils /app/task_management/sync_utils.py:122 - Retrieved page 1 with 0 tasks from 'My Tasks'
+[2025-04-26 05:14:57,182] INFO task_management.sync_utils /app/task_management/sync_utils.py:136 - Total updated tasks found in 'My Tasks': 0
+[2025-04-26 05:14:57,189] INFO task_management.sync_utils /app/task_management/sync_utils.py:294 - Google sync completed successfully with 0 updates
+[2025-04-26 05:14:57,191] INFO task_management.sync_utils /app/task_management/sync_utils.py:572 - No updates to report for kittureddy2000 and google
+[2025-04-26 05:14:57,193] INFO task_management.sync_utils /app/task_management/sync_utils.py:655 - Google sync completed for user ID: 2
+[2025-04-26 05:26:08,662] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:26:10,001] INFO task_management.views /app/task_management/views.py:42 - Inside ensure_predefined_lists
+[2025-04-26 05:26:10,001] INFO task_management.views /app/task_management/views.py:43 - [{'name': 'Samaan Tasks', 'listcode': 'SAMAAN_TASKS'}, {'name': 'Past Due', 'listcode': 'PAST_DUE'}, {'name': 'Important', 'listcode': 'IMPORTANT'}, {'name': 'All Tasks', 'listcode': 'ALL_TASKS'}]
+[2025-04-26 05:26:10,002] INFO task_management.views /app/task_management/views.py:52 - ['task', 'taskhistory', 'id', 'user', 'list_name', 'list_code', 'list_type', 'list_source']
+[2025-04-26 05:26:10,010] INFO task_management.views /app/task_management/views.py:209 - [get_lists] Special: ['All Tasks', 'Important', 'Past Due', 'Samaan Tasks']
+[2025-04-26 05:26:10,010] INFO task_management.views /app/task_management/views.py:210 - [get_lists] Semi-Special: ['G My Tasks']
+[2025-04-26 05:26:10,011] INFO task_management.views /app/task_management/views.py:211 - [get_lists] Normal: [] (Count: 0)
+[2025-04-26 05:26:10,066] INFO task_management.views /app/task_management/views.py:69 - Getting All Tasks called as main function
+[2025-04-26 05:26:11,074] INFO task_management.views /app/task_management/views.py:721 - Triggering user sync for user: kittureddy2000
+[2025-04-26 05:26:11,077] INFO task_management.views /app/task_management/views.py:728 - Enqueuing sync for user kittureddy2000 and provider google
+[2025-04-26 05:26:11,146] INFO task_management.sync_utils /app/task_management/sync_utils.py:635 - Processing sync task
+[2025-04-26 05:26:11,147] INFO task_management.sync_utils /app/task_management/sync_utils.py:529 - Starting sync for user: kittureddy2000 with provider: google
+[2025-04-26 05:26:11,148] INFO task_management.sync_utils /app/task_management/sync_utils.py:32 - Starting Google Tasks sync for user: kittureddy2000
+[2025-04-26 05:26:11,149] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:26:11,150] INFO task_management.sync_utils /app/task_management/sync_utils.py:38 - Last sync time: 2025-04-26 05:14:57.183054+00:00
+[2025-04-26 05:26:11,150] INFO task_management.sync_utils /app/task_management/sync_utils.py:41 - Fetching Google Tasks lists
+[2025-04-26 05:26:11,378] INFO task_management.sync_utils /app/task_management/sync_utils.py:45 - Found 1 Google task lists
+[2025-04-26 05:26:11,378] INFO task_management.sync_utils /app/task_management/sync_utils.py:57 - Processing Google list: 'My Tasks' (ID: MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow)
+[2025-04-26 05:26:11,381] INFO task_management.sync_utils /app/task_management/sync_utils.py:74 - Using existing primary Google list 'G My Tasks'
+[2025-04-26 05:26:11,381] INFO task_management.sync_utils /app/task_management/sync_utils.py:103 - Fetching tasks updated since: 2025-04-26T05:14:57.183054+00:00
+[2025-04-26 05:26:11,506] INFO task_management.sync_utils /app/task_management/sync_utils.py:122 - Retrieved page 1 with 0 tasks from 'My Tasks'
+[2025-04-26 05:26:11,507] INFO task_management.sync_utils /app/task_management/sync_utils.py:136 - Total updated tasks found in 'My Tasks': 0
+[2025-04-26 05:26:11,515] INFO task_management.sync_utils /app/task_management/sync_utils.py:294 - Google sync completed successfully with 0 updates
+[2025-04-26 05:26:11,517] INFO task_management.sync_utils /app/task_management/sync_utils.py:572 - No updates to report for kittureddy2000 and google
+[2025-04-26 05:26:11,518] INFO task_management.sync_utils /app/task_management/sync_utils.py:655 - Google sync completed for user ID: 2
+[2025-04-26 05:26:13,944] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:26:22,146] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:26:23,044] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:23,047] INFO portfolio.services /app/portfolio/services.py:93 - Getting data for GOOG directly from API
+[2025-04-26 05:26:23,047] INFO portfolio.api /app/portfolio/api.py:45 - Fetching stock data for symbol: GOOG
+[2025-04-26 05:26:23,047] INFO portfolio.api /app/portfolio/api.py:35 - Using Alpha Vantage API key: DFC7...6LO9
+[2025-04-26 05:26:23,047] INFO portfolio.api /app/portfolio/api.py:49 - Using API key: DFC7...6LO9
+[2025-04-26 05:26:23,047] INFO portfolio.api /app/portfolio/api.py:64 - Making request to Alpha Vantage for GOOG quote data
+[2025-04-26 05:26:23,367] INFO portfolio.api /app/portfolio/api.py:73 - Response status code: 200
+[2025-04-26 05:26:23,367] INFO portfolio.api /app/portfolio/api.py:130 - Retrieved price for GOOG: 163.8500
+[2025-04-26 05:26:24,373] INFO portfolio.api /app/portfolio/api.py:160 - Making request to Alpha Vantage for GOOG company overview
+[2025-04-26 05:26:24,547] INFO portfolio.api /app/portfolio/api.py:164 - Overview response status code: 200
+[2025-04-26 05:26:24,549] INFO portfolio.api /app/portfolio/api.py:189 - Retrieved company name for GOOG: Alphabet Inc Class C
+[2025-04-26 05:26:24,550] INFO portfolio.api /app/portfolio/api.py:210 - Retrieved additional data for GOOG: {'day_change': Decimal('2.3800'), 'day_change_percentage': Decimal('1.473958011'), 'fifty_two_week_high': Decimal('208.46'), 'fifty_two_week_low': Decimal('142.66'), 'pe_ratio': Decimal('20.08'), 'dividend_yield': Decimal('0.5100')}
+[2025-04-26 05:26:24,569] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:24,590] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:24,596] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:24,602] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:24,609] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:24,615] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:29,102] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:29,116] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:29,123] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:29,129] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:29,135] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:29,141] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:29,148] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:31,634] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:31,640] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:31,647] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:31,654] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:31,660] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:31,666] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:26:31,673] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:27:11,052] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /dashboard/www.google.com
+[2025-04-26 05:27:11,052] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /dashboard/www.google.com
+[2025-04-26 05:27:47,690] INFO spreturn.views /app/spreturn/views.py:23 - Accessing S&P Return calculator
+[2025-04-26 05:27:47,703] INFO spreturn.views /app/spreturn/views.py:69 - Retrieved 97 S&P return records
+[2025-04-26 05:28:09,442] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:31:20,296] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:31:22,366] INFO task_management.views /app/task_management/views.py:42 - Inside ensure_predefined_lists
+[2025-04-26 05:31:22,366] INFO task_management.views /app/task_management/views.py:43 - [{'name': 'Samaan Tasks', 'listcode': 'SAMAAN_TASKS'}, {'name': 'Past Due', 'listcode': 'PAST_DUE'}, {'name': 'Important', 'listcode': 'IMPORTANT'}, {'name': 'All Tasks', 'listcode': 'ALL_TASKS'}]
+[2025-04-26 05:31:22,367] INFO task_management.views /app/task_management/views.py:52 - ['task', 'taskhistory', 'id', 'user', 'list_name', 'list_code', 'list_type', 'list_source']
+[2025-04-26 05:31:22,375] INFO task_management.views /app/task_management/views.py:209 - [get_lists] Special: ['All Tasks', 'Important', 'Past Due', 'Samaan Tasks']
+[2025-04-26 05:31:22,375] INFO task_management.views /app/task_management/views.py:210 - [get_lists] Semi-Special: ['G My Tasks']
+[2025-04-26 05:31:22,376] INFO task_management.views /app/task_management/views.py:211 - [get_lists] Normal: [] (Count: 0)
+[2025-04-26 05:31:22,435] INFO task_management.views /app/task_management/views.py:69 - Getting All Tasks called as main function
+[2025-04-26 05:31:23,442] INFO task_management.views /app/task_management/views.py:721 - Triggering user sync for user: kittureddy2000
+[2025-04-26 05:31:23,444] INFO task_management.views /app/task_management/views.py:728 - Enqueuing sync for user kittureddy2000 and provider google
+[2025-04-26 05:31:23,508] INFO task_management.sync_utils /app/task_management/sync_utils.py:635 - Processing sync task
+[2025-04-26 05:31:23,510] INFO task_management.sync_utils /app/task_management/sync_utils.py:529 - Starting sync for user: kittureddy2000 with provider: google
+[2025-04-26 05:31:23,510] INFO task_management.sync_utils /app/task_management/sync_utils.py:32 - Starting Google Tasks sync for user: kittureddy2000
+[2025-04-26 05:31:23,512] INFO googleapiclient.discovery_cache /usr/local/lib/python3.10/site-packages/googleapiclient/discovery_cache/__init__.py:49 - file_cache is only supported with oauth2client<4.0.0
+[2025-04-26 05:31:23,513] INFO task_management.sync_utils /app/task_management/sync_utils.py:38 - Last sync time: 2025-04-26 05:26:11.509805+00:00
+[2025-04-26 05:31:23,513] INFO task_management.sync_utils /app/task_management/sync_utils.py:41 - Fetching Google Tasks lists
+[2025-04-26 05:31:23,709] INFO task_management.sync_utils /app/task_management/sync_utils.py:45 - Found 1 Google task lists
+[2025-04-26 05:31:23,710] INFO task_management.sync_utils /app/task_management/sync_utils.py:57 - Processing Google list: 'My Tasks' (ID: MTI5ODUyMTQ2MDQwMjE2MDU4MTA6MDow)
+[2025-04-26 05:31:23,711] INFO task_management.sync_utils /app/task_management/sync_utils.py:74 - Using existing primary Google list 'G My Tasks'
+[2025-04-26 05:31:23,711] INFO task_management.sync_utils /app/task_management/sync_utils.py:103 - Fetching tasks updated since: 2025-04-26T05:26:11.509805+00:00
+[2025-04-26 05:31:23,835] INFO task_management.sync_utils /app/task_management/sync_utils.py:122 - Retrieved page 1 with 0 tasks from 'My Tasks'
+[2025-04-26 05:31:23,836] INFO task_management.sync_utils /app/task_management/sync_utils.py:136 - Total updated tasks found in 'My Tasks': 0
+[2025-04-26 05:31:23,845] INFO task_management.sync_utils /app/task_management/sync_utils.py:294 - Google sync completed successfully with 0 updates
+[2025-04-26 05:31:23,846] INFO task_management.sync_utils /app/task_management/sync_utils.py:572 - No updates to report for kittureddy2000 and google
+[2025-04-26 05:31:23,848] INFO task_management.sync_utils /app/task_management/sync_utils.py:655 - Google sync completed for user ID: 2
+[2025-04-26 05:31:27,438] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:31:28,436] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:28,439] INFO portfolio.services /app/portfolio/services.py:93 - Getting data for GOOG directly from API
+[2025-04-26 05:31:28,439] INFO portfolio.api /app/portfolio/api.py:45 - Fetching stock data for symbol: GOOG
+[2025-04-26 05:31:28,439] INFO portfolio.api /app/portfolio/api.py:35 - Using Alpha Vantage API key: DFC7...6LO9
+[2025-04-26 05:31:28,439] INFO portfolio.api /app/portfolio/api.py:49 - Using API key: DFC7...6LO9
+[2025-04-26 05:31:28,439] INFO portfolio.api /app/portfolio/api.py:64 - Making request to Alpha Vantage for GOOG quote data
+[2025-04-26 05:31:28,722] INFO portfolio.api /app/portfolio/api.py:73 - Response status code: 200
+[2025-04-26 05:31:28,723] INFO portfolio.api /app/portfolio/api.py:130 - Retrieved price for GOOG: 163.8500
+[2025-04-26 05:31:29,727] INFO portfolio.api /app/portfolio/api.py:160 - Making request to Alpha Vantage for GOOG company overview
+[2025-04-26 05:31:29,899] INFO portfolio.api /app/portfolio/api.py:164 - Overview response status code: 200
+[2025-04-26 05:31:29,900] INFO portfolio.api /app/portfolio/api.py:189 - Retrieved company name for GOOG: Alphabet Inc Class C
+[2025-04-26 05:31:29,900] INFO portfolio.api /app/portfolio/api.py:210 - Retrieved additional data for GOOG: {'day_change': Decimal('2.3800'), 'day_change_percentage': Decimal('1.473958011'), 'fifty_two_week_high': Decimal('208.46'), 'fifty_two_week_low': Decimal('142.66'), 'pe_ratio': Decimal('20.08'), 'dividend_yield': Decimal('0.5100')}
+[2025-04-26 05:31:29,918] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:29,932] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:29,939] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:29,948] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:29,957] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:29,966] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:31,433] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:31:33,194] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:33,200] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:33,207] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:33,214] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:33,222] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:33,228] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:33,236] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:35,424] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:31:42,205] INFO spreturn.views /app/spreturn/views.py:23 - Accessing S&P Return calculator
+[2025-04-26 05:31:42,216] INFO spreturn.views /app/spreturn/views.py:69 - Retrieved 97 S&P return records
+[2025-04-26 05:31:43,587] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:31:45,353] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:31:46,259] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /dashboard/www.google.com
+[2025-04-26 05:31:46,259] WARNING django.request /usr/local/lib/python3.10/site-packages/django/utils/log.py:241 - Not Found: /dashboard/www.google.com
+[2025-04-26 05:31:48,907] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:48,927] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:48,940] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:48,949] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:48,956] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:48,964] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:31:48,973] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:34:52,710] INFO root /app/core/views.py:13 - Calling Dashboard
+[2025-04-26 05:35:32,752] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:32,755] INFO portfolio.services /app/portfolio/services.py:93 - Getting data for GOOG directly from API
+[2025-04-26 05:35:32,755] INFO portfolio.api /app/portfolio/api.py:45 - Fetching stock data for symbol: GOOG
+[2025-04-26 05:35:32,756] INFO portfolio.api /app/portfolio/api.py:35 - Using Alpha Vantage API key: DFC7...6LO9
+[2025-04-26 05:35:32,756] INFO portfolio.api /app/portfolio/api.py:49 - Using API key: DFC7...6LO9
+[2025-04-26 05:35:32,756] INFO portfolio.api /app/portfolio/api.py:64 - Making request to Alpha Vantage for GOOG quote data
+[2025-04-26 05:35:33,089] INFO portfolio.api /app/portfolio/api.py:73 - Response status code: 200
+[2025-04-26 05:35:33,090] INFO portfolio.api /app/portfolio/api.py:130 - Retrieved price for GOOG: 163.8500
+[2025-04-26 05:35:34,093] INFO portfolio.api /app/portfolio/api.py:160 - Making request to Alpha Vantage for GOOG company overview
+[2025-04-26 05:35:34,412] INFO portfolio.api /app/portfolio/api.py:164 - Overview response status code: 200
+[2025-04-26 05:35:34,413] INFO portfolio.api /app/portfolio/api.py:189 - Retrieved company name for GOOG: Alphabet Inc Class C
+[2025-04-26 05:35:34,413] INFO portfolio.api /app/portfolio/api.py:210 - Retrieved additional data for GOOG: {'day_change': Decimal('2.3800'), 'day_change_percentage': Decimal('1.473958011'), 'fifty_two_week_high': Decimal('208.46'), 'fifty_two_week_low': Decimal('142.66'), 'pe_ratio': Decimal('20.08'), 'dividend_yield': Decimal('0.5100')}
+[2025-04-26 05:35:34,427] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:34,442] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:34,450] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:34,456] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:34,463] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:34,470] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:51,355] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:51,363] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:51,373] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:51,383] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:51,389] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:51,396] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:51,401] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:52,403] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:52,410] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:52,417] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:52,423] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:52,430] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:52,436] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:52,442] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:52,448] WARNING portfolio.services /app/portfolio/services.py:40 - Redis is not available - will use in-memory cache instead
+[2025-04-26 05:35:53,858] INFO root /app/core/views.py:13 - Calling Dashboard

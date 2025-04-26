@@ -19,8 +19,21 @@
 
 <div class="container-fluid">
   <div class="row h-100">
+    <!-- Mobile Menu Toggle Button - Only visible on small screens -->
+    <div class="d-md-none mobile-menu-toggle position-fixed" style="top: 70px; left: 10px; z-index: 1030;">
+      <button id="sidebarToggle" class="btn btn-primary rounded-circle shadow" style="width: 40px; height: 40px; padding: 0;">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
     <!-- Bootstrap Sidebar Start -->
     <nav id="sidebarMenu" class="col-md-2 d-md-block sidebar collapse">
+      <!-- Close button for mobile - Only visible on small screens -->
+      <div class="d-md-none d-flex justify-content-end p-2">
+        <button id="sidebarClose" class="btn btn-sm btn-light">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
       <ul class="nav flex-column">
         <!-- Special Lists -->
         {% for tasklist in special_lists %}
@@ -283,6 +296,28 @@
 
 {% block script_block %}
 <script>
+  // Mobile sidebar toggle functionality
+  $(document).ready(function() {
+    // Toggle sidebar on mobile when clicking the hamburger button
+    $("#sidebarToggle").click(function() {
+      $("#sidebarMenu").addClass("show");
+    });
+    
+    // Close sidebar on mobile when clicking the close button
+    $("#sidebarClose").click(function() {
+      $("#sidebarMenu").removeClass("show");
+    });
+    
+    // Close sidebar when clicking outside on mobile
+    $(document).on('click', function(e) {
+      if ($(window).width() < 768) {
+        if (!$(e.target).closest('#sidebarMenu').length && 
+            !$(e.target).closest('#sidebarToggle').length) {
+          $("#sidebarMenu").removeClass("show");
+        }
+      }
+    });
+  });
 
   function createTaskCardHTML(task) {
     // Set icon classes based on task completion status

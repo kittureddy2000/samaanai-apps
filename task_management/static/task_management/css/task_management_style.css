@@ -170,9 +170,11 @@ header.navbar {
   padding: 0 !important; /* Remove Bootstrap padding */
 }
 
-/* Hide the default Bootstrap hamburger toggler */
+/* Allow the hamburger toggle for mobile */
 .navbar-toggler {
-  display: none !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ========================================================================== */
@@ -485,7 +487,7 @@ header.navbar {
  * Styles the <i> tag used for the checkmark
  */
 .task-card .complete-task {
-  font-size: 14px !important;
+  font-size: 16px !important;
   cursor: pointer !important;
   position: relative !important; /* Keep for z-index */
   z-index: 10 !important; 
@@ -510,6 +512,7 @@ header.navbar {
   color: var(--text-primary) !important;
   line-height: 1.4 !important; 
   transition: color 0.2s ease !important;
+  font-size: 15px !important;
 }
 
 /* Add this rule for strikethrough */
@@ -523,7 +526,7 @@ header.navbar {
  * Styles the text displaying the due date below the title
  */
 .task-card .due-date {
-  font-size: 11px !important;
+  font-size: 12px !important;
   color: var(--text-light) !important;
   margin-bottom: 2px !important; 
 }
@@ -550,7 +553,7 @@ header.navbar {
  * Styles the <i> tag used for the favorite star
  */
 .task-card .mark-favorite {
-  font-size: 14px !important;
+  font-size: 16px !important;
   cursor: pointer !important;
   /* color class (text-warning) added by JS/updateTaskCardUI */
 }
@@ -1101,6 +1104,8 @@ cursor: pointer;
   /* Sidebar becomes off-canvas */
   #sidebarMenu {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 80%;
     max-width: 300px; /* Limit width on small screens */
     z-index: 1050;
@@ -1109,10 +1114,21 @@ cursor: pointer;
     height: 100vh !important; /* Full height when off-canvas */
     border-right: none; /* Remove border when off-canvas */
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    background-color: white !important;
   }
   
   #sidebarMenu.show {
     transform: translateX(0);
+  }
+  
+  /* Mobile menu toggle button */
+  .mobile-menu-toggle {
+    display: block !important;
+    z-index: 1040 !important;
+  }
+  
+  #sidebarToggle, #sidebarClose {
+    cursor: pointer !important;
   }
   
   /* Middle panel takes full width */

@@ -139,16 +139,19 @@ def simplified_entry(request):
             weight = request.POST.get('weight', '')
             if weight.strip():
                 try:
-                    weight_value = float(weight)
-                    if weight_value > 0:
+                    # Convert from lbs to kg (1 lb = 0.453592 kg)
+                    weight_lbs = float(weight)
+                    weight_kg = weight_lbs * 0.453592
+                    
+                    if weight_kg > 0:
                         # Check if entry for this date already exists
                         weight_entry, created = WeightEntry.objects.get_or_create(
                             user=request.user,
                             date=entry_date,
-                            defaults={'weight': weight_value}
+                            defaults={'weight': weight_kg}
                         )
                         if not created:
-                            weight_entry.weight = weight_value
+                            weight_entry.weight = weight_kg
                             weight_entry.save()
                 except ValueError:
                     pass
@@ -595,22 +598,20 @@ def track_weight(request):
         if weight_form.is_valid():
             # Check if entry for this date already exists
             entry_date = weight_form.cleaned_data['date']
-            weight_value = weight_form.cleaned_data['weight']
             
-            weight_entry, created = WeightEntry.objects.get_or_create(
-                user=request.user,
-                date=entry_date,
-                defaults={
-                    'weight': weight_value,
-                    'notes': weight_form.cleaned_data['notes']
-                }
-            )
+            # Get existing entry if it exists
+            existing_entry = WeightEntry.objects.filter(user=request.user, date=entry_date).first()
             
-            if not created:
-                # Update existing entry
-                weight_entry.weight = weight_value
-                weight_entry.notes = weight_form.cleaned_data['notes']
-                weight_entry.save()
+            if existing_entry:
+                # Update existing entry - save() method will handle pounds to kg conversion
+                form_with_instance = WeightEntryForm(request.POST, instance=existing_entry)
+                if form_with_instance.is_valid():
+                    form_with_instance.save()
+            else:
+                # Create new entry - save() method will handle pounds to kg conversion
+                entry = weight_form.save(commit=False)
+                entry.user = request.user
+                entry.save()
             
             # Update selected date to the entry date
             selected_date = entry_date
@@ -649,21 +650,11 @@ def track_weight(request):
         else:
             bmi_category = 'Obese'
     
-    # Prepare chart data (last 10 entries in chronological order)
-    weights = []
-    dates = []
-    
-    for entry in weight_entries.order_by('date')[:10]:
-        weights.append(float(entry.weight))
-        dates.append(entry.date.strftime('%b %d'))
-    
     context = {
         'date_form': date_form,
         'weight_form': weight_form,
         'weight_entries': weight_entries,
         'selected_date': selected_date,
-        'weights': weights,
-        'dates': dates,
         'bmi': bmi,
         'bmi_category': bmi_category
     }
